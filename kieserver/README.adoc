@@ -1,0 +1,8 @@
+# Red Hat Decision Manager 7 - Kie Server OpenShift container image
+
+NOTE: Extends link:https://github.com/jboss-container-images/rhdm-7-image/tree/rhdm70-dev/kieserver[Red Hat Decision Manager Execution Server 7.0 container image]
+
+# License
+
+See link:../LICENSE[LICENSE] file.
+
