@@ -403,3 +403,7 @@ run:
       user: 185
       cmd:
           - "/opt/eap/bin/openshift-launch.sh"
+osbs:
+      repository:
+          name: rhdm-7-kieserver-openshift-docker
+          branch: ce-1.0-openshift-rhdm-7.0-jdk-8-rhel-7
