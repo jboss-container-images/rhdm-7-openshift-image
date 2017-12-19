@@ -334,14 +334,14 @@ modules:
           - name: dynamic-resources
           - name: s2i-common
           - name: java-alternatives
-          - name: os-eap7-openshift
           - name: os-eap-s2i
           - name: os-java-jolokia
           - name: jolokia
           - name: os-eap7-openshift
-          - name: os-eap7-modules
           - name: os-eap7-ping
-          - name: os-eap70-openshift
+          - name: os-eap7-modules
+          - name: os-eap71-modules
+          - name: os-eap71-openshift
           - name: os-eap-activemq-rar
           - name: os-java-run
           - name: os-eap-launch
