@@ -14,6 +14,7 @@ items:
       openshift.io/display-name: Red Hat Decision Manager Central 7.0
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
+    dockerImageRepository: registry.access.redhat.com/rhdm-7/rhdm70-decisioncentral-openshift
     tags:
     - name: '1.0'
       annotations:
@@ -22,9 +23,6 @@ items:
         tags: rhdm,xpaas
         supports: rhdm:7.0,xpaas:1.4
         version: '1.0'
-      from:
-        kind: DockerImage
-        name: registry.access.redhat.com/rhdm-7/rhdm70-decisioncentral-openshift:1.0
 - kind: ImageStream
   apiVersion: v1
   metadata:
@@ -33,6 +31,7 @@ items:
       openshift.io/display-name: Red Hat Decision Manager KIE Server 7.0
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
+    dockerImageRepository: registry.access.redhat.com/rhdm-7/rhdm70-kieserver-openshift
     tags:
     - name: '1.0'
       annotations:
@@ -41,6 +40,3 @@ items:
         tags: rhdm,xpaas
         supports: rhdm:7.0,xpaas:1.4
         version: '1.0'
-      from:
-        kind: DockerImage
-        name: registry.access.redhat.com/rhdm-7/rhdm70-kieserver-openshift:1.0
