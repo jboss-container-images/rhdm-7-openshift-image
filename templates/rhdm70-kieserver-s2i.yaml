@@ -80,12 +80,6 @@ parameters:
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
   required: false
-- displayName: KIE Server Sync Deploy
-  description: KIE execution server sync startup with containers; hold the startup
-    until containers are loaded (Sets the org.kie.server.sync.deploy system property)
-  name: KIE_SERVER_SYNC_DEPLOY
-  value: 'false'
-  required: false
 - displayName: KIE Server User
   description: KIE execution server username (Sets the org.kie.server.user system
     property)
@@ -408,8 +402,6 @@ objects:
                 fieldPath: status.podIP
           - name: KIE_SERVER_CONTAINER_DEPLOYMENT
             value: "${KIE_SERVER_CONTAINER_DEPLOYMENT}"
-          - name: KIE_SERVER_SYNC_DEPLOY
-            value: "${KIE_SERVER_SYNC_DEPLOY}"
           - name: KIE_SERVER_PWD
             value: "${KIE_SERVER_PWD}"
           - name: KIE_SERVER_USER
