@@ -361,6 +361,7 @@ modules:
           - name: openshift-passwd
           - name: os-bpmsuite-common
           - name: os-bpmsuite-executionserver
+          - name: jboss-maven
 packages:
       repositories:
           - jboss-os
