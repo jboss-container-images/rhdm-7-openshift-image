@@ -67,6 +67,11 @@ parameters:
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
   required: false
+- displayName: KIE Server ID
+  description: Decision server identifier. Determines the template ID in Decision Central or controller. If this parameter is left blank, it is set using the $HOSTNAME environment variable or a random value. (Sets the org.kie.server.id system property).
+  name: KIE_SERVER_ID
+  value: ''
+  required: false
 - displayName: KIE Server Bypass Auth User
   description: KIE execution server bypass auth user (Sets the org.kie.server.bypass.auth.user system property)
   name: KIE_SERVER_BYPASS_AUTH_USER
@@ -468,6 +473,8 @@ objects:
             value: "${APPLICATION_NAME}-rhdmcentr"
           - name: KIE_SERVER_CONTROLLER_USER
             value: "${KIE_SERVER_CONTROLLER_USER}"
+          - name: KIE_SERVER_ID
+            value: "${KIE_SERVER_ID}"
           - name: KIE_SERVER_HOST
             valueFrom:
               fieldRef:
