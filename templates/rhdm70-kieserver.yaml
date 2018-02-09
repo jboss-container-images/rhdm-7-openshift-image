@@ -102,7 +102,6 @@ parameters:
   name: DROOLS_SERVER_FILTER_CLASSES
   value: 'true'
   required: false
-
 - displayName: Execution Server Custom http Route Hostname
   description: 'Custom hostname for http service route.  Leave blank for default hostname,
     e.g.: <application-name>-kieserver-<project>.<default-domain-suffix>'
@@ -143,6 +142,11 @@ parameters:
   name: IMAGE_STREAM_NAMESPACE
   value: openshift
   required: true
+- displayName: KIE Server Container Deployment
+  description: 'KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version|c2=g2:a2:v2'
+  name: KIE_SERVER_CONTAINER_DEPLOYMENT
+  value: ''
+  required: false
 - displayName: Maven repository URL
   description: Fully qualified URL to a Maven repository.
   name: MAVEN_REPO_URL
@@ -308,6 +312,8 @@ objects:
             value: "${KIE_SERVER_PWD}"
           - name: KIE_SERVER_USER
             value: "${KIE_SERVER_USER}"
+          - name: KIE_SERVER_CONTAINER_DEPLOYMENT
+            value: "${KIE_SERVER_CONTAINER_DEPLOYMENT}"
           - name: MAVEN_REPO_URL
             value: "${MAVEN_REPO_URL}"
           - name: MAVEN_REPO_SERVICE
