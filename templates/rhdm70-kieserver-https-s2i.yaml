@@ -7,14 +7,14 @@ metadata:
     tags: rhdm,jboss,xpaas
     version: 1.4.0
     openshift.io/display-name: Red Hat Decision Manager Execution Server 7.0 S2I (Ephemeral with https)
-  name: rhdm70-kieserver-s2i
+  name: rhdm70-kieserver-https-s2i
 labels:
-  template: rhdm70-kieserver-s2i
+  template: rhdm70-kieserver-https-s2i
   xpaas: 1.4.0
 message: A new Decision Manager Execution Server application has been created in your
   project. Please be sure to create the "kieserver-service-account" service account and
   the secret named "${HTTPS_SECRET}" containing the ${HTTPS_KEYSTORE} file used for
-  serving secure content.
+  serving secure content. The username/password for accessing the KIE Server REST interface is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}.
 parameters:
 - displayName: Application Name
   description: The name for the application.
