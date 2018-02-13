@@ -282,6 +282,7 @@ modules:
           - name: os-eap7-launch
           - name: os-eap-logging
           - name: os-eap-probes
+          - name: os-logging
           - name: jboss-maven
           - name: os-eap-db-drivers
           - name: os-eap-sso
