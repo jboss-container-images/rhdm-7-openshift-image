@@ -3,14 +3,14 @@ apiVersion: v1
 metadata:
   annotations:
     description: Application template for Red Hat Decision Manager Execution Server 7.0 application.
-    iconClass: icon-jboss
+    iconClass: icon-decisionserver
     tags: rhdm,jboss,xpaas
-    version: 1.4.0
+    version: 1.4.8
     openshift.io/display-name: Red Hat Decision Manager Execution Server 7.0 (Ephemeral with https)
   name: rhdm70-kieserver
 labels:
   template: rhdm70-kieserver
-  xpaas: 1.4.0
+  xpaas: 1.4.8
 message: A new Decision Manager Execution Server application has been created in your
   project. Please be sure to create the "kieserver-service-account" service account and
   the secret named "${HTTPS_SECRET}" containing the ${HTTPS_KEYSTORE} file used for
