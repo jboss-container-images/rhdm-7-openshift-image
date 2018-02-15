@@ -3,14 +3,14 @@ apiVersion: v1
 metadata:
   annotations:
     description: Application template for Red Hat Decision Manager Execution Server 7.0 application built using S2I.
-    iconClass: icon-jboss
+    iconClass: icon-decisionserver
     tags: rhdm,jboss,xpaas
-    version: 1.4.0
+    version: 1.4.8
     openshift.io/display-name: Red Hat Decision Manager Execution Server 7.0 S2I Ephemeral (no https)
   name: rhdm70-kieserver-basic-s2i
 labels:
   template: rhdm70-kieserver-basic-s2i
-  xpaas: 1.4.0
+  xpaas: 1.4.8
 message: A new Decision Manager Execution Server application has been created in your project. This template does not include HTTPS setup.
   The username/password for accessing the KIE Server REST interface is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}.
 parameters:
@@ -85,7 +85,7 @@ parameters:
 - displayName: KIE Server Container Deployment
   description: 'KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version|c2=g2:a2:v2'
   name: KIE_SERVER_CONTAINER_DEPLOYMENT
-  value: rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT
+  value: rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.8.Final
   required: false
 - displayName: Git Repository URL
   description: Git source URI for application
@@ -95,7 +95,7 @@ parameters:
 - displayName: Git Reference
   description: Git branch/tag reference
   name: SOURCE_REPOSITORY_REF
-  value: rhdm70-dev
+  value: ose-v1.4.8-1
   required: false
 - displayName: Context Directory
   description: Path within Git project to build; empty for root project directory.
