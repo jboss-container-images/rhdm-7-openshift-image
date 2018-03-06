@@ -339,4 +339,4 @@ run:
 osbs:
       repository:
           name: rhdm-7-decisioncentral-openshift-docker
-          branch: ce-1.0-openshift-rhdm-7.0-jdk-8-rhel-7
+          branch: jb-rhdm-7.0-decisioncentral-rhel-7
