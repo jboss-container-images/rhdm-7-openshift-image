@@ -5,6 +5,8 @@ description: "Red Hat Decision Manager Central 7.0 OpenShift container image"
 version: "1.0"
 from: "rhdm-7/rhdm70-decisioncentral:latest"
 labels:
+    - name: "com.redhat.component"
+      value: "rhdm-7-rhdm70-decisioncentral-openshift-container"
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Decision Manager Central"
     - name: "io.k8s.display-name"
@@ -338,5 +340,5 @@ run:
           - "/opt/eap/bin/openshift-launch.sh"
 osbs:
       repository:
-          name: rhdm-7-decisioncentral-openshift-docker
+          name: containers/rhdm-7-decisioncentral-openshift
           branch: jb-rhdm-7.0-decisioncentral-rhel-7
