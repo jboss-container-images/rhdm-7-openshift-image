@@ -203,4 +203,4 @@ run:
 osbs:
       repository:
           name: containers/rhdm-7-decisioncentral-openshift
-          branch: jb-rhdm-7.0-decisioncentral-rhel-7
+          branch: jb-rhdm-7.0-decisioncentral-openshift-rhel-7
