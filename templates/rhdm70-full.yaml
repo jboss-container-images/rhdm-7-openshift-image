@@ -179,6 +179,16 @@ parameters:
   name: DECISION_CENTRAL_VOLUME_CAPACITY
   value: 512Mi
   required: true
+- displayName: Decision Central Container Memory Limit
+  description: Decision Central Container memory limit
+  name: DECISION_CENTRAL_MEMORY_LIMIT
+  value: 2Gi
+  required: false
+- displayName: Execution Server Container Memory Limit
+  description: Execution Server Container memory limit
+  name: EXCECUTION_SERVER_MEMORY_LIMIT
+  value: 1Gi
+  required: false
 objects:
 - kind: Service
   apiVersion: v1
@@ -328,6 +338,9 @@ objects:
         - name: "${APPLICATION_NAME}-rhdmcentr"
           image: rhdm70-decisioncentral-openshift
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "${DECISION_CENTRAL_MEMORY_LIMIT}"
           volumeMounts:
           - name: decisioncentral-keystore-volume
             mountPath: "/etc/decisioncentral-secret-volume"
@@ -430,6 +443,9 @@ objects:
         - name: "${APPLICATION_NAME}-kieserver"
           image: rhdm70-kieserver-openshift
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "${EXCECUTION_SERVER_MEMORY_LIMIT}"
           volumeMounts:
           - name: kieserver-keystore-volume
             mountPath: "/etc/kieserver-secret-volume"
