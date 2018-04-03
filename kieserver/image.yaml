@@ -5,6 +5,8 @@ description: "Red Hat Decision Manager Kie Server 7.0 container image"
 version: "1.0"
 from: "rhdm-7/rhdm70-kieserver:latest"
 labels:
+    - name: "com.redhat.component"
+      value: "rhdm-7-rhdm70-kieserver-openshift-container"
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Decision Manager Execution Server"
     - name: "io.k8s.display-name"
@@ -408,5 +410,5 @@ run:
           - "/opt/eap/bin/openshift-launch.sh"
 osbs:
       repository:
-          name: rhdm-7-kieserver-openshift-docker
-          branch: ce-1.0-openshift-rhdm-7.0-jdk-8-rhel-7
+          name: containers/rhdm-7-kieserver-openshift
+          branch: jb-rhdm-7.0-kieserver-rhel-7
