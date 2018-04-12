@@ -179,7 +179,6 @@ packages:
           - python-enum34
           - python-requests
           - PyYAML
-          - rh-maven33
           - rh-mongodb32-mongo-java-driver
 artifacts:
     - path: javax.json-1.0.4.jar
