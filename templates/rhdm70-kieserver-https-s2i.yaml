@@ -170,16 +170,16 @@ parameters:
   name: MAVEN_REPO_URL
   value: ''
   required: false
-- displayName: Maven repository user name
-  description: User name to access the Maven repository.
+- displayName: Maven repository username
+  description: Username to access the Maven repository.
   name: MAVEN_REPO_USERNAME
-  value: ''
-  required: false
+  required: true
+  value: mavenUser
 - displayName: Maven repository password
   description: Password to access the Maven repository.
   name: MAVEN_REPO_PASSWORD
-  value: ''
-  required: false
+  from: "[a-zA-Z]{6}[0-9]{1}!"
+  generate: expression
 - description: The directory or several directories within the project that contains the required binary files (KJAR files 
    and any other necessary files) after a successful Maven build. Files from the artefact directory are copied
    into the deployment folder. Use a comma (,) to separate multiple directories. If this parameter is not specified, all 
