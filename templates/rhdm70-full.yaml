@@ -232,6 +232,20 @@ objects:
   apiVersion: v1
   spec:
     ports:
+    - port: 8001
+      targetPort: 8001
+    selector:
+      deploymentConfig: "${APPLICATION_NAME}-rhdmcentr"
+  metadata:
+    name: ${APPLICATION_NAME}-rhdmcentr-git-ssh
+    labels:
+      application: "${APPLICATION_NAME}"
+    annotations:
+      description: The Decision Central Git SSH port
+- kind: Service
+  apiVersion: v1
+  spec:
+    ports:
     - port: 8080
       targetPort: 8080
     selector:
