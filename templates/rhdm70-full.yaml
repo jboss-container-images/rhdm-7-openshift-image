@@ -174,17 +174,16 @@ parameters:
    the repository provided by Decision Central.
   name: MAVEN_REPO_URL
   required: false
-- displayName: Maven repository user name
-  description: User name to access the Maven repository. If Decision Server uses the Decision Central repository, 
-    this parameter must match the KIE Admin User. Default is "adminUser".
+- displayName: Maven repository username
+  description: Username to access the Maven repository. If Decision Server uses the Decision Central repository.
   name: MAVEN_REPO_USERNAME
-  value: adminUser
-  required: false
+  required: true
+  value: mavenUser
 - displayName: Maven repository password
-  description: Password to access the Maven repository. If Decision Server uses the Decision Central repository, 
-    this parameter must match the KIE Admin Password. No default specified.
+  description: Password to access the Maven repository. If Decision Server uses the Decision Central repository.
   name: MAVEN_REPO_PASSWORD
-  required: false
+  from: "[a-zA-Z]{6}[0-9]{1}!"
+  generate: expression
 - displayName: Decision Central Volume Capacity
   description: Size of the persistent storage for Decision Central's runtime data.
   name: DECISION_CENTRAL_VOLUME_CAPACITY
@@ -229,6 +228,20 @@ objects:
       application: "${APPLICATION_NAME}"
     annotations:
       description: The Decision Central web server's https port.
+- kind: Service
+  apiVersion: v1
+  spec:
+    ports:
+    - port: 8001
+      targetPort: 8001
+    selector:
+      deploymentConfig: "${APPLICATION_NAME}-rhdmcentr"
+  metadata:
+    name: ${APPLICATION_NAME}-rhdmcentr-git-ssh
+    labels:
+      application: "${APPLICATION_NAME}"
+    annotations:
+      description: The Decision Central Git SSH port
 - kind: Service
   apiVersion: v1
   spec:

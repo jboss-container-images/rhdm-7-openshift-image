@@ -83,16 +83,13 @@ parameters:
   generate: expression
   required: false
 - displayName: KIE server controller protocol
-  description: KIE server controller protocol. To use Decision Central or a controller to manage this Decision
-    Server, set this parameter to the protocol part of the URL for the Decision Central or controller. (Used to 
-    set the org.kie.server.controller system property).
-  name: KIE_SERVER_CONTROLLER_PROTOCOL
-  value: http
-  required: false
   description: KIE server controller service. To use Decision Central that is hosted on the same OpenShift environment
       to manage this Decision Server, set this variable to the OpenShift service name for the Decision Central. In this
       case, do not set the KIE server controller protocol, KIE server controller host, and KIE server controller port.
       (Sets the org.kie.server.controller system property if host and port are not set).
+  name: KIE_SERVER_CONTROLLER_PROTOCOL
+  value: http
+  required: false
 - displayName: KIE server controller service 
   name: KIE_SERVER_CONTROLLER_SERVICE
   value: ''
@@ -176,16 +173,16 @@ parameters:
   name: MAVEN_REPO_URL
   value: ''
   required: false
-- displayName: Maven repository user name
-  description: User name to access the Maven repository.
+- displayName: Maven repository username
+  description: Username to access the Maven repository.
   name: MAVEN_REPO_USERNAME
-  value: ''
-  required: false
+  required: true
+  value: mavenUser
 - displayName: Maven repository password
   description: Password to access the Maven repository.
   name: MAVEN_REPO_PASSWORD
-  value: ''
-  required: false
+  from: "[a-zA-Z]{6}[0-9]{1}!"
+  generate: expression
 - displayName: Execution Server Container Memory Limit
   description: Execution Server Container memory limit
   name: EXCECUTION_SERVER_MEMORY_LIMIT
