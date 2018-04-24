@@ -408,6 +408,12 @@ objects:
             value: "${KIE_SERVER_PWD}"
           - name: KIE_SERVER_USER
             value: "${KIE_SERVER_USER}"
+          - name: MAVEN_REPO_URL
+            value: "${MAVEN_REPO_URL}"
+          - name: MAVEN_REPO_USERNAME
+            value: "${MAVEN_REPO_USERNAME}"
+          - name: MAVEN_REPO_PASSWORD
+            value: "${MAVEN_REPO_PASSWORD}"
           - name: HTTPS_KEYSTORE_DIR
             value: "/etc/decisioncentral-secret-volume"
           - name: HTTPS_KEYSTORE
