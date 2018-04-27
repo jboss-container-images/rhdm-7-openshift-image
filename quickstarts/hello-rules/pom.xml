@@ -11,7 +11,7 @@
 
     <groupId>org.openshift.quickstarts</groupId>
     <artifactId>rhdm-kieserver-parent</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.4.8.Final</version>
     <packaging>pom</packaging>
 
     <name>OpenShift Quickstarts: RHDM Kie Server: Parent</name>
