@@ -187,7 +187,7 @@ parameters:
 - displayName: Decision Central Volume Capacity
   description: Size of the persistent storage for Decision Central's runtime data.
   name: DECISION_CENTRAL_VOLUME_CAPACITY
-  value: 512Mi
+  value: 1Gi
   required: true
 - displayName: Decision Central Container Memory Limit
   description: Decision Central Container memory limit
