@@ -188,6 +188,11 @@ parameters:
   displayName: Artifact Directory
   value: ''
   required: false
+- displayName: Disable KIE Server Management
+  description: Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy.
+  name: KIE_SERVER_MGMT_DISABLED
+  required: true
+  value: true
 - displayName: Execution Server Container Memory Limit
   description: Execution Server Container memory limit
   name: EXCECUTION_SERVER_MEMORY_LIMIT
@@ -387,6 +392,8 @@ objects:
             value: "${KIE_SERVER_USER}"
           - name: MAVEN_REPO_URL
             value: "${MAVEN_REPO_URL}"
+          - name: KIE_SERVER_MGMT_DISABLED
+            value: "${KIE_SERVER_MGMT_DISABLED}"
           - name: MAVEN_REPO_USERNAME
             value: "${MAVEN_REPO_USERNAME}"
           - name: MAVEN_REPO_PASSWORD
