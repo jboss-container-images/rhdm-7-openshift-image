@@ -183,6 +183,9 @@ envs:
     - name: "DROOLS_SERVER_FILTER_CLASSES"
       example: "true"
       description: "KIE execution server class filtering (Sets the org.drools.server.filter.classes system property)"
+    - name: "KIE_SERVER_MGMT_DISABLED"
+      example: "true"
+      description: "Turn the Execution server immutable, this setting prevents the controllers to execute tasks like add or remove kie containers."
 ports:
     - value: 8080
     - value: 8443
