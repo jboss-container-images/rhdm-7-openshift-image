@@ -5,6 +5,8 @@ description: "Red Hat Decision Manager Central 7.0 OpenShift container image"
 version: "1.0"
 from: "rhdm-7/rhdm70-decisioncentral:latest"
 labels:
+    - name: "com.redhat.component"
+      value: "rhdm-7-rhdm70-decisioncentral-openshift-container"
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Decision Manager Central"
     - name: "io.k8s.display-name"
@@ -16,14 +18,10 @@ labels:
 envs:
     - name: "JBOSS_MODULES_SYSTEM_PKGS"
       value: "org.jboss.logmanager,jdk.nashorn.api"
-    - name: "AB_JOLOKIA_PASSWORD_RANDOM"
-      value: "true"
-    - name: AB_JOLOKIA_AUTH_OPENSHIFT
-      value: "true"
-    - name: AB_JOLOKIA_HTTPS
-      value: "true"
     - name: "DEFAULT_ADMIN_USERNAME"
       value: "eapadmin"
+    - name: "HTTPS_ENABLE_HTTP2"
+      value: "true"
     - name: "KIE_ADMIN_USER"
       example: "adminUser"
       description: "KIE administrator username"
@@ -60,63 +58,6 @@ envs:
     - name: "KIE_SERVER_PWD"
       example: "execution1!"
       description: "KIE execution server password for basic authentication (Sets the org.kie.server.pwd system property)"
-    - name: "MAVEN_REPOS"
-      example: "dev-one,qe-two"
-      description: "If set, multi-repo support is enabled, and other MAVEN_REPO_* variables will be prefixed. For example: DEV_ONE_MAVEN_REPO_URL and QE_TWO_MAVEN_REPO_URL"
-    - name: "MAVEN_REPO_URL"
-      example: "http://repo.example.com:8080/maven2/"
-      description: "Maven repository url (fully defined)"
-    - name: "MAVEN_REPO_SERVICE"
-      example: "buscentr-myapp"
-      description: "Maven repository service to lookup if MAVEN_REPO_URL not specified"
-    - name: "MAVEN_REPO_PROTOCOL"
-      example: "http"
-      description: "Maven repository protocol (if not using fully defined url; will fallback to service)"
-    - name: "MAVEN_REPO_HOST"
-      example: "repo.example.com"
-      description: "Maven repository host (if not using fully defined url; will fallback to service)"
-    - name: "MAVEN_REPO_PORT"
-      example: "8080"
-      description: "Maven repository port (if not using fully defined url; will fallback to service)"
-    - name: "MAVEN_REPO_PATH"
-      example: "/maven2/"
-      description: "Maven repository path (if not using fully defined url; will fallback to service)"
-    - name: "MAVEN_REPO_ID"
-      example: "my-repo"
-      description: "Maven repository id"
-    - name: "MAVEN_REPO_USERNAME"
-      example: "mavenUser"
-      description: "Maven repository username"
-    - name: "MAVEN_REPO_PASSWORD"
-      example: "maven1!"
-      description: "Maven repository password"
-    - name: "MAVEN_REPO_PRIVATE_KEY"
-      example: "${user.home}/.ssh/id_dsa"
-      description: "Maven repository private key"
-    - name: "MAVEN_REPO_PASSPHRASE"
-      example: "maven1!"
-      description: "Maven repository passphrase"
-    - name: "MAVEN_REPO_LAYOUT"
-      example: "default"
-      description: "Maven repository layout"
-    - name: "MAVEN_REPO_RELEASES_ENABLED"
-      example: "true"
-      description: "Maven repository releases enabled"
-    - name: "MAVEN_REPO_RELEASES_UPDATE_POLICY"
-      example: "always"
-      description: "Maven repository releases update policy"
-    - name: "MAVEN_REPO_SNAPSHOTS_ENABLED"
-      example: "true"
-      description: "Maven repository snapshots enabled"
-    - name: "MAVEN_REPO_SNAPSHOTS_UPDATE_POLICY"
-      example: "always"
-      description: "Maven repository snapshots update policy"
-    - name: "OPENSHIFT_KUBE_PING_NAMESPACE"
-      example: "myproject"
-      description: "Clustering project namespace."
-    - name: "OPENSHIFT_KUBE_PING_LABELS"
-      example: "application=eap-app"
-      description: "Clustering labels selector."
     - name: "JAVA_OPTS_APPEND"
       example: "-Dfoo=bar"
       description: "Server startup options."
@@ -132,89 +73,12 @@ envs:
     - name: "CLI_GRACEFUL_SHUTDOWN"
       example: "true"
       description: "If set to any non zero length value then the image will prevent shutdown with the TERM signal and will require execution of the shutdown command through jboss-cli."
-    - name: "AB_HAWKULAR_REST_URL"
-      example: "http://myhawkularservice.example.com/hawkular"
-      description: "The url of the Hawkular REST service to which the Hawkular agent will emit metrics.  This must be set to configure the Hawkular agent."
-    - name: "AB_HAWKULAR_REST_USER"
-      example: "hawkW1nd"
-      description: "The username used for basic authentication with the Hawkular REST service."
-    - name: "AB_HAWKULAR_REST_PASSWORD"
-      example: "QSandC"
-      description: "The password used for basic authentication with the Hawkular REST service."
-    - name: "AB_HAWKULAR_REST_FEED_ID"
-      example: "autogenerate"
-      description: "The feed-id for this agent.  Must be globally unique to the Hawkular REST service."
-    - name: "AB_HAWKULAR_REST_TENANT_ID"
-      example: "hawkular"
-      description: "The tenant-id for this agent."
-    - name: "AB_HAWKULAR_REST_KEYSTORE"
-      example: "keystore.jks"
-      description: "The name of the keystore JKS file used to verify the identity of the Hawkular REST service when using https."
-    - name: "AB_HAWKULAR_REST_KEYSTORE_DIR"
-      example: "/etc/hawkular-agent-volume"
-      description: "The location of the keystore JKS file used to verify the identity of the Hawkular REST service when using https."
-    - name: "AB_HAWKULAR_REST_KEYSTORE_PASSWORD"
-      example: "tru5tM3"
-      description: "The password for the keystore JKS file used to verify the identity of the Hawkular REST service when using https."
-    - name: "AB_HAWKULAR_REST_KEYSTORE_TYPE"
-      example: "jks"
-      description: "The type of the keystore file used to verify the identity of the Hawkular REST service when using https.  Defaults to the JVM default, jks."
-    - name: "AB_HAWKULAR_REST_KEY_MANAGER_ALGORITHM"
-      example: "X509"
-      description: "The key manager algorithm to use when verifying the identity of the Hawkular REST service.  Defaults to the JVM default."
-    - name: "AB_HAWKULAR_REST_TRUST_MANAGER_ALGORITHM"
-      example: "X509"
-      description: "The trust manager algorithm to use when verifying the identity of the Hawkular REST service.  Defaults to the JVM default."
-    - name: "AB_HAWKULAR_REST_SSL_PROTOCOL"
-      example: "TLSv1"
-      description: "The SSL protocol to use when verifying the identity of the Hawkular REST service. Defaults to TLSv1."
-    - name: "AB_HAWKULAR_AGENT_OPTS"
-      description: "Additional options to add to the -javaagent parameter, e.g. delay=10."
-    - name: "AB_HAWKULAR_AGENT_CONFIG"
-      example: "/opt/eap/standalone/configuration/hawkular-javaagent-config.yaml"
-      description: "The location of the Hawkular agent configuration file, in yaml.  Defaults to /opt/hawkular/etc/hawkular-javaagent-config.yaml."
-    - name: "AB_JOLOKIA_OFF"
-      example: "true"
-      description: "If set disables activation of Joloka (i.e. echos an empty value). By default, Jolokia is enabled."
-    - name: "AB_JOLOKIA_CONFIG"
-      example: "/opt/jolokia/custom.properties"
-      description: "If set uses this file (including path) as Jolokia JVM agent properties (as described in Jolokia's link:https://www.jolokia.org/reference/html/agents.html#agents-jvm[reference manual]). If not set, the `/opt/jolokia/etc/jolokia.properties` will be created using the settings as defined in the manual. Otherwise the rest of the settings in this document are ignored."
-    - name: "AB_JOLOKIA_HOST"
-      example: "127.0.0.1"
-      description: "Host address to bind to. Defaults to **0.0.0.0**."
-    - name: "AB_JOLOKIA_PORT"
-      example: "5432"
-      description: "Port to listen to. Defaults to **8778**."
-    - name: "AB_JOLOKIA_USER"
-      example: "myusername"
-      description: "User for basic authentication. Defaults to **jolokia**."
-    - name: "AB_JOLOKIA_PASSWORD"
-      example: "mypassword"
-      description: "Password for basic authentication. By default authentication is switched off."
-    - name: "AB_JOLOKIA_PASSWORD_RANDOM"
-      example: "true"
-      description: "Determines if a random AB_JOLOKIA_PASSWORD be generated. Set to **true** to generate random password. Generated value will be written to `/opt/jolokia/etc/jolokia.pw`."
-    - name: "AB_JOLOKIA_HTTPS"
-      example: "true"
-      description: "Switch on secure communication with https. By default self signed server certificates are generated if no `serverCert` configuration is given in **AB_JOLOKIA_OPTS**."
-    - name: "AB_JOLOKIA_ID"
-      example: "openjdk-app-1-xqlsj"
-      description: "Agent ID to use (`$HOSTNAME` by default, which is the container id)."
-    - name: "AB_JOLOKIA_DISCOVERY_ENABLED"
-      example: "true"
-      description: "Enable Jolokia discovery. Defaults to **false**."
-    - name: "AB_JOLOKIA_OPTS"
-      example: "backlog=20"
-      description: "Additional options to be appended to the agent configuration. They should be given in the format `key=value,key=value,...`."
-    - name: "AB_JOLOKIA_AUTH_OPENSHIFT"
-      example: "true"
-      description: "Switch on client authentication for OpenShift TLS communication. The value of this parameter can be a relative distinguished name which must be contained in a presented client's certificate. Enabling this parameter will automatically switch Jolokia into https communication mode. The default CA cert is set to `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt`."
     - name: "SCRIPT_DEBUG"
       example: "true"
       description: "If set to true, ensurses that the bash scripts are executed with the -x option, printing the commands and their arguments as they are executed."
     - name: "JAVA_MAX_MEM_RATIO"
       example: "50"
-      description: "This is used to calculate a default maximal heap memory based on a containers restriction. If used in a Docker container without any memory constraints for the container then this option has no effect. If there is a memory constraint then `-Xmx` is set to a ratio of the container available memory as set here. The default is `50` which means 50% of the available memory is used as an upper boundary. You can skip this mechanism by setting this value to `0` in which case no `-Xmx` option is added."
+      description: "This is used to calculate a default maximal heap memory based on a containers restriction. If used in a container without any memory constraints for the container then this option has no effect. If there is a memory constraint then `-Xmx` is set to a ratio of the container available memory as set here. The default is `50` which means 50% of the available memory is used as an upper boundary. You can skip this mechanism by setting this value to `0` in which case no `-Xmx` option is added."
     - name: "JAVA_INITIAL_MEM_RATIO"
       example: "100"
       description: "This is used to calculate a default initial heap memory based the maximum heap memory.  The default is `100` which means 100% of the maximal heap is used for the initial heap size.  You can skip this mechanism by setting this value to `0` in which case no `-Xms` option is added."
@@ -257,6 +121,12 @@ envs:
     - name: "PROBE_DISABLE_BOOT_ERRORS_CHECK"
       example: "true"
       description: "Disable the boot errors check in the probes."
+    - name: "ENABLE_ACCESS_LOG"
+      example: "true"
+      description: "Enable the Access Log."
+    - name: "ENABLE_JSON_LOGGING"
+      example: "true"
+      description: "Enable JSON-formatted logging"
 ports:
     - value: 8443
     - value: 8778
@@ -270,22 +140,20 @@ modules:
               ref: master
       install:
           - name: dynamic-resources
-          - name: s2i-common
           - name: java-alternatives
-          - name: os-eap-s2i
           - name: os-java-jolokia
           - name: jolokia
           - name: os-eap7-openshift
-          - name: os-eap7-ping
+          - name: os-eap71-openshift
           - name: os-eap7-modules
           - name: os-eap71-modules
-          - name: os-eap71-openshift
+          - name: os-eap7-ping
+          - name: os-eap-activemq-rar
           - name: os-java-run
           - name: os-eap-launch
           - name: os-eap7-launch
           - name: os-eap-logging
           - name: os-eap-probes
-          - name: os-logging
           - name: jboss-maven
           - name: os-eap-db-drivers
           - name: os-eap-sso
@@ -297,46 +165,41 @@ modules:
           - name: os-eap-extensions
           - name: openshift-layer
           - name: openshift-passwd
+          - name: os-logging
           - name: os.bpmsuite.common
           - name: os.bpmsuite.businesscentral
-          - name: jboss-maven
 packages:
       repositories:
           - jboss-os
           - jboss-rhscl
       install:
-          - rh-mongodb32-mongo-java-driver
-          - postgresql-jdbc
-          - mysql-connector-java
-          - rh-maven33
           - hostname
-          - python-requests
+          - mysql-connector-java
+          - postgresql-jdbc
           - python-enum34
+          - python-requests
           - PyYAML
+          - rh-mongodb32-mongo-java-driver
 artifacts:
-    - url: https://maven.repository.redhat.com/ga/org/jolokia/jolokia-jvm/1.3.6.redhat-1/jolokia-jvm-1.3.6.redhat-1-agent.jar
-      md5: 75e5b5ba0b804cd9def9f20a70af649f
     - path: javax.json-1.0.4.jar
       md5: 569870f975deeeb6691fcb9bc02a9555
     - path: jboss-logmanager-ext-1.0.0.Alpha2-redhat-1.jar
       md5: 7c743e35463db5f55f415dd666d705c5
-    - path: openshift-ping-common-1.1.5.Final-redhat-1.jar
-      md5: e27cdcf626ab1366c8d7d18ebd399ec4
-    - path: openshift-ping-dns-1.1.5.Final-redhat-1.jar
-      md5: ecab0d5ad969cb001e778305485b4640
-    - path: openshift-ping-kube-1.1.5.Final-redhat-1.jar
-      md5: 2f74acc3efc68e3781b7004f5a683fdc
     - path: oauth-20100527.jar
       md5: 91c7c70579f95b7ddee95b2143a49b41
-    - path: rh-sso-7.0.0-eap7-adapter.zip
-      md5: 1542c1014d9ebc24522839a5fa8bee4d
-    - path: rh-sso-7.0.0-saml-eap7-adapter.zip
-      md5: ce858a47c707b362a968ffd5c66768dd
+    - path: activemq-rar-5.11.0.redhat-630329.rar
+      md5: 76ed338d86bb3dbba2d4bd48daff7dbb
+    - path: rh-sso-7.1.0-eap7-adapter.zip
+      description: "Artifact is available on Customer Portal: https://access.redhat.com/jbossnetwork/restricted/softwareDetail.html?softwareId=44831&product=core.service.rhsso&version=7.0&downloadType=distributions"
+      sha256: 3d12e310a9b15f79cd46255819a0198acd569921797204c0936772e71dec8d23
+    - path: rh-sso-7.1.2-saml-eap7-adapter.zip
+      description: "Artifact is available on Customer Portal: https://access.redhat.com/jbossnetwork/restricted/softwareDetail.html?softwareId=44801&product=core.service.rhsso&version=7.0&downloadType=distributions"
+      sha256: f48b2b15ccfd17589f5a424c689697b8cfefbe95a553ba589c14eaba4978a823
 run:
       user: 185
       cmd:
           - "/opt/eap/bin/openshift-launch.sh"
 osbs:
       repository:
-          name: rhdm-7-decisioncentral-openshift-docker
-          branch: ce-1.0-openshift-rhdm-7.0-jdk-8-rhel-7
+          name: containers/rhdm-7-decisioncentral-openshift
+          branch: jb-rhdm-7.0-decisioncentral-openshift-rhel-7
