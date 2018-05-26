@@ -193,6 +193,11 @@ parameters:
   name: KIE_SERVER_MGMT_DISABLED
   required: true
   value: "true"
+- displayName: KIE Server Startup Strategy
+  description: When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable
+  name: KIE_SERVER_STARTUP_STRATEGY
+  required: true
+  value: LocalContainersStartupStrategy
 - displayName: Execution Server Container Memory Limit
   description: Execution Server Container memory limit
   name: EXCECUTION_SERVER_MEMORY_LIMIT
@@ -394,6 +399,8 @@ objects:
             value: "${MAVEN_REPO_URL}"
           - name: KIE_SERVER_MGMT_DISABLED
             value: "${KIE_SERVER_MGMT_DISABLED}"
+          - name: KIE_SERVER_STARTUP_STRATEGY
+            value: "${KIE_SERVER_STARTUP_STRATEGY}"
           - name: MAVEN_REPO_USERNAME
             value: "${MAVEN_REPO_USERNAME}"
           - name: MAVEN_REPO_PASSWORD
