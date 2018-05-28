@@ -90,7 +90,8 @@ parameters:
   name: KIE_SERVER_CONTROLLER_PROTOCOL
   value: http
   required: false
-- displayName: KIE server controller service 
+- displayName: KIE server controller service
+  description: The service name for the optional Decision Central or controller, where it can be reached and registered with. (Used to set the org.kie.server.controller system property if host and port aren't set)
   name: KIE_SERVER_CONTROLLER_SERVICE
   value: ''
   required: false
