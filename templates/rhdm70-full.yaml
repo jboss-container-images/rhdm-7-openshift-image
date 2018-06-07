@@ -358,7 +358,6 @@ objects:
           deploymentConfig: "${APPLICATION_NAME}-rhdmcentr"
           application: "${APPLICATION_NAME}"
       spec:
-        serviceAccountName: decisioncentral-service-account
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-rhdmcentr"
@@ -469,7 +468,6 @@ objects:
           deploymentConfig: "${APPLICATION_NAME}-kieserver"
           application: "${APPLICATION_NAME}"
       spec:
-        serviceAccountName: kieserver-service-account
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-kieserver"
