@@ -131,6 +131,11 @@ parameters:
   name: IMAGE_STREAM_NAMESPACE
   value: openshift
   required: true
+- displayName: ImageStream Tag
+  description: A named pointer to an image in an image stream. Default is "1.1".
+  name: IMAGE_STREAM_TAG
+  value: "1.1"
+  required: false
 - displayName: Maven mirror URL
   description: Maven mirror to use for S2I builds. If the Maven build of your decision service pulls packages 
     from a Maven repository, you can set this parameter. In this case, the build process will pull packages 
@@ -237,7 +242,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: rhdm70-kieserver-openshift:1.0
+          name: "rhdm70-kieserver-openshift:${IMAGE_STREAM_TAG}"
     output:
       to:
         kind: ImageStreamTag
