@@ -133,6 +133,9 @@ envs:
     - name: "ENABLE_JSON_LOGGING"
       example: "true"
       description: "Enable JSON-formatted logging"
+    - name: "GIT_HOOKS_DIR"
+      example: "/opt/git/hooks"
+      description: "If provided, the specified path will be copied to all the git repositories hooks dir"
 ports:
     - value: 8443
     - value: 8778
@@ -186,6 +189,7 @@ packages:
           - python-requests
           - PyYAML
           - rh-mongodb32-mongo-java-driver
+          - git
 artifacts:
     - path: javax.json-1.0.4.jar
       md5: 569870f975deeeb6691fcb9bc02a9555
