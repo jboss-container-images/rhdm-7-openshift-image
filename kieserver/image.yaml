@@ -14,7 +14,7 @@ labels:
     - name: "io.openshift.expose-services"
       value: "8080:http"
     - name: "io.openshift.tags"
-      value: "builder,javaee,eap,eap7,rhdm,rhdm77"
+      value: "builder,javaee,eap,eap7,rhdm,rhdm7"
     - name: "io.openshift.s2i.scripts-url"
       value: "image:///usr/local/s2i"
 envs:
