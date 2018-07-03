@@ -49,11 +49,9 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.1". | 1.1 | False
 |`MAVEN_MIRROR_URL` | -- | Maven mirror to use for S2I builds. If the Maven build of your decision service pulls packages from a Maven repository, you can set this parameter. In this case, the build process will pull packages from the mirror repository instead of the configured original repository. | -- | False
 |`MAVEN_REPO_URL` | `MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. | `${MAVEN_REPO_URL}` | False
-|`MAVEN_REPO_USERNAME` | `MAVEN_REPO_USERNAME` | Username to access the Maven repository. | mavenUser | True
-|`MAVEN_REPO_PASSWORD` | `MAVEN_REPO_PASSWORD` | Password to access the Maven repository. | `${MAVEN_REPO_PASSWORD}` | ?
+|`MAVEN_REPO_USERNAME` | `MAVEN_REPO_USERNAME` | Username to access the Maven repository, if required. | `${MAVEN_REPO_USERNAME}` | False
+|`MAVEN_REPO_PASSWORD` | `MAVEN_REPO_PASSWORD` | Password to access the Maven repository, if required. | `${MAVEN_REPO_PASSWORD}` | False
 |`ARTIFACT_DIR` | -- | The directory or several directories within the project that contains the required binary files (KJAR files and any other necessary files) after a successful Maven build. Files from the artefact directory are copied into the deployment folder. Use a comma (,) to separate multiple directories. If this parameter is not specified, all archives in /target are copied. | -- | False
-|`KIE_SERVER_MGMT_DISABLED` | `KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | true | True
-|`KIE_SERVER_STARTUP_STRATEGY` | `KIE_SERVER_STARTUP_STRATEGY` | When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable | LocalContainersStartupStrategy | True
 |`EXCECUTION_SERVER_MEMORY_LIMIT` | -- | Execution Server Container memory limit | 1Gi | False
 |=======================================================================
 
@@ -201,7 +199,7 @@ for more information.
 |=======================================================================
 |Deployment |Variable name |Description |Example value
 
-.19+| `${APPLICATION_NAME}-kieserver`
+.17+| `${APPLICATION_NAME}-kieserver`
 |`DROOLS_SERVER_FILTER_CLASSES` | KIE execution server class filtering. When this parameter is set to true, the Decision Server extension accepts custom classes annotated by the XmlRootElement or Remotable annotations only. Setting to true is preferable for performance, but some custom decision services might require false. (Sets the org.drools.server.filter.classes system property). | `${DROOLS_SERVER_FILTER_CLASSES}`
 |`KIE_ADMIN_PWD` | KIE administrator password. | `${KIE_ADMIN_PWD}`
 |`KIE_ADMIN_USER` | KIE administrator username. Use this user account to manage the Decision Server using administrative API calls. | `${KIE_ADMIN_USER}`
@@ -213,10 +211,8 @@ for more information.
 |`KIE_SERVER_PWD` | KIE execution server password (sets the org.kie.server.pwd system property). | `${KIE_SERVER_PWD}`
 |`KIE_SERVER_USER` | KIE execution server user name. Use this user account for API calls to the Decision Server. (Sets the org.kie.server.user system property). | `${KIE_SERVER_USER}`
 |`MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. | `${MAVEN_REPO_URL}`
-|`KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | `${KIE_SERVER_MGMT_DISABLED}`
-|`KIE_SERVER_STARTUP_STRATEGY` | When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable | `${KIE_SERVER_STARTUP_STRATEGY}`
-|`MAVEN_REPO_USERNAME` | Username to access the Maven repository. | `${MAVEN_REPO_USERNAME}`
-|`MAVEN_REPO_PASSWORD` | Password to access the Maven repository. | `${MAVEN_REPO_PASSWORD}`
+|`MAVEN_REPO_USERNAME` | Username to access the Maven repository, if required. | `${MAVEN_REPO_USERNAME}`
+|`MAVEN_REPO_PASSWORD` | Password to access the Maven repository, if required. | `${MAVEN_REPO_PASSWORD}`
 |`HTTPS_KEYSTORE_DIR` | The name of the keystore file within the secret. | `/etc/kieserver-secret-volume`
 |`HTTPS_KEYSTORE` | The name of the keystore file within the secret. | `${HTTPS_KEYSTORE}`
 |`HTTPS_NAME` | The name associated with the server certificate. | `${HTTPS_NAME}`

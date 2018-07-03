@@ -49,9 +49,11 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`KIE_SERVER_HTTPS_PASSWORD` | `HTTPS_PASSWORD` | The password for the keystore and certificate. | mykeystorepass | False
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. Modify this setting only if you have installed the ImageStreams in a different namespace/project. | openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.1". | 1.1 | False
-|`MAVEN_REPO_URL` | `MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. If this parameter is unspecified, Decision Server uses the repository provided by Decision Central. | `${MAVEN_REPO_URL}` | False
-|`MAVEN_REPO_USERNAME` | `MAVEN_REPO_USERNAME` | Username to access the Maven repository. If Decision Server uses the Decision Central repository. | mavenUser | True
-|`MAVEN_REPO_PASSWORD` | `MAVEN_REPO_PASSWORD` | Password to access the Maven repository. If Decision Server uses the Decision Central repository. | `${MAVEN_REPO_PASSWORD}` | ?
+|`MAVEN_REPO_URL` | `MAVEN_REPO_URL` | Fully qualified URL to a Maven repository or service. | `${MAVEN_REPO_URL}` | False
+|`MAVEN_REPO_USERNAME` | `MAVEN_REPO_USERNAME` | Username to access the Maven repository, if required. | `${MAVEN_REPO_USERNAME}` | False
+|`MAVEN_REPO_PASSWORD` | `MAVEN_REPO_PASSWORD` | Password to access the Maven repository, if required. | `${MAVEN_REPO_PASSWORD}` | False
+|`DECISION_CENTRAL_MAVEN_USERNAME` | -- | Username to access the Maven service hosted by Decision Central inside EAP. | mavenUser | True
+|`DECISION_CENTRAL_MAVEN_PASSWORD` | -- | Password to access the Maven service hosted by Decision Central inside EAP. | -- | True
 |`DECISION_CENTRAL_VOLUME_CAPACITY` | -- | Size of the persistent storage for Decision Central's runtime data. | 1Gi | True
 |`DECISION_CENTRAL_MEMORY_LIMIT` | -- | Decision Central Container memory limit | 2Gi | False
 |`EXCECUTION_SERVER_MEMORY_LIMIT` | -- | Execution Server Container memory limit | 1Gi | False
@@ -199,10 +201,11 @@ for more information.
 |=============
 |Deployments | Name  | Port  | Protocol
 
-.3+| `${APPLICATION_NAME}-rhdmcentr`
+.4+| `${APPLICATION_NAME}-rhdmcentr`
 |jolokia | 8778 | `TCP`
 |http | 8080 | `TCP`
 |https | 8443 | `TCP`
+|git-ssh | 8001 | `TCP`
 .3+| `${APPLICATION_NAME}-kieserver`
 |jolokia | 8778 | `TCP`
 |http | 8080 | `TCP`
@@ -216,7 +219,7 @@ for more information.
 |=======================================================================
 |Deployment |Variable name |Description |Example value
 
-.18+| `${APPLICATION_NAME}-rhdmcentr`
+.20+| `${APPLICATION_NAME}-rhdmcentr`
 |`KIE_ADMIN_PWD` | KIE administrator password. | `${KIE_ADMIN_PWD}`
 |`KIE_ADMIN_USER` | KIE administrator user name. Use this user account to log on to Decision Central. | `${KIE_ADMIN_USER}`
 |`KIE_MBEANS` | KIE execution server MBeans enabled/disabled. These MBeans provide monitoring information. (Sets the kie.mbeans and kie.scanner.mbeans system properties). | `${KIE_MBEANS}`
@@ -224,9 +227,11 @@ for more information.
 |`KIE_SERVER_CONTROLLER_USER` | KIE server controller user name. The Decision Server uses this user account to log on to Decision Central. (Sets the org.kie.server.controller.user system property). | `${KIE_SERVER_CONTROLLER_USER}`
 |`KIE_SERVER_PWD` | KIE execution server password (sets the org.kie.server.pwd system property). | `${KIE_SERVER_PWD}`
 |`KIE_SERVER_USER` | KIE execution server user name. Use this user account for API calls to the Decision Server. (Sets the org.kie.server.user system property). | `${KIE_SERVER_USER}`
-|`MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. If this parameter is unspecified, Decision Server uses the repository provided by Decision Central. | `${MAVEN_REPO_URL}`
-|`MAVEN_REPO_USERNAME` | Username to access the Maven repository. If Decision Server uses the Decision Central repository. | `${MAVEN_REPO_USERNAME}`
-|`MAVEN_REPO_PASSWORD` | Password to access the Maven repository. If Decision Server uses the Decision Central repository. | `${MAVEN_REPO_PASSWORD}`
+|`MAVEN_REPO_URL` | Fully qualified URL to a Maven repository or service. | `${MAVEN_REPO_URL}`
+|`MAVEN_REPO_USERNAME` | Username to access the Maven repository, if required. | `${MAVEN_REPO_USERNAME}`
+|`MAVEN_REPO_PASSWORD` | Password to access the Maven repository, if required. | `${MAVEN_REPO_PASSWORD}`
+|`KIE_MAVEN_USER` | -- | `${DECISION_CENTRAL_MAVEN_USERNAME}`
+|`KIE_MAVEN_PWD` | -- | `${DECISION_CENTRAL_MAVEN_PASSWORD}`
 |`HTTPS_KEYSTORE_DIR` | -- | `/etc/decisioncentral-secret-volume`
 |`HTTPS_KEYSTORE` | The name of the keystore file within the secret. | `${DECISION_CENTRAL_HTTPS_KEYSTORE}`
 |`HTTPS_NAME` | The name associated with the server certificate. | `${DECISION_CENTRAL_HTTPS_NAME}`
@@ -235,7 +240,7 @@ for more information.
 |`ADMIN_PASSWORD` | EAP administrator password. | `${ADMIN_PASSWORD}`
 |`PROBE_IMPL` | -- | probe.eap.jolokia.EapProbe
 |`PROBE_DISABLE_BOOT_ERRORS_CHECK` | -- | true
-.21+| `${APPLICATION_NAME}-kieserver`
+.24+| `${APPLICATION_NAME}-kieserver`
 |`DROOLS_SERVER_FILTER_CLASSES` | KIE execution server class filtering. When this parameter is set to true, the Decision Server extension accepts custom classes annotated by the XmlRootElement or Remotable annotations only. Setting to true is preferable for performance, but some custom decision services might require false. (Sets the org.drools.server.filter.classes system property). | `${DROOLS_SERVER_FILTER_CLASSES}`
 |`KIE_ADMIN_PWD` | KIE administrator password. | `${KIE_ADMIN_PWD}`
 |`KIE_ADMIN_USER` | KIE administrator user name. Use this user account to log on to Decision Central. | `${KIE_ADMIN_USER}`
@@ -248,11 +253,14 @@ for more information.
 |`KIE_SERVER_HOST` | -- | --
 |`KIE_SERVER_PWD` | KIE execution server password (sets the org.kie.server.pwd system property). | `${KIE_SERVER_PWD}`
 |`KIE_SERVER_USER` | KIE execution server user name. Use this user account for API calls to the Decision Server. (Sets the org.kie.server.user system property). | `${KIE_SERVER_USER}`
-|`MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. If this parameter is unspecified, Decision Server uses the repository provided by Decision Central. | `${MAVEN_REPO_URL}`
-|`MAVEN_REPO_SERVICE` | -- | `${APPLICATION_NAME}-rhdmcentr`
-|`MAVEN_REPO_PATH` | -- | `/maven2/`
-|`MAVEN_REPO_USERNAME` | Username to access the Maven repository. If Decision Server uses the Decision Central repository. | `${MAVEN_REPO_USERNAME}`
-|`MAVEN_REPO_PASSWORD` | Password to access the Maven repository. If Decision Server uses the Decision Central repository. | `${MAVEN_REPO_PASSWORD}`
+|`MAVEN_REPOS` | -- | RHDMCENTR,EXTERNAL
+|`RHDMCENTR_MAVEN_REPO_SERVICE` | -- | `${APPLICATION_NAME}-rhdmcentr`
+|`RHDMCENTR_MAVEN_REPO_PATH` | -- | `/maven2/`
+|`RHDMCENTR_MAVEN_REPO_USERNAME` | Username to access the Maven repository, if required. | `${DECISION_CENTRAL_MAVEN_USERNAME}`
+|`RHDMCENTR_MAVEN_REPO_PASSWORD` | Password to access the Maven repository, if required. | `${DECISION_CENTRAL_MAVEN_PASSWORD}`
+|`EXTERNAL_MAVEN_REPO_URL` | Fully qualified URL to a Maven repository or service. | `${MAVEN_REPO_URL}`
+|`EXTERNAL_MAVEN_REPO_USERNAME` | Username to access the Maven repository, if required. | `${MAVEN_REPO_USERNAME}`
+|`EXTERNAL_MAVEN_REPO_PASSWORD` | Password to access the Maven repository, if required. | `${MAVEN_REPO_PASSWORD}`
 |`HTTPS_KEYSTORE_DIR` | -- | `/etc/kieserver-secret-volume`
 |`HTTPS_KEYSTORE` | The name of the keystore file within the secret. | `${KIE_SERVER_HTTPS_KEYSTORE}`
 |`HTTPS_NAME` | The name associated with the server certificate. | `${KIE_SERVER_HTTPS_NAME}`

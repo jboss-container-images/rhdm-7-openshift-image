@@ -23,6 +23,9 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |Variable name |Image Environment Variable |Description |Example value |Required
 
 |`APPLICATION_NAME` | -- | The name for the application. | myapp | True
+|`MAVEN_REPO_URL` | `MAVEN_REPO_URL` | Fully qualified URL to a Maven repository or service. | `${MAVEN_REPO_URL}` | True
+|`MAVEN_REPO_USERNAME` | `MAVEN_REPO_USERNAME` | Username to access the Maven repository, if required. | `${MAVEN_REPO_USERNAME}` | False
+|`MAVEN_REPO_PASSWORD` | `MAVEN_REPO_PASSWORD` | Password to access the Maven repository, if required. | `${MAVEN_REPO_PASSWORD}` | False
 |`ADMIN_USERNAME` | -- | EAP administrator user name. Use this user account if you need use JBoss EAP command line management. You can use rsh to access the command line on the pods. | eapadmin | False
 |`ADMIN_PASSWORD` | -- | EAP administrator password. | -- | False
 |`KIE_ADMIN_USER` | `KIE_ADMIN_USER` | KIE administrator user name. Use this user account to manage the Decision Server using administrative API calls. | adminUser | False
@@ -48,9 +51,6 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. Modify this setting only if you have installed the ImageStreams in a different namespace/project. | openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.1". | 1.1 | False
 |`KIE_SERVER_CONTAINER_DEPLOYMENT` | `KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2 | `${KIE_SERVER_CONTAINER_DEPLOYMENT}` | False
-|`MAVEN_REPO_URL` | `MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. You can use Decision Server, a management console, or the API to make the Decision Server retrieve a decision service from this repository. | `${MAVEN_REPO_URL}` | False
-|`MAVEN_REPO_USERNAME` | `MAVEN_REPO_USERNAME` | Username to access the Maven repository. | mavenUser | True
-|`MAVEN_REPO_PASSWORD` | `MAVEN_REPO_PASSWORD` | Password to access the Maven repository. | `${MAVEN_REPO_PASSWORD}` | ?
 |`EXCECUTION_SERVER_MEMORY_LIMIT` | -- | Execution Server Container memory limit | 1Gi | False
 |=======================================================================
 
@@ -185,7 +185,7 @@ for more information.
 |=======================================================================
 |Deployment |Variable name |Description |Example value
 
-.25+| `${APPLICATION_NAME}-kieserver`
+.23+| `${APPLICATION_NAME}-kieserver`
 |`DROOLS_SERVER_FILTER_CLASSES` | KIE execution server class filtering. When this parameter is set to true, the Decision Server extension accepts custom classes annotated by the XmlRootElement or Remotable annotations only. Setting to true is preferable for performance, but some custom decision services might require false. (Sets the org.drools.server.filter.classes system property). | `${DROOLS_SERVER_FILTER_CLASSES}`
 |`KIE_ADMIN_PWD` | KIE administrator password. | `${KIE_ADMIN_PWD}`
 |`KIE_ADMIN_USER` | KIE administrator user name. Use this user account to manage the Decision Server using administrative API calls. | `${KIE_ADMIN_USER}`
@@ -202,11 +202,9 @@ for more information.
 |`KIE_SERVER_PWD` | KIE execution server password (sets the org.kie.server.pwd system property). | `${KIE_SERVER_PWD}`
 |`KIE_SERVER_USER` | KIE execution server user name. Use this user account for API calls to the Decision Server. (Sets the org.kie.server.user system property). | `${KIE_SERVER_USER}`
 |`KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2 | `${KIE_SERVER_CONTAINER_DEPLOYMENT}`
-|`MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. You can use Decision Server, a management console, or the API to make the Decision Server retrieve a decision service from this repository. | `${MAVEN_REPO_URL}`
-|`MAVEN_REPO_SERVICE` | -- | `${APPLICATION_NAME}-rhdmcentr`
-|`MAVEN_REPO_PATH` | -- | `/maven2/`
-|`MAVEN_REPO_USERNAME` | Username to access the Maven repository. | `${MAVEN_REPO_USERNAME}`
-|`MAVEN_REPO_PASSWORD` | Password to access the Maven repository. | `${MAVEN_REPO_PASSWORD}`
+|`MAVEN_REPO_URL` | Fully qualified URL to a Maven repository or service. | `${MAVEN_REPO_URL}`
+|`MAVEN_REPO_USERNAME` | Username to access the Maven repository, if required. | `${MAVEN_REPO_USERNAME}`
+|`MAVEN_REPO_PASSWORD` | Password to access the Maven repository, if required. | `${MAVEN_REPO_PASSWORD}`
 |`HTTPS_KEYSTORE_DIR` | The name of the keystore file within the secret. | `/etc/kieserver-secret-volume`
 |`HTTPS_KEYSTORE` | The name of the keystore file within the secret. | `${HTTPS_KEYSTORE}`
 |`HTTPS_NAME` | The name associated with the server certificate. | `${HTTPS_NAME}`
