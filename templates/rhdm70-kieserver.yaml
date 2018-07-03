@@ -23,6 +23,19 @@ parameters:
   name: APPLICATION_NAME
   value: myapp
   required: true
+- displayName: Maven repository URL
+  description: Fully qualified URL to a Maven repository or service.
+  name: MAVEN_REPO_URL
+  example: http://nexus.nexus-project.svc.cluster.local:8081/nexus/content/groups/public/
+  required: true
+- displayName: Maven repository username
+  description: Username to access the Maven repository, if required.
+  name: MAVEN_REPO_USERNAME
+  required: false
+- displayName: Maven repository password
+  description: Password to access the Maven repository, if required.
+  name: MAVEN_REPO_PASSWORD
+  required: false
 - displayName: EAP Admin User
   description: EAP administrator user name. Use this user account if you need use JBoss EAP command line management.
     You can use rsh to access the command line on the pods. 
@@ -173,22 +186,6 @@ parameters:
   name: KIE_SERVER_CONTAINER_DEPLOYMENT
   value: ''
   required: false
-- displayName: Maven repository URL
-  description: Fully qualified URL to a Maven repository. You can use Decision Server, a management
-    console, or the API to make the Decision Server retrieve a decision service from this repository.
-  name: MAVEN_REPO_URL
-  value: ''
-  required: false
-- displayName: Maven repository username
-  description: Username to access the Maven repository.
-  name: MAVEN_REPO_USERNAME
-  required: true
-  value: mavenUser
-- displayName: Maven repository password
-  description: Password to access the Maven repository.
-  name: MAVEN_REPO_PASSWORD
-  from: "[a-zA-Z]{6}[0-9]{1}!"
-  generate: expression
 - displayName: Execution Server Container Memory Limit
   description: Execution Server Container memory limit
   name: EXCECUTION_SERVER_MEMORY_LIMIT
@@ -352,10 +349,6 @@ objects:
             value: "${KIE_SERVER_CONTAINER_DEPLOYMENT}"
           - name: MAVEN_REPO_URL
             value: "${MAVEN_REPO_URL}"
-          - name: MAVEN_REPO_SERVICE
-            value: "${APPLICATION_NAME}-rhdmcentr"
-          - name: MAVEN_REPO_PATH
-            value: "/maven2/"
           - name: MAVEN_REPO_USERNAME
             value: "${MAVEN_REPO_USERNAME}"
           - name: MAVEN_REPO_PASSWORD

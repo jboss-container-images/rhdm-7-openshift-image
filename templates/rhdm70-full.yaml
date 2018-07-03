@@ -175,20 +175,29 @@ parameters:
   value: "1.1"
   required: false
 - displayName: Maven repository URL
-  description: Fully qualified URL to a Maven repository. If this parameter is unspecified, Decision Server uses 
-   the repository provided by Decision Central.
+  description: Fully qualified URL to a Maven repository or service.
   name: MAVEN_REPO_URL
+  example: http://nexus.nexus-project.svc.cluster.local:8081/nexus/content/groups/public/
   required: false
 - displayName: Maven repository username
-  description: Username to access the Maven repository. If Decision Server uses the Decision Central repository.
+  description: Username to access the Maven repository, if required.
   name: MAVEN_REPO_USERNAME
+  required: false
+- displayName: Maven repository password
+  description: Password to access the Maven repository, if required.
+  name: MAVEN_REPO_PASSWORD
+  required: false
+- displayName: Username for the Maven service hosted by Decision Central
+  description: Username to access the Maven service hosted by Decision Central inside EAP.
+  name: DECISION_CENTRAL_MAVEN_USERNAME
   required: true
   value: mavenUser
-- displayName: Maven repository password
-  description: Password to access the Maven repository. If Decision Server uses the Decision Central repository.
-  name: MAVEN_REPO_PASSWORD
+- displayName: Password for the Maven service hosted by Decision Central
+  description: Password to access the Maven service hosted by Decision Central inside EAP.
+  name: DECISION_CENTRAL_MAVEN_PASSWORD
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
+  required: true
 - displayName: Decision Central Volume Capacity
   description: Size of the persistent storage for Decision Central's runtime data.
   name: DECISION_CENTRAL_VOLUME_CAPACITY
@@ -420,6 +429,10 @@ objects:
             value: "${MAVEN_REPO_USERNAME}"
           - name: MAVEN_REPO_PASSWORD
             value: "${MAVEN_REPO_PASSWORD}"
+          - name: KIE_MAVEN_USER
+            value: "${DECISION_CENTRAL_MAVEN_USERNAME}"
+          - name: KIE_MAVEN_PWD
+            value: "${DECISION_CENTRAL_MAVEN_PASSWORD}"
           - name: HTTPS_KEYSTORE_DIR
             value: "/etc/decisioncentral-secret-volume"
           - name: HTTPS_KEYSTORE
@@ -534,15 +547,21 @@ objects:
             value: "${KIE_SERVER_PWD}"
           - name: KIE_SERVER_USER
             value: "${KIE_SERVER_USER}"
-          - name: MAVEN_REPO_URL
-            value: "${MAVEN_REPO_URL}"
-          - name: MAVEN_REPO_SERVICE
+          - name: MAVEN_REPOS
+            value: "RHDMCENTR,EXTERNAL"
+          - name: RHDMCENTR_MAVEN_REPO_SERVICE
             value: "${APPLICATION_NAME}-rhdmcentr"
-          - name: MAVEN_REPO_PATH
+          - name: RHDMCENTR_MAVEN_REPO_PATH
             value: "/maven2/"
-          - name: MAVEN_REPO_USERNAME
+          - name: RHDMCENTR_MAVEN_REPO_USERNAME
+            value: "${DECISION_CENTRAL_MAVEN_USERNAME}"
+          - name: RHDMCENTR_MAVEN_REPO_PASSWORD
+            value: "${DECISION_CENTRAL_MAVEN_PASSWORD}"
+          - name: EXTERNAL_MAVEN_REPO_URL
+            value: "${MAVEN_REPO_URL}"
+          - name: EXTERNAL_MAVEN_REPO_USERNAME
             value: "${MAVEN_REPO_USERNAME}"
-          - name: MAVEN_REPO_PASSWORD
+          - name: EXTERNAL_MAVEN_REPO_PASSWORD
             value: "${MAVEN_REPO_PASSWORD}"
           - name: HTTPS_KEYSTORE_DIR
             value: "/etc/kieserver-secret-volume"
