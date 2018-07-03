@@ -408,6 +408,9 @@ objects:
           - name: https
             containerPort: 8443
             protocol: TCP
+          - name: git-ssh
+            containerPort: 8001
+            protocol: TCP
           env:
           - name: KIE_ADMIN_PWD
             value: "${KIE_ADMIN_PWD}"
