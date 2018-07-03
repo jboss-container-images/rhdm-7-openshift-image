@@ -25,18 +25,6 @@ parameters:
   name: APPLICATION_NAME
   value: myapp
   required: true
-- displayName: EAP Admin User
-  description: EAP administrator user name. Use this user account if you need use JBoss EAP command line management.
-    You can use rsh to access the command line on the pods.
-  name: ADMIN_USERNAME
-  value: eapadmin
-  required: false
-- displayName: EAP Admin Password
-  description: EAP administrator password.
-  name: ADMIN_PASSWORD
-  from: "[a-zA-Z]{6}[0-9]{1}!"
-  generate: expression
-  required: false
 - displayName: KIE Admin User 
   description: KIE administrator user name. Use this user account to log on to Decision Central.
   name: KIE_ADMIN_USER
@@ -464,10 +452,6 @@ objects:
             value: "${DECISION_CENTRAL_HTTPS_NAME}"
           - name: HTTPS_PASSWORD
             value: "${DECISION_CENTRAL_HTTPS_PASSWORD}"
-          - name: ADMIN_USERNAME
-            value: "${ADMIN_USERNAME}"
-          - name: ADMIN_PASSWORD
-            value: "${ADMIN_PASSWORD}"
           - name: PROBE_IMPL
             value: probe.eap.jolokia.EapProbe
           - name: PROBE_DISABLE_BOOT_ERRORS_CHECK

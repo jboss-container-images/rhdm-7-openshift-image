@@ -21,18 +21,6 @@ parameters:
   name: APPLICATION_NAME
   value: myapp
   required: true
-- displayName: EAP Admin User
-  description: EAP administrator user name. Use this user account if you need use JBoss EAP command line management.
-    You can use rsh to access the command line on the pods.
-  name: ADMIN_USERNAME
-  value: eapadmin
-  required: false
-- displayName: EAP Admin Password
-  description: EAP administrator password.
-  name: ADMIN_PASSWORD
-  from: "[a-zA-Z]{6}[0-9]{1}!"
-  generate: expression
-  required: false
 - displayName: KIE Admin User
   description: KIE administrator username. Use this user account to manage the Decision Server using administrative 
     API calls.
