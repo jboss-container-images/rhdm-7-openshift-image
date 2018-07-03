@@ -146,18 +146,15 @@ parameters:
 - displayName: Maven repository URL
   description: Fully qualified URL to a Maven repository.
   name: MAVEN_REPO_URL
-  value: ''
   required: false
 - displayName: Maven repository username
-  description: Username to access the Maven repository.
+  description: Username to access the Maven repository, if required.
   name: MAVEN_REPO_USERNAME
-  required: true
-  value: mavenUser
+  required: false
 - displayName: Maven repository password
-  description: Password to access the Maven repository.
+  description: Password to access the Maven repository, if required.
   name: MAVEN_REPO_PASSWORD
-  from: "[a-zA-Z]{6}[0-9]{1}!"
-  generate: expression
+  required: false
 - description: The directory or several directories within the project that contains the required binary files (KJAR files 
    and any other necessary files) after a successful Maven build. Files from the artefact directory are copied
    into the deployment folder. Use a comma (,) to separate multiple directories. If this parameter is not specified, all 
@@ -166,16 +163,6 @@ parameters:
   displayName: Artifact Directory
   value: ''
   required: false
-- displayName: Disable KIE Server Management
-  description: Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true.
-  name: KIE_SERVER_MGMT_DISABLED
-  required: true
-  value: "true"
-- displayName: KIE Server Startup Strategy
-  description: When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable
-  name: KIE_SERVER_STARTUP_STRATEGY
-  required: true
-  value: LocalContainersStartupStrategy
 - displayName: Execution Server Container Memory Limit
   description: Execution Server Container memory limit
   name: EXCECUTION_SERVER_MEMORY_LIMIT
@@ -336,10 +323,6 @@ objects:
             value: "${KIE_SERVER_PWD}"
           - name: KIE_SERVER_USER
             value: "${KIE_SERVER_USER}"
-          - name: KIE_SERVER_MGMT_DISABLED
-            value: "${KIE_SERVER_MGMT_DISABLED}"
-          - name: KIE_SERVER_STARTUP_STRATEGY
-            value: "${KIE_SERVER_STARTUP_STRATEGY}"
           - name: MAVEN_REPO_URL
             value: "${MAVEN_REPO_URL}"
           - name: MAVEN_REPO_USERNAME

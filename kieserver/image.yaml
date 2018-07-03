@@ -14,7 +14,7 @@ labels:
     - name: "io.openshift.expose-services"
       value: "8080:http"
     - name: "io.openshift.tags"
-      value: "builder,javaee,eap,eap7,rhdm,rhdm77"
+      value: "builder,javaee,eap,eap7,rhdm,rhdm7"
     - name: "io.openshift.s2i.scripts-url"
       value: "image:///usr/local/s2i"
 envs:
@@ -183,12 +183,6 @@ envs:
     - name: "DROOLS_SERVER_FILTER_CLASSES"
       example: "true"
       description: "KIE execution server class filtering (Sets the org.drools.server.filter.classes system property)"
-    - name: "KIE_SERVER_MGMT_DISABLED"
-      example: "true"
-      description: "Turn the Execution server immutable, this setting prevents the controllers to execute tasks like add or remove kie containers."
-    - name: "KIE_SERVER_STARTUP_STRATEGY"
-      description: "When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable"
-      example: "LocalContainersStartupStrategy"
 ports:
     - value: 8080
     - value: 8443
