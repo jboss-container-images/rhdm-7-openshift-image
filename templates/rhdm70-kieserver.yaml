@@ -5,12 +5,12 @@ metadata:
     description: Application template for Red Hat Decision Manager Execution Server 7.0 application.
     iconClass: icon-jboss
     tags: rhdm,jboss,kieserver
-    version: 1.2
+    version: "1.2"
     openshift.io/display-name: Red Hat Decision Manager Execution Server 7.0 (Ephemeral with https)
   name: rhdm70-kieserver
 labels:
   template: rhdm70-kieserver
-  rhdm: 1.2
+  rhdm: "1.2"
 message: A new Decision Manager Execution Server application has been created in your
   project. The user name/password for calls to the Decision Server is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}.
   Please be sure to create the "kieserver-service-account" service account and
