@@ -6,12 +6,12 @@ metadata:
     description: Application template for Red Hat Decision Manager 7.0 applications with persistent storage.
     iconClass: icon-jboss
     tags: rhdm,jboss,full
-    version: 1.2
+    version: "1.2"
     openshift.io/display-name: Red Hat Decision Manager 7.0 applications (Persistent with https)
   name: rhdm70-full-persistent
 labels:
   template: rhdm70-full-persistent
-  rhdm: 1.2
+  rhdm: "1.2"
 message: New persistent Decision Central and Decision Server applications have been created in your project.
   The user name/password for accessing the Decision Central interface is ${KIE_ADMIN_USER}/${KIE_ADMIN_PWD}.
   The user name/password for calls to the Decision Server is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}.
