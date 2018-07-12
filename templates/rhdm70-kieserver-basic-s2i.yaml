@@ -143,6 +143,21 @@ parameters:
   description: Password to access the Maven repository, if required.
   name: MAVEN_REPO_PASSWORD
   required: false
+- displayName: Name of the Maven service hosted by Decision Central
+  description: The service name for the optional decision central, where it can be reached, to allow service lookups (for maven repo usage), if required
+  name: DECISION_CENTRAL_MAVEN_SERVICE
+  example: "myapp-rhdmcentr"
+  required: false
+- displayName: Username for the Maven service hosted by Decision Central
+  description: Username to access the Maven service hosted by Decision Central inside EAP.
+  name: DECISION_CENTRAL_MAVEN_USERNAME
+  example: "mavenUser"
+  required: false
+- displayName: Password for the Maven service hosted by Decision Central
+  description: Password to access the Maven service hosted by Decision Central inside EAP.
+  name: DECISION_CENTRAL_MAVEN_PASSWORD
+  example: "maven1!"
+  required: false
 - description: The directory or several directories within the project that contains the required binary files (KJAR files 
    and any other necessary files) after a successful Maven build. Files from the artefact directory are copied
    into the deployment folder. Use a comma (,) to separate multiple directories. If this parameter is not specified, all 
@@ -311,9 +326,19 @@ objects:
             value: "${KIE_SERVER_PWD}"
           - name: KIE_SERVER_USER
             value: "${KIE_SERVER_USER}"
-          - name: MAVEN_REPO_URL
+          - name: MAVEN_REPOS
+            value: "RHDMCENTR,EXTERNAL"
+          - name: RHDMCENTR_MAVEN_REPO_SERVICE
+            value: "${DECISION_CENTRAL_MAVEN_SERVICE}"
+          - name: RHDMCENTR_MAVEN_REPO_PATH
+            value: "/maven2/"
+          - name: RHDMCENTR_MAVEN_REPO_USERNAME
+            value: "${DECISION_CENTRAL_MAVEN_USERNAME}"
+          - name: RHDMCENTR_MAVEN_REPO_PASSWORD
+            value: "${DECISION_CENTRAL_MAVEN_PASSWORD}"
+          - name: EXTERNAL_MAVEN_REPO_URL
             value: "${MAVEN_REPO_URL}"
-          - name: MAVEN_REPO_USERNAME
+          - name: EXTERNAL_MAVEN_REPO_USERNAME
             value: "${MAVEN_REPO_USERNAME}"
-          - name: MAVEN_REPO_PASSWORD
+          - name: EXTERNAL_MAVEN_REPO_PASSWORD
             value: "${MAVEN_REPO_PASSWORD}"
