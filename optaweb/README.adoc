@@ -1,0 +1,8 @@
+# Red Hat Decision Manager Employee Rostering Optimizer 7.0
+
+NOTE: Extends link:https://github.com/jboss-container-images/jboss-eap-7-image[JBoss EAP 7 image]
+
+# License
+
+See link:../LICENSE[LICENSE] file.
+
