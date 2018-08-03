@@ -1,16 +1,16 @@
 schema_version: 1
 
-name: "rhdm-7/rhdm70-optaweb-openshift"
-description: "Red Hat Red Hat Decision Employee Rostering Optimizer 7.0 container image"
+name: "rhdm-7/rhdm71-optaweb-employee-rostering-openshift"
+description: "Red Hat Business Optimizer OptaWeb Employee Rostering 7.1 OpenShift container image"
 version: "1.1"
-from: "rhdm-7/rhdm70-optaweb:latest"
+from: "rhdm-7/rhdm71-optaweb-employee-rostering:latest"
 labels:
     - name: "com.redhat.component"
-      value: "rhdm-7-rhdm70-optaweb-openshift-container"
+      value: "rhdm-7-rhdm71-optaweb-employee-rostering-openshift-container"
     - name: "io.k8s.description"
-      value: "Platform for running Red Hat Decision Employee Rostering Optimizer"
+      value: "Platform for running Red Hat Business Optimizer OptaWeb Employee Rostering"
     - name: "io.k8s.display-name"
-      value: "Red Hat Red Hat Decision Employee Rostering Optimizer 7.0"
+      value: "Red Hat Business Optimizer OptaWeb Employee Rostering 7.1"
     - name: "io.openshift.expose-services"
       value: "8080:http,8443:https"
     - name: "io.openshift.tags"
@@ -96,6 +96,9 @@ envs:
     - name: "OPTAWEB_ROSTERING_PERSISTENCE_DATASOURCE"
       example: "java:jboss/datasources/dbe"
       description: "server persistence datasource for persistence.xml "
+    - name: "OPTAWEB_GENERATOR_TIMEZONE_ID"
+      example: "America/New_York"
+      description: "Keep in sync with https://github.com/kiegroup/optaweb-employee-rostering/blob/master/employee-rostering-docs/src/main/asciidoc/Introduction/SystemProperties/SystemProperties-section.adoc "
 ports:
     - value: 8080
     - value: 8443
@@ -165,5 +168,5 @@ run:
           - "/opt/eap/bin/openshift-launch.sh"
 osbs:
       repository:
-          name: containers/rhdm-7-optaweb-openshift
-          branch: jb-rhdm-7.0-optaweb-rhel-7
+          name: containers/rhdm-7-optaweb-employee-rostering-openshift
+          branch: jb-rhdm-7.1-optaweb-employee-rostering-openshift-rhel-7
