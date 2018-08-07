@@ -2,14 +2,14 @@ kind: Template
 apiVersion: v1
 metadata:
   annotations:
-    description: Application template for Red Hat Decision Manager Execution Server 7.0 application.
+    description: Application template for Red Hat Decision Manager Execution Server 7.1 application.
     iconClass: icon-jboss
     tags: rhdm,jboss,kieserver
     version: "1.2"
-    openshift.io/display-name: Red Hat Decision Manager Execution Server 7.0 (Ephemeral with https)
-  name: rhdm70-kieserver
+    openshift.io/display-name: Red Hat Decision Manager Execution Server 7.1 (Ephemeral with https)
+  name: rhdm71-kieserver
 labels:
-  template: rhdm70-kieserver
+  template: rhdm71-kieserver
   rhdm: "1.2"
 message: A new Decision Manager Execution Server application has been created in your
   project. The user name/password for calls to the Decision Server is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}.
@@ -185,9 +185,9 @@ parameters:
   value: openshift
   required: true
 - displayName: ImageStream Tag
-  description: A named pointer to an image in an image stream. Default is "1.1".
+  description: A named pointer to an image in an image stream. Default is "1.0".
   name: IMAGE_STREAM_TAG
-  value: "1.1"
+  value: "1.0"
   required: false
 - displayName: KIE Server Container Deployment
   description: 'KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version|c2=g2:a2:v2'
@@ -289,7 +289,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "rhdm70-kieserver-openshift:${IMAGE_STREAM_TAG}"
+          name: "rhdm71-kieserver-openshift:${IMAGE_STREAM_TAG}"
     - type: ConfigChange
     replicas: 1
     selector:
@@ -305,7 +305,7 @@ objects:
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-kieserver"
-          image: rhdm70-kieserver-openshift
+          image: rhdm71-kieserver-openshift
           imagePullPolicy: Always
           resources:
             limits:

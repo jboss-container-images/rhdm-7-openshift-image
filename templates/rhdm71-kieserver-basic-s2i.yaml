@@ -2,20 +2,19 @@ kind: Template
 apiVersion: v1
 metadata:
   annotations:
-    description: Application template for Red Hat Decision Manager Execution Server 7.0 application built using S2I.
+    description: Application template for Red Hat Decision Manager Execution Server 7.1 application built using S2I.
     iconClass: icon-jboss
-    tags: rhdm,jboss,kieserver,https
+    tags: rhdm,jboss,kieserver,basic
     version: "1.2"
-    openshift.io/display-name: Red Hat Decision Manager Execution Server 7.0 S2I (Ephemeral with https)
-  name: rhdm70-kieserver-https-s2i
+    openshift.io/display-name: Red Hat Decision Manager Execution Server 7.1 S2I Ephemeral (no https)
+  name: rhdm71-kieserver-basic-s2i
 labels:
-  template: rhdm70-kieserver-https-s2i
+  template: rhdm71-kieserver-basic-s2i
   rhdm: "1.2"
-message: A new Decision Manager Decision Server application has been created in your
-  project. The user name/password for calls to the Decision Server is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}.
-  Please be sure to create the "kieserver-service-account" service account and
-  the secret named "${HTTPS_SECRET}" containing the ${HTTPS_KEYSTORE} file used for
-  serving secure content. The username/password for accessing the KIE Server REST interface is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}. Only stateless API calls to the Decision Server are supported.
+message: A new Decision Manager Decision Server application has been created in your project. This deployment 
+  does not include HTTPS support.
+  The user name/password for calls to the Decision Server is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}.
+  Only stateless API calls to the Decision Server are supported.
 parameters:
 - displayName: Application Name
   description: The name for the application.
@@ -29,7 +28,7 @@ parameters:
   value: adminUser
   required: false
 - displayName: KIE Admin Password
-  description: KIE administrator password.
+  description: KIE administrator password
   name: KIE_ADMIN_PWD
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
@@ -73,35 +72,9 @@ parameters:
   required: false
 - displayName: Decision Server Custom http Route Hostname
   description: 'Custom hostname for http service route.  Leave blank for default hostname,
-    example: <application-name>-execserv-<project>.<default-domain-suffix>'
+    e.g.: <application-name>-execserv-<project>.<default-domain-suffix>'
   name: EXECUTION_SERVER_HOSTNAME_HTTP
   value: ''
-  required: false
-- displayName: Decision Server Custom https Route Hostname
-  description: 'Custom hostname for https service route.  Leave blank for default hostname, 
-    example: secure-<application-name>-execserv-<project>.<default-domain-suffix>'
-  name: EXECUTION_SERVER_HOSTNAME_HTTPS
-  value: ''
-  required: false
-- displayName: Server Keystore Secret Name
-  description: The name of the secret containing the keystore file for Decision Server.
-  name: HTTPS_SECRET
-  value: kieserver-app-secret
-  required: false
-- displayName: Server Keystore Filename
-  description: The name of the keystore file within the secret.
-  name: HTTPS_KEYSTORE
-  value: keystore.jks
-  required: false
-- displayName: Server Certificate Name
-  description: The name associated with the server certificate.
-  name: HTTPS_NAME
-  value: jboss
-  required: false
-- displayName: Server Keystore Password
-  description: The password for the keystore and certificate.
-  name: HTTPS_PASSWORD
-  value: mykeystorepass
   required: false
 - displayName: KIE Server Container Deployment
   description: 'KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version|c2=g2:a2:v2. 
@@ -119,7 +92,7 @@ parameters:
 - displayName: Git Reference
   description: Git branch/tag reference for the source of your decision service.
   name: SOURCE_REPOSITORY_REF
-  value: rhdm70-dev
+  value: rhdm71-dev
   required: false
 - displayName: Context Directory
   description: Location of the module to build (pom.xml file) in the Git project. Empty for root project directory.
@@ -147,9 +120,9 @@ parameters:
   value: openshift
   required: true
 - displayName: ImageStream Tag
-  description: A named pointer to an image in an image stream. Default is "1.1".
+  description: A named pointer to an image in an image stream. Default is "1.0".
   name: IMAGE_STREAM_TAG
-  value: "1.1"
+  value: "1.0"
   required: false
 - displayName: Maven mirror URL
   description: Maven mirror to use for S2I builds. If the Maven build of your decision service pulls packages 
@@ -213,20 +186,6 @@ objects:
       application: "${APPLICATION_NAME}"
     annotations:
       description: The execution server web server's http port.
-- kind: Service
-  apiVersion: v1
-  spec:
-    ports:
-    - port: 8443
-      targetPort: 8443
-    selector:
-      deploymentConfig: "${APPLICATION_NAME}-kieserver"
-  metadata:
-    name: secure-${APPLICATION_NAME}-kieserver
-    labels:
-      application: "${APPLICATION_NAME}"
-    annotations:
-      description: The execution server web server's https port.
 - kind: Route
   apiVersion: v1
   id: "${APPLICATION_NAME}-kieserver-http"
@@ -240,21 +199,6 @@ objects:
     host: "${EXECUTION_SERVER_HOSTNAME_HTTP}"
     to:
       name: "${APPLICATION_NAME}-kieserver"
-- kind: Route
-  apiVersion: v1
-  id: "${APPLICATION_NAME}-kieserver-https"
-  metadata:
-    name: secure-${APPLICATION_NAME}-kieserver
-    labels:
-      application: "${APPLICATION_NAME}"
-    annotations:
-      description: Route for execution server's https service.
-  spec:
-    host: "${EXECUTION_SERVER_HOSTNAME_HTTPS}"
-    to:
-      name: secure-${APPLICATION_NAME}-kieserver
-    tls:
-      termination: passthrough
 - kind: ImageStream
   apiVersion: v1
   metadata:
@@ -288,7 +232,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "rhdm70-kieserver-openshift:${IMAGE_STREAM_TAG}"
+          name: "rhdm71-kieserver-openshift:${IMAGE_STREAM_TAG}"
     output:
       to:
         kind: ImageStreamTag
@@ -340,10 +284,6 @@ objects:
           resources:
             limits:
               memory: "${EXCECUTION_SERVER_MEMORY_LIMIT}"
-          volumeMounts:
-          - name: kieserver-keystore-volume
-            mountPath: "/etc/kieserver-secret-volume"
-            readOnly: true
           livenessProbe:
             exec:
               command:
@@ -362,9 +302,6 @@ objects:
             protocol: TCP
           - name: http
             containerPort: 8080
-            protocol: TCP
-          - name: https
-            containerPort: 8443
             protocol: TCP
           env:
           - name: DROOLS_SERVER_FILTER_CLASSES
@@ -405,15 +342,3 @@ objects:
             value: "${MAVEN_REPO_USERNAME}"
           - name: EXTERNAL_MAVEN_REPO_PASSWORD
             value: "${MAVEN_REPO_PASSWORD}"
-          - name: HTTPS_KEYSTORE_DIR
-            value: "/etc/kieserver-secret-volume"
-          - name: HTTPS_KEYSTORE
-            value: "${HTTPS_KEYSTORE}"
-          - name: HTTPS_NAME
-            value: "${HTTPS_NAME}"
-          - name: HTTPS_PASSWORD
-            value: "${HTTPS_PASSWORD}"
-        volumes:
-        - name: kieserver-keystore-volume
-          secret:
-            secretName: "${HTTPS_SECRET}"

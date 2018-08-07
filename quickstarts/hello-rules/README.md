@@ -1,10 +1,10 @@
 ## Red Hat Decision Manager Kie Server Quickstart
 
-This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/rhdm70-dev/kieserver) image.
+This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/rhdm71-dev/kieserver) image.
 
 ## How to use it?
 
-To deploy the Hello Rules demo you can use the [rhdm70-kieserver-s2i](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/rhdm70-dev/templates/rhdm70-kieserver-s2i.yaml)
+To deploy the Hello Rules demo you can use the [rhdm71-kieserver-s2i](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/rhdm71-dev/templates/rhdm71-kieserver-s2i.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
 
@@ -43,29 +43,29 @@ to build a new example application in Ruby.
 
 Make sure that you have the RHDM template installed in your OpenShift Instance:
 ```bash
-$ oc get template rhdm70-kieserver-s2i -n openshift
-Error from server (NotFound): templates "rhdm70-kieserver-s2i" not found
+$ oc get template rhdm71-kieserver-s2i -n openshift
+Error from server (NotFound): templates "rhdm71-kieserver-s2i" not found
 ```
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm70-dev/templates/rhdm70-kieserver-s2i.yaml -n openshift
-template "rhdm70-kieserver-s2i" created
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm71-dev/templates/rhdm71-kieserver-s2i.yaml -n openshift
+template "rhdm71-kieserver-s2i" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm70-dev/kieserver-app-secret.yaml
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm71-dev/kieserver-app-secret.yaml
 ```
 
 
 ```bash
-$ oc new-app rhdm70-kieserver-s2i
-  --> Deploying template "openshift/rhdm70-kieserver-s2i" to project rhdm-kieserver
+$ oc new-app rhdm71-kieserver-s2i
+  --> Deploying template "openshift/rhdm71-kieserver-s2i" to project rhdm-kieserver
   
-       Red Hat Decision Manager Execution Server 7.0 S2I (Ephemeral with https)
+       Red Hat Decision Manager Execution Server 7.1 S2I (Ephemeral with https)
        ---------
-       Application template for Red Hat Decision Manager Execution Server 7.0 application built using S2I.
+       Application template for Red Hat Decision Manager Execution Server 7.1 application built using S2I.
   
        A new Decision Manager Execution Server application has been created in your project. Please be sure to create the "kieserver-service-account" service account and the secret named "kieserver-app-secret" containing the keystore.jks file used for serving secure content.
   
@@ -95,7 +95,7 @@ $ oc new-app rhdm70-kieserver-s2i
           * Server Keystore Password=mykeystorepass
           * KIE Server Container Deployment=rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0.Final
           * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
-          * Git Reference=rhdm70-dev
+          * Git Reference=rhdm71-dev
           * Context Directory=quickstarts/hello-rules/hellorules
           * Github Webhook Secret=XK6KW5dB # generated
           * Generic Webhook Secret=MmEl1Rr5 # generated
@@ -127,7 +127,7 @@ To do so, execute the following commands:
 ```bash
 oc new-app eap64-basic-s2i \
     -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
-    -p SOURCE_REPOSITORY_REF=rhdm70-dev \ 
+    -p SOURCE_REPOSITORY_REF=rhdm71-dev \ 
     -p CONTEXT_DIR=quickstarts/hello-rules
 ```
 
@@ -145,7 +145,7 @@ As result you should see something like this:
         * Application Name=eap-app
         * Custom http Route Hostname=
         * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
-        * Git Reference=rhdm70-dev
+        * Git Reference=rhdm71-dev
         * Context Directory=quickstarts/hello-rules
         * Queues=
         * Topics=

@@ -3,12 +3,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (./*.in)
 ////
-= rhdm70-full-persistent
+= rhdm71-full-persistent
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for Red Hat Decision Manager 7.0 applications with persistent storage.
+Application template for Red Hat Decision Manager 7.1 applications with persistent storage.
 
 toc::[]
 
@@ -48,7 +48,7 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`KIE_SERVER_HTTPS_NAME` | `HTTPS_NAME` | The name associated with the server certificate. | jboss | False
 |`KIE_SERVER_HTTPS_PASSWORD` | `HTTPS_PASSWORD` | The password for the keystore and certificate. | mykeystorepass | False
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. Modify this setting only if you have installed the ImageStreams in a different namespace/project. | openshift | True
-|`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.1". | 1.1 | False
+|`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | False
 |`MAVEN_REPO_URL` | `MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. If this parameter is unspecified, Decision Server uses the repository provided by Decision Central. | `${MAVEN_REPO_URL}` | False
 |`MAVEN_REPO_USERNAME` | `MAVEN_REPO_USERNAME` | Username to access the Maven repository. If Decision Server uses the Decision Central repository. | mavenUser | True
 |`MAVEN_REPO_PASSWORD` | `MAVEN_REPO_PASSWORD` | Password to access the Maven repository. If Decision Server uses the Decision Central repository. | `${MAVEN_REPO_PASSWORD}` | ?
@@ -156,8 +156,8 @@ for more information.
 |============
 |Deployment | Image
 
-|`${APPLICATION_NAME}-rhdmcentr` | rhdm70-decisioncentral-openshift
-|`${APPLICATION_NAME}-kieserver` | rhdm70-kieserver-openshift
+|`${APPLICATION_NAME}-rhdmcentr` | rhdm71-decisioncentral-openshift
+|`${APPLICATION_NAME}-kieserver` | rhdm71-kieserver-openshift
 |============
 
 

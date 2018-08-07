@@ -1,0 +1,46 @@
+kind: List
+apiVersion: v1
+metadata:
+  name: rhdm71-image-streams
+  annotations:
+    description: ImageStream definitions for Red Hat Decision Manager 7.1
+    openshift.io/provider-display-name: Red Hat, Inc.
+items:
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: rhdm71-decisioncentral-openshift
+    annotations:
+      openshift.io/display-name: Red Hat Decision Manager Central 7.1
+      openshift.io/provider-display-name: Red Hat, Inc.
+  spec:
+    tags:
+    - name: '1.0'
+      annotations:
+        description: Red Hat Decision Manager 7.1 - Decision Central image.
+        iconClass: icon-jboss
+        tags: rhdm,xpaas
+        supports: rhdm:7.1,xpaas:1.4
+        version: '1.0'
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/rhdm-7/rhdm71-decisioncentral-openshift:1.0
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: rhdm71-kieserver-openshift
+    annotations:
+      openshift.io/display-name: Red Hat Decision Manager KIE Server 7.1
+      openshift.io/provider-display-name: Red Hat, Inc.
+  spec:
+    tags:
+    - name: '1.0'
+      annotations:
+        description: Red Hat Decision Manager 7.1 - KIE Server image.
+        iconClass: icon-jboss
+        tags: rhdm,xpaas
+        supports: rhdm:7.1,xpaas:1.4
+        version: '1.0'
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/rhdm-7/rhdm71-kieserver-openshift:1.0

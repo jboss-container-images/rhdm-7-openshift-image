@@ -3,14 +3,14 @@ kind: Template
 apiVersion: v1
 metadata:
   annotations:
-    description: Application template for Red Hat Decision Manager 7.0 applications with persistent storage.
+    description: Application template for Red Hat Decision Manager 7.1 applications with persistent storage.
     iconClass: icon-jboss
     tags: rhdm,jboss,full
     version: "1.2"
-    openshift.io/display-name: Red Hat Decision Manager 7.0 applications (Persistent with https)
-  name: rhdm70-full-persistent
+    openshift.io/display-name: Red Hat Decision Manager 7.1 applications (Persistent with https)
+  name: rhdm71-full-persistent
 labels:
-  template: rhdm70-full-persistent
+  template: rhdm71-full-persistent
   rhdm: "1.2"
 message: New persistent Decision Central and Decision Server applications have been created in your project.
   The user name/password for accessing the Decision Central interface is ${KIE_ADMIN_USER}/${KIE_ADMIN_PWD}.
@@ -163,9 +163,9 @@ parameters:
   value: openshift
   required: true
 - displayName: ImageStream Tag
-  description: A named pointer to an image in an image stream. Default is "1.1".
+  description: A named pointer to an image in an image stream. Default is "1.0".
   name: IMAGE_STREAM_TAG
-  value: "1.1"
+  value: "1.0"
   required: false
 - displayName: Maven repository URL
   description: Fully qualified URL to a Maven repository or service.
@@ -368,7 +368,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "rhdm70-decisioncentral-openshift:${IMAGE_STREAM_TAG}"
+          name: "rhdm71-decisioncentral-openshift:${IMAGE_STREAM_TAG}"
     - type: ConfigChange
     replicas: 1
     selector:
@@ -383,7 +383,7 @@ objects:
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-rhdmcentr"
-          image: rhdm70-decisioncentral-openshift
+          image: rhdm71-decisioncentral-openshift
           imagePullPolicy: Always
           resources:
             limits:
@@ -481,7 +481,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "rhdm70-kieserver-openshift:${IMAGE_STREAM_TAG}"
+          name: "rhdm71-kieserver-openshift:${IMAGE_STREAM_TAG}"
     - type: ConfigChange
     replicas: 1
     selector:
@@ -497,7 +497,7 @@ objects:
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-kieserver"
-          image: rhdm70-kieserver-openshift
+          image: rhdm71-kieserver-openshift
           imagePullPolicy: Always
           resources:
             limits:

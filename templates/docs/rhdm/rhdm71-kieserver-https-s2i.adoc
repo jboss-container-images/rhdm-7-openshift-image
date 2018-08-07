@@ -3,12 +3,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (./*.in)
 ////
-= rhdm70-kieserver
+= rhdm71-kieserver-https-s2i
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for Red Hat Decision Manager Execution Server 7.0 application.
+Application template for Red Hat Decision Manager Execution Server 7.1 application built using S2I.
 
 toc::[]
 
@@ -25,32 +25,35 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`APPLICATION_NAME` | -- | The name for the application. | myapp | True
 |`ADMIN_USERNAME` | -- | EAP administrator user name. Use this user account if you need use JBoss EAP command line management. You can use rsh to access the command line on the pods. | eapadmin | False
 |`ADMIN_PASSWORD` | -- | EAP administrator password. | -- | False
-|`KIE_ADMIN_USER` | `KIE_ADMIN_USER` | KIE administrator user name. Use this user account to manage the Decision Server using administrative API calls. | adminUser | False
+|`KIE_ADMIN_USER` | `KIE_ADMIN_USER` | KIE administrator username. Use this user account to manage the Decision Server using administrative API calls. | adminUser | False
 |`KIE_ADMIN_PWD` | `KIE_ADMIN_PWD` | KIE administrator password. | `${KIE_ADMIN_PWD}` | False
 |`KIE_SERVER_USER` | `KIE_SERVER_USER` | KIE execution server user name. Use this user account for API calls to the Decision Server. (Sets the org.kie.server.user system property). | executionUser | False
 |`KIE_SERVER_PWD` | `KIE_SERVER_PWD` | KIE execution server password (sets the org.kie.server.pwd system property). | `${KIE_SERVER_PWD}` | False
 |`KIE_SERVER_ID` | `KIE_SERVER_ID` | Decision server identifier. Determines the template ID in Decision Central or controller. If this parameter is left blank, it is set using the $HOSTNAME environment variable or a random value. (Sets the org.kie.server.id system property). | `${KIE_SERVER_ID}` | False
 |`KIE_SERVER_BYPASS_AUTH_USER` | `KIE_SERVER_BYPASS_AUTH_USER` | KIE execution server bypass auth user. If this parameter is set to true, the Decision Server accepts API calls without user account authorization. (Sets the org.kie.server.bypass.auth.user system property). | false | False
-|`KIE_SERVER_CONTROLLER_USER` | `KIE_SERVER_CONTROLLER_USER` | KIE server controller user name. The Decision Server uses this user account to log on to Decision Central or a controller. (Sets the org.kie.server.controller.user system property). | controllerUser | False
-|`KIE_SERVER_CONTROLLER_PWD` | `KIE_SERVER_CONTROLLER_PWD` | KIE server controller password (sets the org.kie.server.controller.pwd system property). | `${KIE_SERVER_CONTROLLER_PWD}` | False
-|`KIE_SERVER_CONTROLLER_PROTOCOL` | `KIE_SERVER_CONTROLLER_PROTOCOL` | KIE server controller service. To use Decision Central that is hosted on the same OpenShift environment to manage this Decision Server, set this variable to the OpenShift service name for the Decision Central. In this case, do not set the KIE server controller protocol, KIE server controller host, and KIE server controller port. (Sets the org.kie.server.controller system property if host and port are not set). | http | False
-|`KIE_SERVER_CONTROLLER_SERVICE` | `KIE_SERVER_CONTROLLER_SERVICE` | The service name for the optional Decision Central or controller, where it can be reached and registered with. (Used to set the org.kie.server.controller system property if host and port aren't set) | `${KIE_SERVER_CONTROLLER_SERVICE}` | False
-|`KIE_SERVER_CONTROLLER_HOST` | `KIE_SERVER_CONTROLLER_HOST` | KIE server controller host. To use Decision Central or a controller to manage this Decision Server, set this parameter to the host part of the URL for the Decision Central or controller. (Used to set the org.kie.server.controller system property). | `${KIE_SERVER_CONTROLLER_HOST}` | False
-|`KIE_SERVER_CONTROLLER_PORT` | `KIE_SERVER_CONTROLLER_PORT` | KIE server controller port. To use Decision Central or a controller to manage this Decision Server, set this parameter to the port part of the URL for the Decision Central or controller. (Used to set the org.kie.server.controller system property). | `${KIE_SERVER_CONTROLLER_PORT}` | False
-|`KIE_MBEANS` | `KIE_MBEANS` | KIE execution server mbeans enabled/disabled. These MBeans provide monitoring information. (Sets the kie.mbeans and kie.scanner.mbeans system properties). | enabled | False
+|`KIE_MBEANS` | `KIE_MBEANS` | KIE execution server MBeans enabled/disabled. These MBeans provide monitoring information. (Sets the kie.mbeans and kie.scanner.mbeans system properties). | enabled | False
 |`DROOLS_SERVER_FILTER_CLASSES` | `DROOLS_SERVER_FILTER_CLASSES` | KIE execution server class filtering. When this parameter is set to true, the Decision Server extension accepts custom classes annotated by the XmlRootElement or Remotable annotations only. Setting to true is preferable for performance, but some custom decision services might require false. (Sets the org.drools.server.filter.classes system property). | true | False
-|`EXECUTION_SERVER_HOSTNAME_HTTP` | -- | Custom hostname for http service route.  Leave blank for default hostname, example: <application-name>-kieserver-<project>.<default-domain-suffix> | -- | False
-|`EXECUTION_SERVER_HOSTNAME_HTTPS` | -- | Custom hostname for https service route.  Leave blank for default hostname, example: secure-<application-name>-kieserver-<project>.<default-domain-suffix> | -- | False
+|`EXECUTION_SERVER_HOSTNAME_HTTP` | -- | Custom hostname for http service route.  Leave blank for default hostname, example: <application-name>-execserv-<project>.<default-domain-suffix> | -- | False
+|`EXECUTION_SERVER_HOSTNAME_HTTPS` | -- | Custom hostname for https service route.  Leave blank for default hostname, example: secure-<application-name>-execserv-<project>.<default-domain-suffix> | -- | False
 |`HTTPS_SECRET` | -- | The name of the secret containing the keystore file for Decision Server. | kieserver-app-secret | False
 |`HTTPS_KEYSTORE` | `HTTPS_KEYSTORE_DIR` | The name of the keystore file within the secret. | keystore.jks | False
 |`HTTPS_NAME` | `HTTPS_NAME` | The name associated with the server certificate. | jboss | False
 |`HTTPS_PASSWORD` | `HTTPS_PASSWORD` | The password for the keystore and certificate. | mykeystorepass | False
+|`KIE_SERVER_CONTAINER_DEPLOYMENT` | `KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2. This information identifies the decision service (KJAR file) that is built from your source. You can provide two or more KJAR files using the `\|` separator, for example: `containerId=groupId:artifactId:version\|c2=g2:a2:v2`. The Maven build process must produce all these files from the source in the Git repository. | rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT | False
+|`SOURCE_REPOSITORY_URL` | -- | The URI for the Git repository containing the source for your decision service. | https://github.com/jboss-container-images/rhdm-7-openshift-image.git | True
+|`SOURCE_REPOSITORY_REF` | -- | Git branch/tag reference for the source of your decision service. | rhdm71-dev | False
+|`CONTEXT_DIR` | -- | Location of the module to build (pom.xml file) in the Git project. Empty for root project directory. | quickstarts/hello-rules/hellorules | False
+|`GITHUB_WEBHOOK_SECRET` | -- | GitHub trigger secret. | -- | True
+|`GENERIC_WEBHOOK_SECRET` | -- | Generic build trigger secret. | -- | True
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. Modify this setting only if you have installed the ImageStreams in a different namespace/project. | openshift | True
-|`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.1". | 1.1 | False
-|`KIE_SERVER_CONTAINER_DEPLOYMENT` | `KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2 | `${KIE_SERVER_CONTAINER_DEPLOYMENT}` | False
-|`MAVEN_REPO_URL` | `MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. You can use Decision Server, a management console, or the API to make the Decision Server retrieve a decision service from this repository. | `${MAVEN_REPO_URL}` | False
+|`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | False
+|`MAVEN_MIRROR_URL` | -- | Maven mirror to use for S2I builds. If the Maven build of your decision service pulls packages from a Maven repository, you can set this parameter. In this case, the build process will pull packages from the mirror repository instead of the configured original repository. | -- | False
+|`MAVEN_REPO_URL` | `MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. | `${MAVEN_REPO_URL}` | False
 |`MAVEN_REPO_USERNAME` | `MAVEN_REPO_USERNAME` | Username to access the Maven repository. | mavenUser | True
 |`MAVEN_REPO_PASSWORD` | `MAVEN_REPO_PASSWORD` | Password to access the Maven repository. | `${MAVEN_REPO_PASSWORD}` | ?
+|`ARTIFACT_DIR` | -- | The directory or several directories within the project that contains the required binary files (KJAR files and any other necessary files) after a successful Maven build. Files from the artefact directory are copied into the deployment folder. Use a comma (,) to separate multiple directories. If this parameter is not specified, all archives in /target are copied. | -- | False
+|`KIE_SERVER_MGMT_DISABLED` | `KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | true | True
+|`KIE_SERVER_STARTUP_STRATEGY` | `KIE_SERVER_STARTUP_STRATEGY` | When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable | LocalContainersStartupStrategy | True
 |`EXCECUTION_SERVER_MEMORY_LIMIT` | -- | Execution Server Container memory limit | 1Gi | False
 |=======================================================================
 
@@ -96,6 +99,19 @@ https://docs.openshift.com/enterprise/3.0/architecture/core_concepts/routes.html
 
 
 
+=== Build Configurations
+
+A `buildConfig` describes a single build definition and a set of triggers for when a new build should be created.
+A `buildConfig` is a REST object, which can be used in a POST to the API server to create a new instance. Refer to
+the https://docs.openshift.com/enterprise/3.0/dev_guide/builds.html#defining-a-buildconfig[Openshift documentation]
+for more information.
+
+|=============
+| S2I image  | link | Build output | BuildTriggers and Settings
+
+|rhdm71-kieserver-openshift:1.0 |  link:../../../kieserver/image.yaml[`rhdm-7/rhdm71-kieserver-openshift`] | `${APPLICATION_NAME}-kieserver:latest` | GitHub, Generic, ImageChange, ConfigChange
+|=============
+
 
 === Deployment Configurations
 
@@ -140,7 +156,7 @@ for more information.
 |============
 |Deployment | Image
 
-|`${APPLICATION_NAME}-kieserver` | rhdm70-kieserver-openshift
+|`${APPLICATION_NAME}-kieserver` | `${APPLICATION_NAME}-kieserver`
 |============
 
 
@@ -185,26 +201,20 @@ for more information.
 |=======================================================================
 |Deployment |Variable name |Description |Example value
 
-.25+| `${APPLICATION_NAME}-kieserver`
+.19+| `${APPLICATION_NAME}-kieserver`
 |`DROOLS_SERVER_FILTER_CLASSES` | KIE execution server class filtering. When this parameter is set to true, the Decision Server extension accepts custom classes annotated by the XmlRootElement or Remotable annotations only. Setting to true is preferable for performance, but some custom decision services might require false. (Sets the org.drools.server.filter.classes system property). | `${DROOLS_SERVER_FILTER_CLASSES}`
 |`KIE_ADMIN_PWD` | KIE administrator password. | `${KIE_ADMIN_PWD}`
-|`KIE_ADMIN_USER` | KIE administrator user name. Use this user account to manage the Decision Server using administrative API calls. | `${KIE_ADMIN_USER}`
-|`KIE_MBEANS` | KIE execution server mbeans enabled/disabled. These MBeans provide monitoring information. (Sets the kie.mbeans and kie.scanner.mbeans system properties). | `${KIE_MBEANS}`
+|`KIE_ADMIN_USER` | KIE administrator username. Use this user account to manage the Decision Server using administrative API calls. | `${KIE_ADMIN_USER}`
+|`KIE_MBEANS` | KIE execution server MBeans enabled/disabled. These MBeans provide monitoring information. (Sets the kie.mbeans and kie.scanner.mbeans system properties). | `${KIE_MBEANS}`
 |`KIE_SERVER_BYPASS_AUTH_USER` | KIE execution server bypass auth user. If this parameter is set to true, the Decision Server accepts API calls without user account authorization. (Sets the org.kie.server.bypass.auth.user system property). | `${KIE_SERVER_BYPASS_AUTH_USER}`
-|`KIE_SERVER_CONTROLLER_USER` | KIE server controller user name. The Decision Server uses this user account to log on to Decision Central or a controller. (Sets the org.kie.server.controller.user system property). | `${KIE_SERVER_CONTROLLER_USER}`
-|`KIE_SERVER_CONTROLLER_PWD` | KIE server controller password (sets the org.kie.server.controller.pwd system property). | `${KIE_SERVER_CONTROLLER_PWD}`
-|`KIE_SERVER_CONTROLLER_SERVICE` | The service name for the optional Decision Central or controller, where it can be reached and registered with. (Used to set the org.kie.server.controller system property if host and port aren't set) | `${KIE_SERVER_CONTROLLER_SERVICE}`
-|`KIE_SERVER_CONTROLLER_PROTOCOL` | KIE server controller service. To use Decision Central that is hosted on the same OpenShift environment to manage this Decision Server, set this variable to the OpenShift service name for the Decision Central. In this case, do not set the KIE server controller protocol, KIE server controller host, and KIE server controller port. (Sets the org.kie.server.controller system property if host and port are not set). | `${KIE_SERVER_CONTROLLER_PROTOCOL}`
-|`KIE_SERVER_CONTROLLER_HOST` | KIE server controller host. To use Decision Central or a controller to manage this Decision Server, set this parameter to the host part of the URL for the Decision Central or controller. (Used to set the org.kie.server.controller system property). | `${KIE_SERVER_CONTROLLER_HOST}`
-|`KIE_SERVER_CONTROLLER_PORT` | KIE server controller port. To use Decision Central or a controller to manage this Decision Server, set this parameter to the port part of the URL for the Decision Central or controller. (Used to set the org.kie.server.controller system property). | `${KIE_SERVER_CONTROLLER_PORT}`
 |`KIE_SERVER_ID` | Decision server identifier. Determines the template ID in Decision Central or controller. If this parameter is left blank, it is set using the $HOSTNAME environment variable or a random value. (Sets the org.kie.server.id system property). | `${KIE_SERVER_ID}`
 |`KIE_SERVER_HOST` | -- | --
+|`KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2. This information identifies the decision service (KJAR file) that is built from your source. You can provide two or more KJAR files using the `\|` separator, for example: `containerId=groupId:artifactId:version\|c2=g2:a2:v2`. The Maven build process must produce all these files from the source in the Git repository. | `${KIE_SERVER_CONTAINER_DEPLOYMENT}`
 |`KIE_SERVER_PWD` | KIE execution server password (sets the org.kie.server.pwd system property). | `${KIE_SERVER_PWD}`
 |`KIE_SERVER_USER` | KIE execution server user name. Use this user account for API calls to the Decision Server. (Sets the org.kie.server.user system property). | `${KIE_SERVER_USER}`
-|`KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2 | `${KIE_SERVER_CONTAINER_DEPLOYMENT}`
-|`MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. You can use Decision Server, a management console, or the API to make the Decision Server retrieve a decision service from this repository. | `${MAVEN_REPO_URL}`
-|`MAVEN_REPO_SERVICE` | -- | `${APPLICATION_NAME}-rhdmcentr`
-|`MAVEN_REPO_PATH` | -- | `/maven2/`
+|`MAVEN_REPO_URL` | Fully qualified URL to a Maven repository. | `${MAVEN_REPO_URL}`
+|`KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | `${KIE_SERVER_MGMT_DISABLED}`
+|`KIE_SERVER_STARTUP_STRATEGY` | When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable | `${KIE_SERVER_STARTUP_STRATEGY}`
 |`MAVEN_REPO_USERNAME` | Username to access the Maven repository. | `${MAVEN_REPO_USERNAME}`
 |`MAVEN_REPO_PASSWORD` | Password to access the Maven repository. | `${MAVEN_REPO_PASSWORD}`
 |`HTTPS_KEYSTORE_DIR` | The name of the keystore file within the secret. | `/etc/kieserver-secret-volume`
