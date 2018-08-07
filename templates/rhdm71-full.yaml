@@ -399,13 +399,20 @@ objects:
               command:
               - "/bin/bash"
               - "-c"
-              - "/opt/eap/bin/livenessProbe.sh"
+              - "curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/kie-drools-wb.jsp"
+            initialDelaySeconds: 180
+            timeoutSeconds: 2
+            periodSeconds: 15
           readinessProbe:
             exec:
               command:
               - "/bin/bash"
               - "-c"
-              - "/opt/eap/bin/readinessProbe.sh"
+              - "curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/kie-drools-wb.jsp"
+            initialDelaySeconds: 60
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 6
           ports:
           - name: jolokia
             containerPort: 8778
