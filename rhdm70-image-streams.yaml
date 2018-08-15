@@ -25,9 +25,11 @@ items:
         tags: rhdm,xpaas
         supports: rhdm:7.0,xpaas:1.4
         version: '1.0'
+      referencePolicy:
+        type: Local
       from:
         kind: DockerImage
-        name: registry.access.redhat.com/rhdm-7/rhdm70-decisioncentral-openshift:1.0
+        name: registry.redhat.io/rhdm-7/rhdm70-decisioncentral-openshift:1.0
 
 - kind: ImageStream
   apiVersion: v1
@@ -48,6 +50,8 @@ items:
         tags: rhdm,xpaas
         supports: rhdm:7.0,xpaas:1.4
         version: '1.0'
+      referencePolicy:
+        type: Local
       from:
         kind: DockerImage
-        name: registry.access.redhat.com/rhdm-7/rhdm70-kieserver-openshift:1.0
+        name: registry.redhat.io/rhdm-7/rhdm70-kieserver-openshift:1.0
