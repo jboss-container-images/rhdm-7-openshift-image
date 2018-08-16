@@ -393,7 +393,7 @@ objects:
             mountPath: "/etc/decisioncentral-secret-volume"
             readOnly: true
           - name: "${APPLICATION_NAME}-rhdmcentr-pvol"
-            mountPath: "/opt/eap/standalone/data/bpmsuite"
+            mountPath: "/opt/eap/standalone/data/kie"
           livenessProbe:
             exec:
               command:

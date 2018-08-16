@@ -1,0 +1,21 @@
+schema_version: 1
+
+from: "rhdm-7/rhdm71-decisioncentral:latest"
+modules:
+      repositories:
+          - name: cct_module
+            git:
+                  url: https://github.com/jboss-openshift/cct_module.git
+                  ref: master
+          - name: jboss-eap-modules
+            git:
+                  url: https://github.com/jboss-container-images/jboss-eap-modules.git
+                  ref: master
+          - name: jboss-kie-modules
+            git:
+                  url: https://github.com/jboss-container-images/jboss-kie-modules.git
+                  ref: master
+osbs:
+      repository:
+          name: containers/rhdm-7-decisioncentral-openshift
+          branch: jb-rhdm-7.1-decisioncentral-openshift-dev-rhel-7
