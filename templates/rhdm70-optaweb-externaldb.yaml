@@ -85,6 +85,11 @@ parameters:
   displayName: Database datasource / xa-datasource
   name: NON_XA_DATASOURCE
   value: "true"
+- displayName: Decision Manager Employee Rostering Optimizer Memory Limit
+  description: Decision Manager Employee Rostering Optimizer memory limit
+  name: OPTAWEB_EMPLOYEE_ROSTERING_MEMORY_LIMIT
+  value: 2Gi
+  required: false
 objects:
 - kind: Service
   apiVersion: v1
@@ -153,6 +158,9 @@ objects:
         - name: "${APPLICATION_NAME}-optaweb"
           image: rhdm70-optaweb-openshift
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "${OPTAWEB_EMPLOYEE_ROSTERING_MEMORY_LIMIT}"
           livenessProbe:
             exec:
               command:
