@@ -459,10 +459,6 @@ objects:
             value: "${DECISION_CENTRAL_HTTPS_NAME}"
           - name: HTTPS_PASSWORD
             value: "${DECISION_CENTRAL_HTTPS_PASSWORD}"
-          - name: PROBE_IMPL
-            value: probe.eap.jolokia.EapProbe
-          - name: PROBE_DISABLE_BOOT_ERRORS_CHECK
-            value: 'true'
         volumes:
         - name: decisioncentral-keystore-volume
           secret:
@@ -518,13 +514,21 @@ objects:
               command:
               - "/bin/bash"
               - "-c"
-              - "/opt/eap/bin/livenessProbe.sh"
+              - "curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/services/rest/server/healthcheck"
+            initialDelaySeconds: 180
+            timeoutSeconds: 2
+            periodSeconds: 15
+            failureThreshold: 3
           readinessProbe:
             exec:
               command:
               - "/bin/bash"
               - "-c"
-              - "/opt/eap/bin/readinessProbe.sh"
+              - "curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/services/rest/server/readycheck"
+            initialDelaySeconds: 60
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 6
           ports:
           - name: jolokia
             containerPort: 8778
