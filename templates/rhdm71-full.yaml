@@ -2,15 +2,20 @@ kind: Template
 apiVersion: v1
 metadata:
   annotations:
-    description: Application template for Red Hat Decision Manager 7.1 applications with persistent storage.
     iconClass: icon-jboss
     tags: rhdm,jboss,full
-    version: "1.2"
+    version: "1.0"
     openshift.io/display-name: Red Hat Decision Manager 7.1 applications (Persistent with https)
+    openshift.io/provider-display-name: Red Hat, Inc.
+    description: Application template for Red Hat Decision Manager 7.1 applications with persistent storage.
+    template.openshift.io/long-description: This template defines resources needed to develop Rules on Red Hat Decision Manager 7.1, including application deployment configuration, secure and insecure http communication and persistent volume to store data that needs to survive to a restart.
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_red_hat_decision_manager_on_red_hat_openshift_container_platform/
+    template.openshift.io/support-url: https://access.redhat.com
+    template.openshift.io/bindable: "false"
   name: rhdm71-full-persistent
 labels:
   template: rhdm71-full-persistent
-  rhdm: "1.2"
+  rhdm: "1.0"
 message: |-
           A new persistent Decision Central and Decision Server applications have been created in your project.
           The username/password for accessing the Decision Central interface is
@@ -362,6 +367,8 @@ objects:
     name: "${APPLICATION_NAME}-rhdmcentr"
     labels:
       application: "${APPLICATION_NAME}"
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
   spec:
     strategy:
       type: Recreate
@@ -478,6 +485,8 @@ objects:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
       application: "${APPLICATION_NAME}"
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
   spec:
     strategy:
       type: Recreate

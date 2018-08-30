@@ -2,15 +2,20 @@ kind: Template
 apiVersion: v1
 metadata:
   annotations:
-    description: Application template for Red Hat Decision Manager Execution Server 7.1 application.
     iconClass: icon-jboss
     tags: rhdm,jboss,kieserver
-    version: "1.2"
+    version: "1.0"
     openshift.io/display-name: Red Hat Decision Manager Execution Server 7.1 (Ephemeral with https)
+    openshift.io/provider-display-name: Red Hat, Inc.
+    description: Application template for Red Hat Decision Manager Execution Server 7.1 application.
+    template.openshift.io/long-description:  This template defines resources needed execute Rules on Red Hat Decision Manager Execution Server 7.1, including application deployment configuration, secure and insecure http communication.
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_red_hat_decision_manager_on_red_hat_openshift_container_platform/
+    template.openshift.io/support-url: https://access.redhat.com
+    template.openshift.io/bindable: "false"
   name: rhdm71-kieserver
 labels:
   template: rhdm71-kieserver
-  rhdm: "1.2"
+  rhdm: "1.0"
 message: |-
           A new Decision Manager Execution Server application has been created in your project.
           The username/password for calls to the Decision Server is:
@@ -280,6 +285,8 @@ objects:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
       application: "${APPLICATION_NAME}"
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
   spec:
     strategy:
       type: Recreate

@@ -2,15 +2,20 @@ kind: Template
 apiVersion: v1
 metadata:
   annotations:
-    description: Application template for Red Hat Decision Manager Execution Server 7.1 application built using S2I.
     iconClass: icon-jboss
     tags: rhdm,jboss,kieserver,basic
-    version: "1.2"
+    version: "1.0"
     openshift.io/display-name: Red Hat Decision Manager Execution Server 7.1 S2I Ephemeral (no https)
+    openshift.io/provider-display-name: Red Hat, Inc.
+    description: Application template for Red Hat Decision Manager Execution Server 7.1 application built using S2I.
+    template.openshift.io/long-description: This template defines resources needed to execute Rules on Red Hat Decision Manager Execution Server 7.1 by providing an application's source code to be built by the S2I, including a build configuration, application deployment configuration and insecure http communication.
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_red_hat_decision_manager_on_red_hat_openshift_container_platform/
+    template.openshift.io/support-url: https://access.redhat.com
+    template.openshift.io/bindable: "false"
   name: rhdm71-kieserver-basic-s2i
 labels:
   template: rhdm71-kieserver-basic-s2i
-  rhdm: "1.2"
+  rhdm: "1.0"
 message: |-
           A new Decision Manager Execution Server application has been created in your project. This deployment
           does not include HTTPS support. The username/password for calls to the Decision Server is
@@ -215,6 +220,10 @@ objects:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
       application: "${APPLICATION_NAME}"
+    annotations:
+      # wait-for-ready used on BuildConfig ensures that template instantiation
+      # will fail immediately if build fails
+      template.alpha.openshift.io/wait-for-ready: "true"
   spec:
     source:
       type: Git
@@ -257,6 +266,8 @@ objects:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
       application: "${APPLICATION_NAME}"
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
   spec:
     strategy:
       type: Recreate
