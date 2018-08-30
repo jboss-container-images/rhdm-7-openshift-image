@@ -11,10 +11,14 @@ metadata:
 labels:
   template: rhdm71-kieserver-basic-s2i
   rhdm: "1.2"
-message: A new Decision Manager Decision Server application has been created in your project. This deployment 
-  does not include HTTPS support.
-  The user name/password for calls to the Decision Server is ${KIE_SERVER_USER}/${KIE_SERVER_PWD}.
-  Only stateless API calls to the Decision Server are supported.
+message: |-
+          A new Decision Manager Execution Server application has been created in your project. This deployment
+          does not include HTTPS support. The username/password for calls to the Decision Server is
+
+              Username: ${KIE_SERVER_USER}
+              Password: ${KIE_SERVER_PWD}
+
+          Only stateless API calls to the Decision Server are supported.
 parameters:
 - displayName: Application Name
   description: The name for the application.
