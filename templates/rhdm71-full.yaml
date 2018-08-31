@@ -202,6 +202,11 @@ parameters:
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
   required: true
+- displayName: Git hooks directory
+  description: The directory to use for git hooks, if required.
+  name: GIT_HOOKS_DIR
+  example: /opt/git/hooks
+  required: false
 - displayName: Decision Central Volume Capacity
   description: Size of the persistent storage for Decision Central's runtime data.
   name: DECISION_CENTRAL_VOLUME_CAPACITY
@@ -464,6 +469,8 @@ objects:
             value: "${DECISION_CENTRAL_MAVEN_USERNAME}"
           - name: KIE_MAVEN_PWD
             value: "${DECISION_CENTRAL_MAVEN_PASSWORD}"
+          - name: GIT_HOOKS_DIR
+            value: "${GIT_HOOKS_DIR}"
           - name: HTTPS_KEYSTORE_DIR
             value: "/etc/decisioncentral-secret-volume"
           - name: HTTPS_KEYSTORE
