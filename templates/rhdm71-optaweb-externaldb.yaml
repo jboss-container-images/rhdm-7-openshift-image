@@ -4,7 +4,7 @@ apiVersion: v1
 metadata:
   annotations:
     iconClass: icon-jboss
-    tags: rhdm,jboss,xpaas,optaweb,employee-rostering
+    tags: rhdm,jboss,optaweb,employee-rostering,externaldb
     version: "1.0"
     openshift.io/display-name: Ephemeral Red Hat Decision Manager Employee Rostering Optimizer 7.1 which uses an external DB.
     openshift.io/provider-display-name: Red Hat, Inc.
@@ -25,8 +25,7 @@ parameters:
   value: myapp
   required: true
 - displayName: Employee Rostering Optimizer Custom http Route Hostname
-  description: 'Custom hostname for http service route.  Leave blank for default hostname,
-    e.g.: <application-name>-optaweb-<project>.<default-domain-suffix>'
+  description: 'Custom hostname for http service route.  Leave blank for default hostname, e.g.: <application-name>-optaweb-<project>.<default-domain-suffix>'
   name: OPTAWEB_SERVER_HOSTNAME_HTTP
   required: false
 - displayName: ImageStream Namespace
@@ -39,67 +38,55 @@ parameters:
   name: IMAGE_STREAM_TAG
   value: "1.0"
   required: false
-- displayName: optaweb rostering persistence Dialect
-  description: optaweb rostering server persistence dialect 
-  name: OPTAWEB_ROSTERING_PERSISTENCE_DIALECT
+- displayName: optaweb rostering Persistence DS
+  description: optaweb rostering server persistence datasource (Sets the org.kie.server.persistence.ds system property)
+  name: OPTAWEB_ROSTERING_PERSISTENCE_DS
+  value: java:/jboss/datasources/optaweb
+  required: false
+## External database parameters BEGIN
+- displayName: optaweb rostering External Database Driver
+  description: optaweb rostering server external database driver
+  name: OPTAWEB_ROSTERING_EXTERNALDB_DRIVER
+  example: "mysql"
   required: true
-- displayName: optaweb rostering persistence Datasource
-  description: optaweb rostering server persistence datasource for persistence.xml 
-  name: OPTAWEB_ROSTERING_PERSISTENCE_DATASOURCE
-  example: java:/jboss/datasources/optaweb
-  required: true
-- description: Database name
-  displayName: Database Name
-  name: RHDM_EXTERNALDB_DATABASE
-  required: true
-- description: Database user name
-  displayName: Database Username
-  name: RHDM_EXTERNALDB_USERNAME
-  required: true
-- description: Database user password
-  displayName: Database Password
-  name: RHDM_EXTERNALDB_PASSWORD
-  value: '1'
-  required: true
-- description: Database driver
-  displayName: Database driver
-  example: mysql
-  name: RHDM_EXTERNALDB_DRIVER
-  required: true
-- displayName: KIE Server External Database Driver Type
-  description: KIE execution server external database driver type, applicable only for DB2, possible values are 4 (default) or 2
-  name: RHDM_EXTERNALDB_DRIVER_TYPE
+- displayName: optaweb rostering External Database Driver Type
+  description: optaweb rostering server external database driver type, applicable only for DB2, possible values are 4 (default) or 2
+  name: OPTAWEB_ROSTERING_EXTERNALDB_DRIVER_TYPE
   example: "4"
   required: false
-- description: XA Connection URL
-  displayName: XA Connection URL
-  name: RHDM_XA_CONNECTION_PROPERTY_URL
+- displayName: optaweb rostering External Database User
+  description: optaweb rostering server external database username
+  name: OPTAWEB_ROSTERING_EXTERNALDB_USER
+  example: optaweb
+  required: true
+- displayName: optaweb rostering External Database Password
+  description: optaweb rostering server external database password
+  name: OPTAWEB_ROSTERING_EXTERNALDB_PWD
+  required: true
+- displayName: optaweb rostering External Database URL
+  description: optaweb rostering server external database JDBC URL
+  name: OPTAWEB_ROSTERING_EXTERNALDB_URL
+  example: "jdbc:mysql://127.0.0.1:3306/optaweb"
   required: false
-- description: Database service host name
-  displayName: Database service host
-  name: RHDM_SERVICE_HOST
+- displayName: optaweb rostering External Database Dialect
+  description: optaweb rostering server external database dialect
+  name: OPTAWEB_ROSTERING_EXTERNALDB_DIALECT
+  example: "org.hibernate.dialect.MySQL5Dialect"
+  required: true
+- displayName: optaweb rostering External Database Host
+  description: optaweb rostering server external database host
+  name: OPTAWEB_ROSTERING_EXTERNALDB_HOST
+  required: true
+- displayName: optaweb rostering External Database Port
+  description: optaweb rostering server external database port
+  name: OPTAWEB_ROSTERING_EXTERNALDB_PORT
+  required: true
+- displayName: optaweb rostering External Database name
+  description: optaweb rostering server external database name
+  name: OPTAWEB_ROSTERING_EXTERNALDB_DB
+  value: optaweb
   required: false
-- description: Database service port number
-  displayName: Database service port
-  name: RHDM_SERVICE_PORT
-  required: false
-- description: This parameter allows to configure datasource or xa-datasource
-  displayName: Database datasource / xa-datasource
-  name: NON_XA_DATASOURCE
-  value: "true"
-  required: false
-- displayName: Datasource Minimum Pool Size
-  description: Sets xa-pool/min-pool-size for the configured datasource.
-  name: DB_MIN_POOL_SIZE
-  required: false
-- displayName: Datasource Maximum Pool Size
-  description: Sets xa-pool/max-pool-size for the configured datasource.
-  name: DB_MAX_POOL_SIZE
-  required: false
-- displayName: Datasource Transaction Isolation
-  description: Sets transaction-isolation for the configured datasource.
-  name: DB_TX_ISOLATION
-  required: false
+## External database parameters END
 - displayName: Decision Manager Employee Rostering Optimizer Memory Limit
   description: Decision Manager Employee Rostering Optimizer memory limit
   name: OPTAWEB_EMPLOYEE_ROSTERING_MEMORY_LIMIT
@@ -207,39 +194,29 @@ objects:
             containerPort: 8080
             protocol: TCP
           env:
-          - name: OPTAWEB_ROSTERING_PERSISTENCE_DIALECT
-            value: "${OPTAWEB_ROSTERING_PERSISTENCE_DIALECT}"
-          - name: OPTAWEB_ROSTERING_PERSISTENCE_DATASOURCE
-            value: "${OPTAWEB_ROSTERING_PERSISTENCE_DATASOURCE}"
           - name: DATASOURCES
             value: "RHDM"
           - name: RHDM_JNDI
-            value: "${OPTAWEB_ROSTERING_PERSISTENCE_DATASOURCE}"
-          - name: KIE_SERVER_PERSISTENCE_DIALECT
-            value: "${OPTAWEB_ROSTERING_PERSISTENCE_DIALECT}"
+            value: "${OPTAWEB_ROSTERING_PERSISTENCE_DS}"
+## External database driver settings BEGIN
+          - name: OPTAWEB_ROSTERING_PERSISTENCE_DIALECT
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_DIALECT}"
           - name: RHDM_DRIVER
-            value: "${RHDM_EXTERNALDB_DRIVER}"
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_DRIVER}"
           - name: RHDM_DRIVER_TYPE
-            value: "${RHDM_EXTERNALDB_DRIVER_TYPE}"
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_DRIVER_TYPE}"
           - name: RHDM_USERNAME
-            value: "${RHDM_EXTERNALDB_USERNAME}"
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_USER}"
           - name: RHDM_PASSWORD
-            value: "${RHDM_EXTERNALDB_PASSWORD}"
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_PWD}"
           - name: RHDM_XA_CONNECTION_PROPERTY_URL
-            value: "${RHDM_XA_CONNECTION_PROPERTY_URL}"
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_URL}"
           - name: RHDM_SERVICE_HOST
-            value: "${RHDM_SERVICE_HOST}"
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_HOST}"
           - name: RHDM_SERVICE_PORT
-            value: "${RHDM_SERVICE_PORT}"
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_PORT}"
           - name: RHDM_DATABASE
-            value: "${RHDM_EXTERNALDB_DATABASE}"
+            value: "${OPTAWEB_ROSTERING_EXTERNALDB_DB}"
+## External database driver settings END
           - name: RHDM_JTA
             value: "true"
-          - name: RHDM_NONXA
-            value: "${NON_XA_DATASOURCE}"
-          - name: DB_MIN_POOL_SIZE
-            value: "${DB_MIN_POOL_SIZE}"
-          - name: DB_MAX_POOL_SIZE
-            value: "${DB_MAX_POOL_SIZE}"
-          - name: DB_TX_ISOLATION
-            value: "${DB_TX_ISOLATION}"
