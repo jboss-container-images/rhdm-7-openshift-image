@@ -162,7 +162,7 @@ objects:
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-optaweb-er"
-          image: rhdm70-optaweb-employee-rostering-openshift
+          image: rhdm71-optaweb-employee-rostering-openshift
           imagePullPolicy: Always
           resources:
             limits:
