@@ -25,13 +25,13 @@ envs:
       example: "true"
     - name: "STI_BUILDER"
       value: "jee"
-    - name: "OPTAWEB_ROSTERING_PERSISTENCE_DIALECT"
+    - name: "OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT"
       example: "org.hibernate.dialect.MySQL5Dialect"
       description: "server persistence dialect"
-    - name: "OPTAWEB_ROSTERING_PERSISTENCE_DS"
+    - name: "OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DS"
       example: "java:/jboss/datasources/optaweb"
       description: "server persistence datasource for persistence.xml"
-    - name: "OPTAWEB_GENERATOR_TIMEZONE_ID"
+    - name: "OPTAWEB_GENERATOR_ZONE_ID"
       # Keep example/description in sync with documentation https://github.com/kiegroup/optaweb-employee-rostering/blob/master/employee-rostering-docs/src/main/asciidoc/Introduction/SystemProperties/SystemProperties-section.adoc
       example: "America/New_York"
       description: "The time zone ID for the automatically generated tenants. This defaults to the system default Zone ID."
@@ -82,7 +82,9 @@ modules:
           - name: openshift-layer
           - name: openshift-passwd
           - name: os-logging
-          - name: os.optaweb.employeerostering
+          - name: jboss.kie.common
+          - name: jboss.kie.optaweb.common
+          - name: jboss.kie.optaweb.employeerostering
 packages:
       repositories:
           - jboss-os
