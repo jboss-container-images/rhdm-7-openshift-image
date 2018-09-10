@@ -106,7 +106,7 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
     annotations:
-      description: The execution server web server's http port.
+      description: The KIE server web server's http port.
 - kind: Route
   apiVersion: v1
   id: "${APPLICATION_NAME}-optaweb-http"
@@ -115,7 +115,7 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
     annotations:
-      description: Route for execution server's http service.
+      description: Route for KIE server's http service.
   spec:
     host: "${OPTAWEB_SERVER_HOSTNAME_HTTP}"
     to:

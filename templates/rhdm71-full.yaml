@@ -60,13 +60,13 @@ parameters:
   generate: expression
   required: false
 - displayName: KIE Server User
-  description: KIE execution server user name. Use this user account for API calls to the Decision Server. 
+  description: KIE server user name. Use this user account for API calls to the Decision Server. 
     (Sets the org.kie.server.user system property).
   name: KIE_SERVER_USER
   value: executionUser
   required: false
 - displayName: KIE Server Password
-  description: KIE execution server password (sets the org.kie.server.pwd system property).
+  description: KIE server password (sets the org.kie.server.pwd system property).
   name: KIE_SERVER_PWD
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
@@ -77,19 +77,19 @@ parameters:
   value: ''
   required: false
 - displayName: KIE Server Bypass Auth User
-  description: KIE execution server bypass auth user. If this parameter is set to true, the Decision Server accepts
+  description: KIE server bypass auth user. If this parameter is set to true, the Decision Server accepts
    API calls without user account authorization. (Sets the org.kie.server.bypass.auth.user system property).
   name: KIE_SERVER_BYPASS_AUTH_USER
   value: 'false'
   required: false
 - displayName: KIE MBeans
-  description: KIE execution server MBeans enabled/disabled. These MBeans provide monitoring information. (Sets the 
+  description: KIE server MBeans enabled/disabled. These MBeans provide monitoring information. (Sets the 
     kie.mbeans and kie.scanner.mbeans system properties).
   name: KIE_MBEANS
   value: enabled
   required: false
 - displayName: Drools Server Filter Classes
-  description: KIE execution server class filtering. When this parameter is set to true, the Decision Server extension 
+  description: KIE server class filtering. When this parameter is set to true, the Decision Server extension 
     accepts custom classes annotated by the XmlRootElement or Remotable annotations only. Setting to true is preferable 
     for performance, but some custom decision services might require false. (Sets the org.drools.server.filter.classes
     system property).
@@ -111,18 +111,18 @@ parameters:
 - displayName: Decision Server Custom http Route Hostname
   description: 'Custom hostname for http service route, if set will also configure the KIE_SERVER_HOST.  Leave blank for default hostname,
     example: <application-name>-kieserver-<project>.<default-domain-suffix>'
-  name: EXECUTION_SERVER_HOSTNAME_HTTP
+  name: KIE_SERVER_HOSTNAME_HTTP
   value: ''
   required: false
 - displayName: Decision Server Custom https Route Hostname
   description: 'Custom hostname for https service route.  Leave blank for default hostname,
     example: secure-<application-name>-kieserver-<project>.<default-domain-suffix>'
-  name: EXECUTION_SERVER_HOSTNAME_HTTPS
+  name: KIE_SERVER_HOSTNAME_HTTPS
   value: ''
   required: false
 - displayName: Use the secure route name to set KIE_SERVER_HOST.
   description: Use https for the KIE_SERVER_HOST when it is not explicit configured to a custom value.
-  name: EXECUTION_SERVER_USE_SECURE_ROUTE_NAME
+  name: KIE_SERVER_USE_SECURE_ROUTE_NAME
   value: 'false'
   required: false
 - displayName: Decision Central Server Keystore Secret Name
@@ -217,8 +217,8 @@ parameters:
   name: DECISION_CENTRAL_MEMORY_LIMIT
   value: 2Gi
   required: false
-- displayName: Execution Server Container Memory Limit
-  description: Execution Server Container memory limit
+- displayName: KIE server Container Memory Limit
+  description: KIE server Container memory limit
   name: EXCECUTION_SERVER_MEMORY_LIMIT
   value: 1Gi
   required: false
@@ -348,7 +348,7 @@ objects:
     annotations:
       description: Route for KIE server's http service.
   spec:
-    host: "${EXECUTION_SERVER_HOSTNAME_HTTP}"
+    host: "${KIE_SERVER_HOSTNAME_HTTP}"
     to:
       name: "${APPLICATION_NAME}-kieserver"
 - kind: Route
@@ -361,7 +361,7 @@ objects:
     annotations:
       description: Route for KIE server's https service.
   spec:
-    host: "${EXECUTION_SERVER_HOSTNAME_HTTPS}"
+    host: "${KIE_SERVER_HOSTNAME_HTTPS}"
     to:
       name: secure-${APPLICATION_NAME}-kieserver
     tls:
@@ -583,11 +583,11 @@ objects:
           - name: KIE_SERVER_ID
             value: "${KIE_SERVER_ID}"
           - name: KIE_SERVER_HOST
-            value: "${EXECUTION_SERVER_HOSTNAME_HTTP}"
-          - name: EXECUTION_SERVER_ROUTE_NAME
+            value: "${KIE_SERVER_HOSTNAME_HTTP}"
+          - name: KIE_SERVER_ROUTE_NAME
             value: "${APPLICATION_NAME}-kieserver"
-          - name: EXECUTION_SERVER_USE_SECURE_ROUTE_NAME
-            value: "${EXECUTION_SERVER_USE_SECURE_ROUTE_NAME}"
+          - name: KIE_SERVER_USE_SECURE_ROUTE_NAME
+            value: "${KIE_SERVER_USE_SECURE_ROUTE_NAME}"
           - name: KIE_SERVER_PWD
             value: "${KIE_SERVER_PWD}"
           - name: KIE_SERVER_USER

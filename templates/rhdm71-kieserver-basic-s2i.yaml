@@ -5,10 +5,10 @@ metadata:
     iconClass: icon-jboss
     tags: rhdm,jboss,kieserver,basic
     version: "1.0"
-    openshift.io/display-name: Red Hat Decision Manager Execution Server 7.1 S2I Ephemeral (no https)
+    openshift.io/display-name: Red Hat Decision Manager KIE server 7.1 S2I Ephemeral (no https)
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for Red Hat Decision Manager Execution Server 7.1 application built using S2I.
-    template.openshift.io/long-description: This template defines resources needed to execute Rules on Red Hat Decision Manager Execution Server 7.1 by providing an application's source code to be built by the S2I, including a build configuration, application deployment configuration and insecure http communication.
+    description: Application template for Red Hat Decision Manager KIE server 7.1 application built using S2I.
+    template.openshift.io/long-description: This template defines resources needed to execute Rules on Red Hat Decision Manager KIE server 7.1 by providing an application's source code to be built by the S2I, including a build configuration, application deployment configuration and insecure http communication.
     template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_red_hat_decision_manager_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
@@ -17,7 +17,7 @@ labels:
   template: rhdm71-kieserver-basic-s2i
   rhdm: "1.0"
 message: |-
-          A new Decision Manager Execution Server application has been created in your project. This deployment
+          A new Decision Manager KIE server application has been created in your project. This deployment
           does not include HTTPS support. The username/password for calls to the Decision Server is
 
               Username: ${KIE_SERVER_USER}
@@ -43,13 +43,13 @@ parameters:
   generate: expression
   required: false
 - displayName: KIE Server User
-  description: KIE execution server user name. Use this user account for API calls to the Decision Server. 
+  description: KIE server user name. Use this user account for API calls to the Decision Server. 
     (Sets the org.kie.server.user system property).
   name: KIE_SERVER_USER
   value: executionUser
   required: false
 - displayName: KIE Server Password
-  description: KIE execution server password (sets the org.kie.server.pwd system property).
+  description: KIE server password (sets the org.kie.server.pwd system property).
   name: KIE_SERVER_PWD
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
@@ -60,19 +60,19 @@ parameters:
   value: ''
   required: false
 - displayName: KIE Server Bypass Auth User
-  description: KIE execution server bypass auth user. If this parameter is set to true, the Decision Server accepts
+  description: KIE server bypass auth user. If this parameter is set to true, the Decision Server accepts
    API calls without user account authorization. (Sets the org.kie.server.bypass.auth.user system property).
   name: KIE_SERVER_BYPASS_AUTH_USER
   value: 'false'
   required: false
 - displayName: KIE MBeans
-  description: KIE execution server MBeans enabled/disabled. These MBeans provide monitoring information. (Sets the 
+  description: KIE server MBeans enabled/disabled. These MBeans provide monitoring information. (Sets the 
     kie.mbeans and kie.scanner.mbeans system properties).
   name: KIE_MBEANS
   value: enabled
   required: false
 - displayName: Drools Server Filter Classes
-  description: KIE execution server class filtering. When this parameter is set to true, the Decision Server extension 
+  description: KIE server class filtering. When this parameter is set to true, the Decision Server extension 
     accepts custom classes annotated by the XmlRootElement or Remotable annotations only. Setting to true is preferable 
     for performance, but some custom decision services might require false. (Sets the org.drools.server.filter.classes
     system property).
@@ -82,7 +82,7 @@ parameters:
 - displayName: Decision Server Custom http Route Hostname
   description: 'Custom hostname for http service route.  Leave blank for default hostname,
     e.g.: <application-name>-execserv-<project>.<default-domain-suffix>'
-  name: EXECUTION_SERVER_HOSTNAME_HTTP
+  name: KIE_SERVER_HOSTNAME_HTTP
   value: ''
   required: false
 - displayName: KIE Server Container Deployment
@@ -175,8 +175,8 @@ parameters:
   displayName: Artifact Directory
   value: ''
   required: false
-- displayName: Execution Server Container Memory Limit
-  description: Execution Server Container memory limit
+- displayName: KIE server Container Memory Limit
+  description: KIE server Container memory limit
   name: EXCECUTION_SERVER_MEMORY_LIMIT
   value: 1Gi
   required: false
@@ -194,7 +194,7 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
     annotations:
-      description: The execution server web server's http port.
+      description: The KIE server web server's http port.
 - kind: Route
   apiVersion: v1
   id: "${APPLICATION_NAME}-kieserver-http"
@@ -203,9 +203,9 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
     annotations:
-      description: Route for execution server's http service.
+      description: Route for KIE server's http service.
   spec:
-    host: "${EXECUTION_SERVER_HOSTNAME_HTTP}"
+    host: "${KIE_SERVER_HOSTNAME_HTTP}"
     to:
       name: "${APPLICATION_NAME}-kieserver"
 - kind: ImageStream

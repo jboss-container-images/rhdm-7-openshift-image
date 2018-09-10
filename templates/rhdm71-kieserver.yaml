@@ -5,10 +5,10 @@ metadata:
     iconClass: icon-jboss
     tags: rhdm,jboss,kieserver
     version: "1.0"
-    openshift.io/display-name: Red Hat Decision Manager Execution Server 7.1 (Ephemeral with https)
+    openshift.io/display-name: Red Hat Decision Manager KIE server 7.1 (Ephemeral with https)
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for Red Hat Decision Manager Execution Server 7.1 application.
-    template.openshift.io/long-description:  This template defines resources needed execute Rules on Red Hat Decision Manager Execution Server 7.1, including application deployment configuration, secure and insecure http communication.
+    description: Application template for Red Hat Decision Manager KIE server 7.1 application.
+    template.openshift.io/long-description:  This template defines resources needed execute Rules on Red Hat Decision Manager KIE server 7.1, including application deployment configuration, secure and insecure http communication.
     template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_red_hat_decision_manager_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
@@ -17,7 +17,7 @@ labels:
   template: rhdm71-kieserver
   rhdm: "1.0"
 message: |-
-          A new Decision Manager Execution Server application has been created in your project.
+          A new Decision Manager KIE server application has been created in your project.
           The username/password for calls to the Decision Server is:
 
               Username: ${KIE_SERVER_USER}
@@ -72,13 +72,13 @@ parameters:
   generate: expression
   required: false
 - displayName: KIE Server User
-  description: KIE execution server user name. Use this user account for API calls to the Decision Server. 
+  description: KIE server user name. Use this user account for API calls to the Decision Server. 
     (Sets the org.kie.server.user system property).
   name: KIE_SERVER_USER
   value: executionUser
   required: false
 - displayName: KIE Server Password
-  description: KIE execution server password (sets the org.kie.server.pwd system property).
+  description: KIE server password (sets the org.kie.server.pwd system property).
   name: KIE_SERVER_PWD
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
@@ -89,7 +89,7 @@ parameters:
   value: ''
   required: false
 - displayName: KIE Server Bypass Auth User
-  description: KIE execution server bypass auth user. If this parameter is set to true, the Decision Server accepts
+  description: KIE server bypass auth user. If this parameter is set to true, the Decision Server accepts
    API calls without user account authorization. (Sets the org.kie.server.bypass.auth.user system property).
   name: KIE_SERVER_BYPASS_AUTH_USER
   value: 'false'
@@ -134,13 +134,13 @@ parameters:
   example: '8080'
   required: false
 - displayName: KIE MBeans
-  description: KIE execution server mbeans enabled/disabled. These MBeans provide monitoring information. (Sets
+  description: KIE server mbeans enabled/disabled. These MBeans provide monitoring information. (Sets
     the kie.mbeans and kie.scanner.mbeans system properties).
   name: KIE_MBEANS
   value: enabled
   required: false
 - displayName: Drools Server Filter Classes
-  description: KIE execution server class filtering. When this parameter is set to true, the Decision Server extension 
+  description: KIE server class filtering. When this parameter is set to true, the Decision Server extension 
     accepts custom classes annotated by the XmlRootElement or Remotable annotations only. Setting to true is preferable 
     for performance, but some custom decision services might require false. (Sets the org.drools.server.filter.classes
     system property).
@@ -150,18 +150,18 @@ parameters:
 - displayName: Decision Server Custom http Route Hostname
   description: 'Custom hostname for http service route, if set will also configure the KIE_SERVER_HOST.  Leave blank for default hostname,
     example: <application-name>-kieserver-<project>.<default-domain-suffix>'
-  name: EXECUTION_SERVER_HOSTNAME_HTTP
+  name: KIE_SERVER_HOSTNAME_HTTP
   value: ''
   required: false
 - displayName: Decision Server Custom https Route Hostname
   description: 'Custom hostname for https service route.  Leave blank for default hostname,
     example: secure-<application-name>-kieserver-<project>.<default-domain-suffix>'
-  name: EXECUTION_SERVER_HOSTNAME_HTTPS
+  name: KIE_SERVER_HOSTNAME_HTTPS
   value: ''
   required: false
 - displayName: Use the secure route name to set KIE_SERVER_HOST.
   description: Use https for the KIE_SERVER_HOST when it is not explicit configured to a custom value.
-  name: EXECUTION_SERVER_USE_SECURE_ROUTE_NAME
+  name: KIE_SERVER_USE_SECURE_ROUTE_NAME
   value: 'false'
   required: false
 - displayName: Server Keystore Secret Name
@@ -202,8 +202,8 @@ parameters:
   name: KIE_SERVER_CONTAINER_DEPLOYMENT
   value: ''
   required: false
-- displayName: Execution Server Container Memory Limit
-  description: Execution Server Container memory limit
+- displayName: KIE server Container Memory Limit
+  description: KIE server Container memory limit
   name: EXCECUTION_SERVER_MEMORY_LIMIT
   value: 1Gi
   required: false
@@ -236,7 +236,7 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
     annotations:
-      description: The execution server web server's http port.
+      description: The KIE server web server's http port.
 - kind: Service
   apiVersion: v1
   spec:
@@ -250,7 +250,7 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
     annotations:
-      description: The execution server web server's https port.
+      description: The KIE server web server's https port.
 - kind: Route
   apiVersion: v1
   id: "${APPLICATION_NAME}-kieserver-http"
@@ -259,9 +259,9 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
     annotations:
-      description: Route for execution server's http service.
+      description: Route for KIE server's http service.
   spec:
-    host: "${EXECUTION_SERVER_HOSTNAME_HTTP}"
+    host: "${KIE_SERVER_HOSTNAME_HTTP}"
     to:
       name: "${APPLICATION_NAME}-kieserver"
 - kind: Route
@@ -272,9 +272,9 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
     annotations:
-      description: Route for execution server's https service.
+      description: Route for KIE server's https service.
   spec:
-    host: "${EXECUTION_SERVER_HOSTNAME_HTTPS}"
+    host: "${KIE_SERVER_HOSTNAME_HTTPS}"
     to:
       name: secure-${APPLICATION_NAME}-kieserver
     tls:
@@ -382,11 +382,11 @@ objects:
           - name: KIE_SERVER_ID
             value: "${KIE_SERVER_ID}"
           - name: KIE_SERVER_HOST
-            value: "${EXECUTION_SERVER_HOSTNAME_HTTP}"
-          - name: EXECUTION_SERVER_ROUTE_NAME
+            value: "${KIE_SERVER_HOSTNAME_HTTP}"
+          - name: KIE_SERVER_ROUTE_NAME
             value: "${APPLICATION_NAME}-kieserver"
-          - name: EXECUTION_SERVER_USE_SECURE_ROUTE_NAME
-            value: "${EXECUTION_SERVER_USE_SECURE_ROUTE_NAME}"
+          - name: KIE_SERVER_USE_SECURE_ROUTE_NAME
+            value: "${KIE_SERVER_USE_SECURE_ROUTE_NAME}"
           - name: KIE_SERVER_PWD
             value: "${KIE_SERVER_PWD}"
           - name: KIE_SERVER_USER
