@@ -1,0 +1,118 @@
+schema_version: 1
+
+name: "rhdm-7/rhdm71-controller-openshift"
+description: "Red Hat Decision Manager Standalone Controller 7.1 container image"
+version: "1.0"
+from: "rhdm-7/rhdm71-controller:latest"
+labels:
+    - name: "com.redhat.component"
+      value: "rhdm-7-rhdm71-controller-openshift-container"
+    - name: "io.k8s.description"
+      value: "Platform for running Red Hat Decision Manager Standalone Controller"
+    - name: "io.k8s.display-name"
+      value: "Red Hat Decision Manager Standalone Controller 7.1"
+    - name: "io.openshift.expose-services"
+      value: "8080:http,8443:https"
+    - name: "io.openshift.tags"
+      value: "javaee,eap,eap7,rhdm,rhdm7"
+envs:
+    - name: "HTTPS_ENABLE_HTTP2"
+      value: "true"
+    - name: "SCRIPT_DEBUG"
+      description: "If set to true, ensures that the bash scripts are executed with the -x option, printing the commands and their arguments as they are executed."
+      example: "true"
+    - name: "KIE_SERVER_USER"
+      example: "executionUser"
+      description: "KIE execution server username for basic authentication (Sets the org.kie.server.user system property)"
+    - name: "KIE_SERVER_PWD"
+      example: "execution1!"
+      description: "KIE execution server password for basic authentication (Sets the org.kie.server.pwd system property)"
+    - name: "KIE_SERVER_TOKEN"
+      example: "dasd373egds"
+      description: "KIE server token for bearer authentication (Sets the org.kie.server.token system property)"
+    - name: "KIE_SERVER_CONTROLLER_SERVICE"
+      example: "deccentr-myapp"
+      description: "KIE server controller service (Used to set the org.kie.server.controller system property if host and port aren't set)"
+    - name: "KIE_SERVER_CONTROLLER_PROTOCOL"
+      example: "http"
+      description: "KIE server controller protocol (Used to set the org.kie.server.controller system property)"
+    - name: "KIE_SERVER_CONTROLLER_HOST"
+      example: "my-app-controller.os.mycloud.com"
+      description: "KIE server controller host (Used to set the org.kie.server.controller system property)"
+    - name: "KIE_SERVER_CONTROLLER_PORT"
+      example: "8080"
+      description: "KIE server controller port (Used to set the org.kie.server.controller system property)"
+    - name: "KIE_SERVER_CONTROLLER_USER"
+      example: "controllerUser"
+      description: "KIE server controller username for basic authentication (Sets the org.kie.server.controller.user system property)"
+    - name: "KIE_SERVER_CONTROLLER_PWD"
+      example: "controller1!"
+      description: "KIE server controller password for basic authentication (Sets the org.kie.server.controller.pwd system property)"
+    - name: "KIE_SERVER_CONTROLLER_TOKEN"
+      example: "dasd373egds"
+      description: "KIE server controller token for bearer authentication (Sets the org.kie.server.controller.token system property)"
+ports:
+    - value: 8080
+    - value: 8443
+    - value: 8778
+modules:
+      repositories:
+          - name: cct_module
+            git:
+                  url: https://github.com/jboss-openshift/cct_module.git
+                  ref: master
+          - name: jboss-eap-modules
+            git:
+                  url: https://github.com/jboss-container-images/jboss-eap-modules.git
+                  ref: master
+          - name: jboss-kie-modules
+            git:
+                  url: https://github.com/jboss-container-images/jboss-kie-modules.git
+                  ref: master
+      install:
+          - name: dynamic-resources
+          - name: java-alternatives
+          - name: os-java-jolokia
+          - name: jolokia
+          - name: os-eap7-openshift
+          - name: os-eap71-openshift
+          - name: os-eap7-modules
+          - name: os-eap71-modules
+          - name: os-eap7-ping
+          - name: os-eap-activemq-rar
+          - name: os-java-run
+          - name: os-eap-launch
+          - name: os-eap7-launch
+          - name: jboss.eap.logging.ext
+          - name: os-eap-probes
+          - name: jboss-maven
+          - name: os-eap-db-drivers
+          - name: os-eap-sso
+          - name: os-eap70-sso
+          - name: os-java-hawkular
+          - name: os-eap70-hawkular
+          - name: os-eap-hawkular
+          - name: os-eap-deployment-scanner
+          - name: os-eap-extensions
+          - name: openshift-layer
+          - name: openshift-passwd
+          - name: os-logging
+          - name: jboss.kie.common
+          - name: jboss.kie.controller
+packages:
+      repositories:
+          - jboss-os
+          - jboss-rhscl
+      install:
+          - python-requests
+          - python-enum34
+          - PyYAML
+          - hostname
+run:
+      user: 185
+      cmd:
+          - "/opt/eap/bin/openshift-launch.sh"
+osbs:
+      repository:
+          name: containers/rhdm-7-controller-openshift
+          branch: jb-rhdm-7.1-controller-openshift-rhel-7
