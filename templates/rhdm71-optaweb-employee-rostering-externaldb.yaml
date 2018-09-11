@@ -6,11 +6,11 @@ metadata:
     iconClass: icon-jboss
     tags: rhdm,jboss,optaweb,employee-rostering,externaldb
     version: "1.0"
-    openshift.io/display-name: Ephemeral Red Hat Decision Manager Employee Rostering Optimizer 7.1 which uses an external DB.
+    openshift.io/display-name: Red Hat Decision Manager Business Optimizer Employee Rostering 7.1 with an external DB.
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for Red Hat Decision Manager Employee Rostering Optimizer 7.1 which uses an external DB.
-    template.openshift.io/long-description: This template defines resources needed to install the Red Hat Business Automation Employee Rostering Optimizer application, including application deployment configuration, secure and insecure http communication and persistent volume to store data that needs to survive to a restart.
-    template.openshift.io/documentation-url: <need_info_from_Geoffrey>
+    description: Red Hat Decision Manager Business Optimizer Employee Rostering 7.1 with an external DB.
+    template.openshift.io/long-description: This web application assists the operations department assign shifts to employees, for example in hospitals, factories, guard firms or call centers. It automatically finds the best employee for each shift, taking into account labor regulations, skill requirements, employee preferences and other constraints.
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_the_employee_roster_starter_application_for_red_hat_business_optimizer_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
   name: rhdm71-optaweb-employee-rostering-externaldb
