@@ -475,24 +475,18 @@ objects:
 - kind: ServiceAccount
   apiVersion: v1
   metadata:
-    name: "${APPLICATION_NAME}-kieserver"
+    name: "${APPLICATION_NAME}-rhdmsvc"
     labels:
       application: "${APPLICATION_NAME}"
 - kind: RoleBinding
   apiVersion: v1
   metadata:
-     name: "${APPLICATION_NAME}-kieserver-view"
+     name: "${APPLICATION_NAME}-rhdmsvc-view"
   subjects:
   - kind: ServiceAccount
-    name: "${APPLICATION_NAME}-kieserver"
+    name: "${APPLICATION_NAME}-rhdmsvc"
   roleRef:
     name: view
-- kind: ServiceAccount
-  apiVersion: v1
-  metadata:
-    name: "${APPLICATION_NAME}-rhdmcentr"
-    labels:
-      application: "${APPLICATION_NAME}"
 - kind: Service
   apiVersion: v1
   spec:
@@ -703,7 +697,7 @@ objects:
           deploymentConfig: "${APPLICATION_NAME}-rhdmcentr"
           application: "${APPLICATION_NAME}"
       spec:
-        serviceAccountName: "${APPLICATION_NAME}-rhdmcentr"
+        serviceAccountName: "${APPLICATION_NAME}-rhdmsvc"
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-rhdmcentr"
@@ -767,6 +761,8 @@ objects:
             value: "${KIE_SERVER_USER}"
           - name: KIE_SERVER_PWD
             value: "${KIE_SERVER_PWD}"
+          - name: WORKBENCH_ROUTE_NAME
+            value: "${APPLICATION_NAME}-rhdmcentr"
           - name: MAVEN_REPO_URL
             value: "${MAVEN_REPO_URL}"
           - name: MAVEN_REPO_USERNAME
@@ -912,7 +908,7 @@ objects:
           deploymentConfig: "${APPLICATION_NAME}-kieserver"
           application: "${APPLICATION_NAME}"
       spec:
-        serviceAccountName: "${APPLICATION_NAME}-kieserver"
+        serviceAccountName: "${APPLICATION_NAME}-rhdmsvc"
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-kieserver"
