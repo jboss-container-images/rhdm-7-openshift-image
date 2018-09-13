@@ -4,61 +4,33 @@ apiVersion: v1
 metadata:
   annotations:
     iconClass: icon-jboss
-    tags: rhdm,jboss,kieserver
+    tags: rhdm,jboss,kieserver,immutable,s2i
     version: "1.0"
-    openshift.io/display-name: Red Hat Decision Manager 7.1 managed KIE Server
+    openshift.io/display-name: Red Hat Decision Manager 7.1 immutable production environment
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for a managed KIE Server, for Red Hat Decision Manager 7.1
-    template.openshift.io/long-description: This template defines resources needed to execute Rules on Red Hat Decision Manager KIE server 7.1, including application deployment configuration, secure and insecure http communication.
-    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_a_red_hat_decision_manager_7.1_managed_server_environment_on_red_hat_openshift_container_platform/
+    description: Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.1
+    template.openshift.io/long-description: This template defines resources needed for a immultable production runtime environment for Red Hat Decision Manager 7.1, including application deployment configuration, secure and insecure http communication and persistent volume to store data that needs to survive to a restart.
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_a_red_hat_decision_manager_7.1_immutable_server_environment_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
-  name: rhdm71-kieserver
+  name: rhdm71-prod-immutable-kieserver
 labels:
-  template: rhdm71-kieserver
+  template: rhdm71-prod-immutable-kieserver
   rhdm: "1.0"
 message: |-
-          A new Decision Manager KIE server application have been created in your project.
-          The username/password for accessing the KIE server
+          A new immutable Red Hat Decision Manager KIE server have been created in your project.
+          The username/password for accessing the KIE server is
 
               Username: ${KIE_SERVER_USER}
               Password: ${KIE_SERVER_PWD}
 
-          Please be sure to create the secret named "${KIE_SERVER_HTTPS_SECRET}" containing the ${KIE_SERVER_HTTPS_KEYSTORE} file used for serving secure content.
+          Please be sure to create the secret named "${KIE_SERVER_HTTPS_SECRET}" containing the ${KIE_SERVER_HTTPS_KEYSTORE} files used for serving secure content.
 parameters:
 - displayName: Application Name
   description: The name for the application.
   name: APPLICATION_NAME
   value: myapp
   required: true
-- displayName: Maven repository URL
-  description: Fully qualified URL to a Maven repository or service.
-  name: MAVEN_REPO_URL
-  example: http://nexus.nexus-project.svc.cluster.local:8081/nexus/content/groups/public/
-  required: true
-- displayName: Maven repository username
-  description: Username to access the Maven repository, if required.
-  name: MAVEN_REPO_USERNAME
-  required: false
-- displayName: Maven repository password
-  description: Password to access the Maven repository, if required.
-  name: MAVEN_REPO_PASSWORD
-  required: false
-- displayName: Name of the Maven service hosted by Decision Central
-  description: The service name for the optional decision central, where it can be reached, to allow service lookups (for maven repo usage), if required
-  name: DECISION_CENTRAL_MAVEN_SERVICE
-  example: "myapp-rhdmcentr"
-  required: false
-- displayName: Username for the Maven service hosted by Decision Central
-  description: Username to access the Maven service hosted by Decision Central inside EAP.
-  name: DECISION_CENTRAL_MAVEN_USERNAME
-  example: "mavenUser"
-  required: false
-- displayName: Password for the Maven service hosted by Decision Central
-  description: Password to access the Maven service hosted by Decision Central inside EAP.
-  name: DECISION_CENTRAL_MAVEN_PASSWORD
-  example: "maven1!"
-  required: false
 - displayName: KIE Admin User
   description: KIE administrator username
   name: KIE_ADMIN_USER
@@ -70,20 +42,20 @@ parameters:
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
   required: false
-- displayName: KIE Server ID
-  description: The KIE server ID to use, which defaults to ${APPLICATION_NAME}-kieserver if not specified (Sets the org.kie.server.id system property).
-  name: KIE_SERVER_ID
-  required: false
 - displayName: KIE Server User
   description: KIE server username (Sets the org.kie.server.user system property)
   name: KIE_SERVER_USER
   value: executionUser
   required: false
 - displayName: KIE Server Password
-  description: KIE server password (Sets the org.kie.server.pwd system property)
+  description: KIE server password, used to connect to KIE servers. Generated value can be a suggestion to use for thew s2i various (Sets the org.kie.server.pwd system property)
   name: KIE_SERVER_PWD
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
+  required: false
+- displayName: KIE Server ID
+  description: The KIE server ID to use, which defaults to ${APPLICATION_NAME}-kieserver if not specified (Sets the org.kie.server.id system property).
+  name: KIE_SERVER_ID
   required: false
 - displayName: ImageStream Namespace
   description: Namespace in which the ImageStreams for Red Hat Middleware images are
@@ -188,26 +160,89 @@ parameters:
   name: KIE_SERVER_BYPASS_AUTH_USER
   value: 'false'
   required: false
+- displayName: KIE Server Container Deployment
+  description: 'KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version|c2=g2:a2:v2'
+  name: KIE_SERVER_CONTAINER_DEPLOYMENT
+  example: rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT
+  required: true
+- displayName: Git Repository URL
+  description: Git source URI for application
+  name: SOURCE_REPOSITORY_URL
+  example: https://github.com/jboss-container-images/rhdm-7-openshift-image.git
+  required: true
+- displayName: Git Reference
+  description: Git branch/tag reference
+  name: SOURCE_REPOSITORY_REF
+  example: rhdm71-dev
+  required: false
+- displayName: Context Directory
+  description: Path within Git project to build; empty for root project directory.
+  name: CONTEXT_DIR
+  example: quickstarts/hello-rules/hellorules
+  required: false
+- displayName: Github Webhook Secret
+  description: GitHub trigger secret
+  name: GITHUB_WEBHOOK_SECRET
+  from: "[a-zA-Z0-9]{8}"
+  generate: expression
+  required: true
+- displayName: Generic Webhook Secret
+  description: Generic build trigger secret
+  name: GENERIC_WEBHOOK_SECRET
+  from: "[a-zA-Z0-9]{8}"
+  generate: expression
+  required: true
+- displayName: Maven mirror URL
+  description: Maven mirror to use for S2I builds
+  name: MAVEN_MIRROR_URL
+  required: false
+- displayName: Maven repository URL
+  description: Fully qualified URL to a Maven repository.
+  name: MAVEN_REPO_URL
+  required: false
+- displayName: Maven repository username
+  description: Username to access the Maven repository, if required.
+  name: MAVEN_REPO_USERNAME
+  required: false
+- displayName: Maven repository password
+  description: Password to access the Maven repository, if required.
+  name: MAVEN_REPO_PASSWORD
+  required: false
+- displayName: Name of the Maven service hosted by Decision Central
+  description: The service name for the optional decision central, where it can be reached, to allow service lookups (for maven repo usage), if required
+  name: DECISION_CENTRAL_MAVEN_SERVICE
+  example: "myapp-rhdmcentr"
+  required: false
+- displayName: Username for the Maven service hosted by Decision Central
+  description: Username to access the Maven service hosted by Decision Central inside EAP.
+  name: DECISION_CENTRAL_MAVEN_USERNAME
+  example: "mavenUser"
+  required: false
+- displayName: Password for the Maven service hosted by Decision Central
+  description: Password to access the Maven service hosted by Decision Central inside EAP.
+  name: DECISION_CENTRAL_MAVEN_PASSWORD
+  example: "maven1!"
+  required: false
+- displayName: List of directories from which archives will be copied into the deployment folder
+  description: List of directories from which archives will be copied into the deployment folder. If unspecified, all archives in /target will be copied.
+  name: ARTIFACT_DIR
+  value: ''
+  required: false
 - displayName: KIE Server Container Memory Limit
   description: KIE server Container memory limit
   name: KIE_SERVER_MEMORY_LIMIT
   value: 1Gi
   required: false
-- displayName: KIE Server Container Deployment
-  description: 'KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version|c2=g2:a2:v2'
-  name: KIE_SERVER_CONTAINER_DEPLOYMENT
-  example: rhdm-kieserver-library=org.openshift.quickstarts:rhdm-kieserver-library:1.4.0-SNAPSHOT
-  required: false
 - displayName: Disable KIE Server Management
-  description: "When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable."
+  description: "Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy."
   name: KIE_SERVER_MGMT_DISABLED
-  example: "true"
-  required: false
+  value: "true"
+  required: true
 - displayName: KIE Server Startup Strategy
   description: "When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable."
   name: KIE_SERVER_STARTUP_STRATEGY
-  example: "LocalContainersStartupStrategy"
-  required: false
+  value: LocalContainersStartupStrategy
+  required: true
 - displayName: RH-SSO URL
   description: RH-SSO URL
   name: SSO_URL
@@ -441,6 +476,58 @@ objects:
       targetPort: https
     tls:
       termination: passthrough
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-kieserver"
+    labels:
+      application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-kieserver"
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-kieserver"
+    labels:
+      application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-kieserver"
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
+  spec:
+    source:
+      type: Git
+      git:
+        uri: "${SOURCE_REPOSITORY_URL}"
+        ref: "${SOURCE_REPOSITORY_REF}"
+      contextDir: "${CONTEXT_DIR}"
+    strategy:
+      type: Source
+      sourceStrategy:
+        env:
+        - name: KIE_SERVER_CONTAINER_DEPLOYMENT
+          value: "${KIE_SERVER_CONTAINER_DEPLOYMENT}"
+        - name: MAVEN_MIRROR_URL
+          value: "${MAVEN_MIRROR_URL}"
+        - name: ARTIFACT_DIR
+          value: "${ARTIFACT_DIR}"
+        forcePull: true
+        from:
+          kind: ImageStreamTag
+          namespace: "${IMAGE_STREAM_NAMESPACE}"
+          name: "${KIE_SERVER_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "${APPLICATION_NAME}-kieserver:latest"
+    triggers:
+    - type: GitHub
+      github:
+        secret: "${GITHUB_WEBHOOK_SECRET}"
+    - type: Generic
+      generic:
+        secret: "${GENERIC_WEBHOOK_SECRET}"
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -460,11 +547,10 @@ objects:
         containerNames:
         - "${APPLICATION_NAME}-kieserver"
         from:
-          kind: ImageStreamTag
-          namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "${KIE_SERVER_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
+          kind: ImageStream
+          name: "${APPLICATION_NAME}-kieserver"
     - type: ConfigChange
-    replicas: 1
+    replicas: 2
     selector:
       deploymentConfig: "${APPLICATION_NAME}-kieserver"
     template:
@@ -479,7 +565,7 @@ objects:
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-kieserver"
-          image: "${KIE_SERVER_IMAGE_STREAM_NAME}"
+          image: "${APPLICATION_NAME}-kieserver"
           imagePullPolicy: Always
           resources:
             limits:
@@ -576,10 +662,6 @@ objects:
             value: "${MAVEN_REPO_USERNAME}"
           - name: EXTERNAL_MAVEN_REPO_PASSWORD
             value: "${MAVEN_REPO_PASSWORD}"
-          - name: KIE_SERVER_MGMT_DISABLED
-            value: "${KIE_SERVER_MGMT_DISABLED}"
-          - name: KIE_SERVER_STARTUP_STRATEGY
-            value: "${KIE_SERVER_STARTUP_STRATEGY}"
           - name: HTTPS_KEYSTORE_DIR
             value: "/etc/kieserver-secret-volume"
           - name: HTTPS_KEYSTORE
@@ -588,6 +670,10 @@ objects:
             value: "${KIE_SERVER_HTTPS_NAME}"
           - name: HTTPS_PASSWORD
             value: "${KIE_SERVER_HTTPS_PASSWORD}"
+          - name: KIE_SERVER_MGMT_DISABLED
+            value: "${KIE_SERVER_MGMT_DISABLED}"
+          - name: KIE_SERVER_STARTUP_STRATEGY
+            value: "${KIE_SERVER_STARTUP_STRATEGY}"
           - name: JGROUPS_PING_PROTOCOL
             value: "openshift.DNS_PING"
           - name: OPENSHIFT_DNS_PING_SERVICE_NAME
