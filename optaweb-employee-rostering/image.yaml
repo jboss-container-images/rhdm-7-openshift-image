@@ -15,8 +15,6 @@ labels:
       value: "8080:http,8443:https"
     - name: "io.openshift.tags"
       value: "builder,javaee,eap,eap7,rhdm,rhdm7"
-    - name: "io.openshift.s2i.scripts-url"
-      value: "image:///usr/local/s2i"
 envs:
     - name: "HTTPS_ENABLE_HTTP2"
       value: "true"
@@ -54,9 +52,7 @@ modules:
                   ref: master
       install:
           - name: dynamic-resources
-          - name: s2i-common
           - name: java-alternatives
-          - name: os-eap-s2i
           - name: os-java-jolokia
           - name: jolokia
           - name: os-eap7-openshift
