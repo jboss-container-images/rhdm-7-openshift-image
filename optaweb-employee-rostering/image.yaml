@@ -21,18 +21,19 @@ envs:
     - name: "SCRIPT_DEBUG"
       description: "If set to true, ensures that the bash scripts are executed with the -x option, printing the commands and their arguments as they are executed."
       example: "true"
-    - name: "STI_BUILDER"
-      value: "jee"
+    - name: "OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DATASOURCE"
+      example: "java:/jboss/datasources/optaweb"
+      description: "Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property)"
     - name: "OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT"
       example: "org.hibernate.dialect.MySQL5Dialect"
-      description: "server persistence dialect"
-    - name: "OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DS"
-      example: "java:/jboss/datasources/optaweb"
-      description: "server persistence datasource for persistence.xml"
+      description: "Optaweb employee rostering persistence dialect (Sets the org.optaweb.employeerostering.persistence.dialect system property)"
+    - name: "OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_HBM2DDL_AUTO"
+      example: "update"
+      description: "Optaweb employee rostering persistence hbm2ddl auto (Sets the org.optaweb.employeerostering.persistence.hbm2ddl.auto system property)"
     - name: "OPTAWEB_GENERATOR_ZONE_ID"
       # Keep example/description in sync with documentation https://github.com/kiegroup/optaweb-employee-rostering/blob/master/employee-rostering-docs/src/main/asciidoc/Introduction/SystemProperties/SystemProperties-section.adoc
       example: "America/New_York"
-      description: "The time zone ID for the automatically generated tenants. This defaults to the system default Zone ID."
+      description: "The timezone id used by the OptaWeb Generator (Sets the optaweb.generator.zoneId system property; defaults to local timezone)"
 ports:
     - value: 8080
     - value: 8443
@@ -68,8 +69,6 @@ modules:
           - name: os-eap-probes
           - name: jboss-maven
           - name: os-eap-db-drivers
-          - name: os-eap-sso
-          - name: os-eap70-sso
           - name: os-java-hawkular
           - name: os-eap70-hawkular
           - name: os-eap-hawkular
