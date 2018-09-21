@@ -213,15 +213,6 @@ parameters:
   description: RH-SSO Realm name
   name: SSO_REALM
   required: false
-- displayName: Decision Central RH-SSO Client name
-  description: Decision Central RH-SSO Client name
-  name: DECISION_CENTRAL_SSO_CLIENT
-  required: false
-- displayName: Decision Central RH-SSO Client Secret
-  description: Decision Central RH-SSO Client Secret
-  name: DECISION_CENTRAL_SSO_SECRET
-  example: "252793ed-7118-4ca8-8dab-5622fa97d892"
-  required: false
 - displayName: KIE Server RH-SSO Client name
   description: KIE Server RH-SSO Client name
   name: KIE_SERVER_SSO_CLIENT
