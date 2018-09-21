@@ -666,6 +666,7 @@ objects:
     name: "${APPLICATION_NAME}-rhdmcentr"
     labels:
       application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-rhdmcentr"
     annotations:
       template.alpha.openshift.io/wait-for-ready: "true"
   spec:
@@ -880,6 +881,7 @@ objects:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
       application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-kieserver"
     annotations:
       template.alpha.openshift.io/wait-for-ready: "true"
   spec:
@@ -1082,6 +1084,7 @@ objects:
     name: "${APPLICATION_NAME}-rhdmindex"
     labels:
       application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-rhdmindex"
     annotations:
       template.alpha.openshift.io/wait-for-ready: "true"
   spec:
