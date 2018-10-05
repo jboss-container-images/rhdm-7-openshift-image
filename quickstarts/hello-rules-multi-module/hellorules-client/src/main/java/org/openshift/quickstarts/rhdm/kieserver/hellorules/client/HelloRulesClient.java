@@ -41,7 +41,6 @@ import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
 import org.kie.server.client.RuleServicesClient;
 
-
 import org.openshift.quickstarts.rhdm.kieserver.hellorules.Greeting;
 import org.openshift.quickstarts.rhdm.kieserver.hellorules.Person;
 import org.slf4j.Logger;
@@ -134,14 +133,14 @@ public class HelloRulesClient {
         RuleServicesClient client = KieServicesFactory.newKieServicesClient(config).getServicesClient(RuleServicesClient.class);
         BatchExecutionCommand batch = createBatch();
         ServiceResponse<ExecutionResults> response = client.executeCommandsWithResults("rhdm-kieserver-hellorules", batch);
-        //logger.info(String.valueOf(response));
+        logger.debug(String.valueOf(response));
         ExecutionResults execResults = response.getResult();
         handleResults(callback, execResults);
     }
 
     private BatchExecutionCommand createBatch() {
         Person person = new Person(System.getProperty("user.name"));
-        List<Command<?>> cmds = new ArrayList<Command<?>>();
+        List<Command<?>> cmds = new ArrayList<>();
         KieCommands commands = KieServices.Factory.get().getCommands();
         cmds.add(commands.newInsert(person));
         cmds.add(commands.newFireAllRules());
