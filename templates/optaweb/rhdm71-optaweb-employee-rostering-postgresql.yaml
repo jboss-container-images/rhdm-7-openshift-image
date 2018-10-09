@@ -4,7 +4,7 @@ apiVersion: v1
 metadata:
   annotations:
     iconClass: icon-jboss
-    tags: rhdm,jboss,optaweb,employee-rostering,postgresql
+    tags: rhdm,decisionserver,jboss,optaweb,employee-rostering,postgresql
     version: "1.0"
     openshift.io/display-name: Red Hat Decision Manager 7.1 Business Optimizer Employee Rostering with a PostgreSQL database
     openshift.io/provider-display-name: Red Hat, Inc.
