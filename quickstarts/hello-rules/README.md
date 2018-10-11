@@ -4,9 +4,10 @@ This quickstart is intend to be used with the [RHDM Kie Server](https://github.c
 
 ## How to use it?
 
-To deploy the Hello Rules demo you can use the [rhdm71-kieserver-s2i](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/rhdm71-dev/templates/rhdm71-kieserver-s2i.yaml)
+[rhdm71-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/rhdm71-dev/templates/rhdm71-prod-immutable-kieserver.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
+
 
 ```bash
 $ oc login https://<your_openshift_address>:<port>
@@ -15,131 +16,160 @@ Username: developer
 Password: 
 Login successful.
 
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-    default
-    kube-public
-    kube-system
-    logging
-    management-infra
-    nexus
-    openshift
-    openshift-infra
-    openshift-node
-  * rhdm
-
-Using project "rhdm".
 ```
+
+Create a new project, i.e.:
+
 ```bash
-$ oc new-project decisionserver
-Now using project "rhdm-kieserver" on server "https://ocp-master.cloud.com:8443".
-
-You can add applications to this project with the 'new-app' command. For example, try:
-
-    oc new-app centos/ruby-22-centos7~https://github.com/openshift/ruby-ex.git
-
-to build a new example application in Ruby.
+$ oc new-project rhdm
+Now using project "rhdm" on server "https://ocp-master.severinocloud.com:8443".
 ```
 
 Make sure that you have the RHDM template installed in your OpenShift Instance:
 ```bash
-$ oc get template rhdm71-kieserver-s2i -n openshift
-Error from server (NotFound): templates "rhdm71-kieserver-s2i" not found
+$ oc get template rhdm71-prod-immutable-kieserver -n openshift
+Error from server (NotFound): templates "rhdm71-prod-immutable-kieserver" not found
 ```
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm71-dev/templates/rhdm71-kieserver-s2i.yaml -n openshift
-template "rhdm71-kieserver-s2i" created
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm71-dev/templates/rhdm71-prod-immutable-kieserver.yaml -n openshift
+template "rhdm71-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm71-dev/kieserver-app-secret.yaml
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm71-dev/example-app-secret-template.yaml
+$ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
+--> Deploying template "rhdm1/example-app-secret" to project rhdm
+
+     example-app-secret
+     ---------
+     Examples that can be installed into your project to allow you to test the Red Hat Decision Central templates. You should replace the contents with data that is more appropriate for your deployment.
+
+     * With parameters:
+        * Secret Name=decisioncentral-app-secret
+
+--> Creating resources ...
+    secret "decisioncentral-app-secret" created
+--> Success
+    Run 'oc status' to view your app.
 ```
 
-
 ```bash
-$ oc new-app rhdm71-kieserver-s2i
-  --> Deploying template "openshift/rhdm71-kieserver-s2i" to project rhdm-kieserver
-  
-       Red Hat Decision Manager KIE Server 7.1 S2I (Ephemeral with https)
-       ---------
-       Application template for Red Hat Decision Manager KIE Server 7.1 application built using S2I.
-  
-       A new Decision Manager KIE Server application has been created in your project. Please be sure to create the "kieserver-service-account" service account and the secret named "kieserver-app-secret" containing the keystore.jks file used for serving secure content.
-  
-       * With parameters:
-          * Application Name=myapp
-          * EAP Admin User=eapadmin
-          * EAP Admin Password=cWTrvp4! # generated
-          * KIE Server Controller User=controllerUser
-          * KIE Server Controller Password=HVIIPy2! # generated
-          * KIE server controller protocol=http
-          * KIE server controller service=
-          * KIE server controller host=
-          * KIE server controller port=
-          * KIE Admin User=adminUser
-          * KIE Admin Password=Srkxpd0! # generated
-          * KIE Server Sync Deploy=false
-          * KIE Server User=executionUser
-          * KIE Server Password=qjxFyb6! # generated
-          * KIE Server Bypass Auth User=false
-          * KIE MBeans=enabled
-          * Drools Server Filter Classes=true
-          * KIE Server Custom http Route Hostname=
-          * KIE Server Custom https Route Hostname=
-          * Server Keystore Secret Name=kieserver-app-secret
-          * Server Keystore Filename=keystore.jks
-          * Server Certificate Name=jboss
-          * Server Keystore Password=mykeystorepass
-          * KIE Server Container Deployment=rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0.Final
-          * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
-          * Git Reference=rhdm71-dev
-          * Context Directory=quickstarts/hello-rules/hellorules
-          * Github Webhook Secret=XK6KW5dB # generated
-          * Generic Webhook Secret=MmEl1Rr5 # generated
-          * ImageStream Namespace=openshift
-          * Maven mirror URL=
-          * Maven repository URL=
-          * Maven repository username=
-          * Maven repository password=
-          * ARTIFACT_DIR=
-  
-  --> Creating resources ...
-      service "myapp-kieserver" created
-      service "secure-myapp-kieserver" created
-      route "myapp-kieserver" created
-      route "secure-myapp-kieserver" created
-      imagestream "myapp-kieserver" created
-      buildconfig "myapp-kieserver" created
-      deploymentconfig "myapp-kieserver" created
-  --> Success
-      Build scheduled, use 'oc logs -f bc/myapp-kieserver' to track its progress.
-      Run 'oc status' to view your app.
+$ oc new-app rhdm71-prod-immutable-kieserver \
+-p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
+-p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT \
+-p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
+-p SOURCE_REPOSITORY_REF=rhdm71-dev \
+-p CONTEXT_DIR=quickstarts/hello-rules/hellorules
+  --> Deploying template "openshift/rhdm71-prod-immutable-kieserver" to project rhdm1
+
+     Red Hat Decision Manager 7.1 immutable production environment
+     ---------
+     Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.1
+
+     A new immutable Red Hat Decision Manager KIE server have been created in your project.
+     The username/password for accessing the KIE server is
+     
+         Username: executionUser
+         Password: QTSdSM4!
+     
+     Please be sure to create the secret named "decisioncentral-app-secret" containing the keystore.jks files used for serving secure content.
+
+     * With parameters:
+        * Application Name=myapp
+        * KIE Admin User=adminUser
+        * KIE Admin Password=ujcLVk2! # generated
+        * KIE Server User=executionUser
+        * KIE Server Password=QTSdSM4! # generated
+        * ImageStream Namespace=openshift
+        * KIE Server ImageStream Name=rhdm71-kieserver-openshift
+        * ImageStream Tag=1.0
+        * KIE Server Controller User=controllerUser
+        * KIE Server Controller Password=
+        * KIE Server Controller Token=
+        * KIE Server Controller Service=
+        * KIE Server Controller host=
+        * KIE Server Controller port=
+        * Drools Server Filter Classes=true
+        * KIE MBeans=enabled
+        * KIE Server Custom http Route Hostname=
+        * KIE Server Custom https Route Hostname=
+        * Use the secure route name to set KIE_SERVER_HOST.=false
+        * KIE Server Keystore Secret Name=decisioncentral-app-secret
+        * KIE Server Keystore Filename=keystore.jks
+        * KIE Server Certificate Name=jboss
+        * KIE Server Keystore Password=mykeystorepass
+        * KIE Server Bypass Auth User=false
+        * KIE Server Container Deployment=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT
+        * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
+        * Git Reference=rhdm71-dev
+        * Context Directory=quickstarts/hello-rules/hellorules
+        * Github Webhook Secret=Uhamio24 # generated
+        * Generic Webhook Secret=GqA8F1TX # generated
+        * Maven mirror URL=
+        * Maven repository ID=
+        * Maven repository URL=
+        * Maven repository username=
+        * Maven repository password=
+        * Name of the Maven service hosted by Decision Central=
+        * Username for the Maven service hosted by Decision Central=
+        * Password for the Maven service hosted by Decision Central=
+        * List of directories from which archives will be copied into the deployment folder=
+        * KIE Server Container Memory Limit=1Gi
+        * Disable KIE Server Management=true
+        * KIE Server Startup Strategy=LocalContainersStartupStrategy
+        * RH-SSO URL=
+        * RH-SSO Realm name=
+        * KIE Server RH-SSO Client name=
+        * KIE Server RH-SSO Client Secret=
+        * RH-SSO Realm Admin Username=
+        * RH-SSO Realm Admin Password=
+        * RH-SSO Disable SSL Certificate Validation=false
+        * RH-SSO Principal Attribute=preferred_username
+        ...
+
+W1009 15:35:32.176038   20956 newapp.go:1203] Unable to check for circular build input: Unable to check for circular build input/outputs: imagestreams.image.openshift.io "rhdm71-kieserver-openshift" not found
+--> Creating resources ...
+    serviceaccount "myapp-kieserver" created
+    rolebinding "myapp-kieserver-view" created
+    service "myapp-kieserver" created
+    service "myapp-kieserver-ping" created
+    route "myapp-kieserver" created
+    route "secure-myapp-kieserver" created
+    imagestream "myapp-kieserver" created
+    buildconfig "myapp-kieserver" created
+    deploymentconfig "myapp-kieserver" created
+--> Success
+    Access your application via route 'myapp-kieserver-rhdm1.severinocloud.com' 
+    Access your application via route 'secure-myapp-kieserver-rhdm1.severinocloud.com' 
+    Build scheduled, use 'oc logs -f bc/myapp-kieserver' to track its progress.
+    Run 'oc status' to view your app.
+
 ```
 
 Now you can deploy the [hellorules-client](hellorules-client) in the same or another project and test RHDM Kie Server container.
 
-To deploy the hello rules client you can use the **eap64-basic-s2i** (It is available in the OpenShift Catalog) template and specify the above quickstart to be deployed.
+To deploy the hello rules client you can use the **eap71-basic-s2i** (It is available in the OpenShift Catalog) template and specify the above quickstart to be deployed.
 To do so, execute the following commands:
 
 ```bash
-oc new-app eap64-basic-s2i \
-    -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
-    -p SOURCE_REPOSITORY_REF=rhdm71-dev \ 
-    -p CONTEXT_DIR=quickstarts/hello-rules
+$ oc new-app eap71-basic-s2i \
+-p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
+-p SOURCE_REPOSITORY_REF=rhdm71-dev \ 
+-p CONTEXT_DIR=quickstarts/hello-rules
 ```
 
 As result you should see something like this:
 ```bash
---> Deploying template "openshift/eap64-basic-s2i" to project rhdm-kieserver
+--> Deploying template "openshift/eap71-basic-s2i" to project rhdm
 
-     JBoss EAP 6.4 (no https)
+     JBoss EAP 7.1 (no https)
      ---------
-     An example EAP 6 application. For more information about using this template, see https://github.com/jboss-openshift/application-templates.
+     An example EAP 7 application. For more information about using this template, see https://github.com/jboss-openshift/application-templates.
 
-     A new EAP 6 based application has been created in your project.
+     A new EAP 7 based application has been created in your project.
 
      * With parameters:
         * Application Name=eap-app
@@ -149,33 +179,36 @@ As result you should see something like this:
         * Context Directory=quickstarts/hello-rules
         * Queues=
         * Topics=
-        * HornetQ Password=BWJ2yui6 # generated
-        * Github Webhook Secret=6pDyrJ7T # generated
-        * Generic Webhook Secret=dIlJdN3B # generated
+        * A-MQ cluster password=wMafLKF6 # generated
+        * Github Webhook Secret=BKqfureQ # generated
+        * Generic Webhook Secret=V8QsIkAW # generated
         * ImageStream Namespace=openshift
-        * JGroups Cluster Password=Oq4cTP8s # generated
+        * JGroups Cluster Password=kqnf2NGT # generated
         * Deploy Exploded Archives=false
         * Maven mirror URL=
+        * Maven Additional Arguments=-Dcom.redhat.xpaas.repo.jbossorg
         * ARTIFACT_DIR=
+        * MEMORY_LIMIT=1Gi
 
 --> Creating resources ...
     service "eap-app" created
+    service "eap-app-ping" created
     route "eap-app" created
     imagestream "eap-app" created
     buildconfig "eap-app" created
     deploymentconfig "eap-app" created
 --> Success
+    Access your application via route 'eap-app-rhdm1.severinocloud.com' 
     Build scheduled, use 'oc logs -f bc/eap-app' to track its progress.
     Run 'oc status' to view your app.
-
 ```
 
 After the application is built, access the hello rules client app through the route created:
-
 ```bash
+
 $ oc get routes eap-app
-NAME      HOST/PORT                                         PATH      SERVICES   PORT      TERMINATION   WILDCARD
-eap-app  eap-app-rhdm-kieserver.<your_openshift_suffix>               eap-app    <all>                   None
+NAME      HOST/PORT                               PATH      SERVICES   PORT      TERMINATION   WILDCARD
+eap-app   eap-app-rhdm.<your_openshift_suffix>              eap-app    <all>                   None
 ```
 
 Note that this route should be resolvable.

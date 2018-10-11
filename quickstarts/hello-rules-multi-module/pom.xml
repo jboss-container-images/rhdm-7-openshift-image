@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.drools</groupId>
+        <artifactId>droolsjbpm-integration</artifactId>
+        <version>7.11.0.Final</version>
+    </parent>
+
+    <groupId>org.openshift.quickstarts</groupId>
+    <artifactId>rhdm-kieserver-parent</artifactId>
+    <version>1.4.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>OpenShift Quickstarts: RHDM Kie Server: Parent</name>
+    <description>OpenShift Quickstarts: RHDM Kie Server: Parent</description>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <distribution>repo</distribution>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+        </license>
+    </licenses>
+
+    <properties>
+        <version.org.kie.remote.common>6.5.0.Final</version.org.kie.remote.common>
+        <version.org.jboss.spec.jboss.javaee7>7.1.4.GA</version.org.jboss.spec.jboss.javaee7>
+        <!-- Explicitly declaring the source encoding eliminates the following message: -->
+        <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent! -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- maven-compiler-plugin -->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-eap-javaee7</artifactId>
+                <version>${version.org.jboss.spec.jboss.javaee7}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openshift.quickstarts</groupId>
+                <artifactId>rhdm-kieserver-hellorules</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie.remote</groupId>
+                <artifactId>kie-remote-common</artifactId>
+                <scope>compile</scope>
+                <version>${version.org.kie.remote.common}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openshift.quickstarts</groupId>
+                <artifactId>rhdm-kieserver-hellorules-model</artifactId>
+                <version>1.4.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <modules>
+        <module>hellorules</module>
+        <module>hellorules-client</module>
+        <module>hellorules-model</module>
+    </modules>
+
+</project>

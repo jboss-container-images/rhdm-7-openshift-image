@@ -41,6 +41,7 @@ import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
 import org.kie.server.client.RuleServicesClient;
 
+
 import org.openshift.quickstarts.rhdm.kieserver.hellorules.Greeting;
 import org.openshift.quickstarts.rhdm.kieserver.hellorules.Person;
 import org.slf4j.Logger;
@@ -72,9 +73,6 @@ public class HelloRulesClient {
         } else if ("runRemoteRest".equals(command)) {
             client.runRemoteRest(callback);
             run = true;
-        } else if ("runRemoteHornetQ".equals(command)) {
-            client.runRemoteHornetQ(callback);
-            run = true;
         } else if ("runRemoteActiveMQ".equals(command)) {
             client.runRemoteActiveMQ(callback);
             run = true;
@@ -94,7 +92,7 @@ public class HelloRulesClient {
     private void runRemoteRest(HelloRulesCallback callback) throws Exception {
         String baseurl = getBaseUrl(callback, "http", "localhost", "8080");
         String resturl = baseurl + "/services/rest/server";
-        logger.debug("---------> resturl: " + resturl);
+        logger.info("---------> resturl: " + resturl);
         String username = getUsername(callback);
         String password = getPassword(callback);
         KieServicesConfiguration config = KieServicesFactory.newRestConfiguration(resturl, username, password);
@@ -102,22 +100,6 @@ public class HelloRulesClient {
             config.setUseSsl(true);
             forgiveUnknownCert();
         }
-        runRemote(callback, config);
-    }
-
-    private void runRemoteHornetQ(HelloRulesCallback callback) throws Exception {
-        String baseurl = getBaseUrl(callback, "remote", "localhost", "4447");
-        String username = getUsername(callback);
-        String password = getPassword(callback);
-        String qusername = getQUsername(callback);
-        String qpassword = getQPassword(callback);
-        Properties props = new Properties();
-        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
-        props.setProperty(Context.PROVIDER_URL, baseurl);
-        props.setProperty(Context.SECURITY_PRINCIPAL, username);
-        props.setProperty(Context.SECURITY_CREDENTIALS, password);
-        InitialContext context = new InitialContext(props);
-        KieServicesConfiguration config = KieServicesFactory.newJMSConfiguration(context, qusername, qpassword);
         runRemote(callback, config);
     }
 
@@ -240,7 +222,7 @@ public class HelloRulesClient {
 
     private MarshallingFormat getMarshallingFormat() {
         // can use xstream, xml (jaxb), or json
-        String type = System.getProperty("MarshallingFormat", "xstream");
+        String type = System.getProperty("MarshallingFormat", "jaxb");
         if (type.trim().equalsIgnoreCase("jaxb")) {
             type = "xml";
         }
