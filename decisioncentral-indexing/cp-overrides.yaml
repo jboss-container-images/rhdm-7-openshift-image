@@ -1,17 +1,17 @@
 schema_version: 1
 
-from: "rhdm-7/rhdm71-decisioncentral-indexing:7.1.0"
+from: "rhdm-7/rhdm72-decisioncentral-indexing:7.2.0"
 modules:
       repositories:
           - name: cct_module
             git:
                   url: https://github.com/jboss-openshift/cct_module.git
-                  ref: sprint-24
+                  ref: sprint-25
           - name: jboss-kie-modules
             git:
                   url: https://github.com/jboss-container-images/jboss-kie-modules.git
-                  ref: rhdm-7.1.0.GA
+                  ref: rhdm-7.2.0.GA
 osbs:
       repository:
           name: containers/rhdm-7-decisioncentral-indexing-openshift
-          branch: jb-rhdm-7.1-decisioncentral-indexing-openshift-cp-rhel-7
+          branch: jb-rhdm-7.2-decisioncentral-indexing-openshift-cp-rhel-7

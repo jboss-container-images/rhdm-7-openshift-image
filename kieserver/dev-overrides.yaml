@@ -1,6 +1,6 @@
 schema_version: 1
 
-from: "rhdm-7/rhdm71-kieserver:latest"
+from: "rhdm-7/rhdm72-kieserver:latest"
 modules:
       repositories:
           - name: cct_module
@@ -18,4 +18,4 @@ modules:
 osbs:
       repository:
           name: containers/rhdm-7-kieserver-openshift
-          branch: jb-rhdm-7.1-kieserver-openshift-dev-rhel-7
+          branch: jb-rhdm-7.2-kieserver-openshift-dev-rhel-7
