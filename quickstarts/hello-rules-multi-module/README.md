@@ -1,10 +1,10 @@
 ## Red Hat Decision Manager Kie Server Quickstart - Multi module
 
-This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/rhdm71-dev/kieserver) image.
+This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/master/kieserver) image.
 
 ## How to use it?
 
-To deploy the Hello Rules demo you can use the [rhdm71-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/rhdm71-dev/templates/rhdm71-prod-immutable-kieserver.yaml)
+To deploy the Hello Rules demo you can use the [rhdm72-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/master/templates/rhdm72-prod-immutable-kieserver.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
 
@@ -27,19 +27,19 @@ Now using project "rhdm" on server "https://ocp-master.severinocloud.com:8443".
 
 Make sure that you have the RHDM template installed in your OpenShift Instance:
 ```bash
-$ oc get template rhdm71-prod-immutable-kieserver -n openshift
-Error from server (NotFound): templates "rhdm71-prod-immutable-kieserver" not found
+$ oc get template rhdm72-prod-immutable-kieserver -n openshift
+Error from server (NotFound): templates "rhdm72-prod-immutable-kieserver" not found
 ```
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm71-dev/templates/rhdm71-prod-immutable-kieserver.yaml -n openshift
-template "rhdm71-prod-immutable-kieserver" created
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/templates/rhdm72-prod-immutable-kieserver.yaml -n openshift
+template "rhdm72-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/rhdm71-dev/example-app-secret-template.yaml
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/example-app-secret-template.yaml
 $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
 --> Deploying template "rhdm1/example-app-secret" to project rhdm
 
@@ -58,18 +58,18 @@ $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
 
 
 ```bash
-$ $ oc new-app rhdm71-prod-immutable-kieserver \
+$ $ oc new-app rhdm72-prod-immutable-kieserver \
 -p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT \
 -p ARTIFACT_DIR=hellorules/target,hellorules-model/target \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=rhdm71-dev \
+-p SOURCE_REPOSITORY_REF=master \
 -p CONTEXT_DIR=quickstarts/hello-rules-multi-module
-  --> Deploying template "openshift/rhdm71-prod-immutable-kieserver" to project rhdm
+  --> Deploying template "openshift/rhdm72-prod-immutable-kieserver" to project rhdm
   
-       Red Hat Decision Manager 7.1 immutable production environment
+       Red Hat Decision Manager 7.2 immutable production environment
        ---------
-       Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.1
+       Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.2
   
        A new immutable Red Hat Decision Manager KIE server have been created in your project.
        The username/password for accessing the KIE server is
@@ -86,7 +86,7 @@ $ $ oc new-app rhdm71-prod-immutable-kieserver \
           * KIE Server User=executionUser
           * KIE Server Password=PaasIS8! # generated
           * ImageStream Namespace=openshift
-          * KIE Server ImageStream Name=rhdm71-kieserver-openshift
+          * KIE Server ImageStream Name=rhdm72-kieserver-openshift
           * ImageStream Tag=1.0
           * KIE Server Controller User=controllerUser
           * KIE Server Controller Password=
@@ -124,7 +124,7 @@ $ $ oc new-app rhdm71-prod-immutable-kieserver \
           * KIE Server Startup Strategy=LocalContainersStartupStrategy
           ...
   
-  W1009 15:28:00.581168   20093 newapp.go:1203] Unable to check for circular build input: Unable to check for circular build input/outputs: imagestreams.image.openshift.io "rhdm71-kieserver-openshift" not found
+  W1009 15:28:00.581168   20093 newapp.go:1203] Unable to check for circular build input: Unable to check for circular build input/outputs: imagestreams.image.openshift.io "rhdm72-kieserver-openshift" not found
   --> Creating resources ...
       serviceaccount "myapp-kieserver" created
       rolebinding "myapp-kieserver-view" created
@@ -151,7 +151,7 @@ To do so, execute the following commands:
 ```bash
 $ oc new-app eap71-basic-s2i \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=rhdm71-dev \ 
+-p SOURCE_REPOSITORY_REF=master \ 
 -p CONTEXT_DIR=quickstarts/hello-rules-multi-module
 ```
 
@@ -169,7 +169,7 @@ As result you should see something like this:
         * Application Name=eap-app
         * Custom http Route Hostname=
         * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
-        * Git Reference=rhdm71-dev
+        * Git Reference=master
         * Context Directory=quickstarts/hello-rules-multi-module
         * Topics=
         * A-MQ cluster password=wMafLKF6 # generated

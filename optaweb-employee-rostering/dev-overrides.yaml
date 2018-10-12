@@ -1,6 +1,6 @@
 schema_version: 1
 
-from: "rhdm-7/rhdm71-optaweb-employee-rostering:latest"
+from: "rhdm-7/rhdm72-optaweb-employee-rostering:latest"
 modules:
       repositories:
           - name: cct_module
@@ -18,4 +18,4 @@ modules:
 osbs:
       repository:
           name: containers/rhdm-7-optaweb-employee-rostering-openshift
-          branch: jb-rhdm-7.1-optaweb-employee-rostering-openshift-dev-rhel-7
+          branch: jb-rhdm-7.2-optaweb-employee-rostering-openshift-dev-rhel-7

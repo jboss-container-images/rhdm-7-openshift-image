@@ -1,16 +1,16 @@
 schema_version: 1
 
-name: "rhdm-7/rhdm71-kieserver-openshift"
-description: "Red Hat Decision Manager Kie Server 7.1 container image"
+name: "rhdm-7/rhdm72-kieserver-openshift"
+description: "Red Hat Decision Manager Kie Server 7.2 container image"
 version: "1.0"
-from: "rhdm-7/rhdm71-kieserver:latest"
+from: "rhdm-7/rhdm72-kieserver:latest"
 labels:
     - name: "com.redhat.component"
-      value: "rhdm-7-rhdm71-kieserver-openshift-container"
+      value: "rhdm-7-rhdm72-kieserver-openshift-container"
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Decision Manager KIE Server"
     - name: "io.k8s.display-name"
-      value: "Red Hat Decision Manager KIE Server 7.1"
+      value: "Red Hat Decision Manager KIE Server 7.2"
     - name: "io.openshift.expose-services"
       value: "8080:http,8443:https"
     - name: "io.openshift.tags"
@@ -136,11 +136,11 @@ modules:
           - name: cct_module
             git:
                   url: https://github.com/jboss-openshift/cct_module.git
-                  ref: sprint-24
+                  ref: sprint-25
           - name: jboss-eap-modules
             git:
                   url: https://github.com/jboss-container-images/jboss-eap-modules.git
-                  ref: sprint-24
+                  ref: master
           - name: jboss-kie-modules
             git:
                   url: https://github.com/jboss-container-images/jboss-kie-modules.git
@@ -198,4 +198,4 @@ run:
 osbs:
       repository:
           name: containers/rhdm-7-kieserver-openshift
-          branch: jb-rhdm-7.1-kieserver-openshift-rhel-7
+          branch: jb-rhdm-7.2-kieserver-openshift-rhel-7

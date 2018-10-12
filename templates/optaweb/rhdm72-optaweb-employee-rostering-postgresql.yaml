@@ -4,18 +4,18 @@ apiVersion: v1
 metadata:
   annotations:
     iconClass: icon-jboss
-    tags: rhdm,decisionserver,jboss,optaweb,employee-rostering,mysql
+    tags: rhdm,decisionserver,jboss,optaweb,employee-rostering,postgresql
     version: "1.0"
-    openshift.io/display-name: Red Hat Decision Manager 7.1 Business Optimizer Employee Rostering with a MySQL database
+    openshift.io/display-name: Red Hat Decision Manager 7.2 Business Optimizer Employee Rostering with a PostgreSQL database
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for a Optaweb Employee Rostering with a MySQL database, for Red Hat Decision Manager 7.1
+    description: Application template for a Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.2
     template.openshift.io/long-description: This web application assists the operations department to assign shifts to employees, for example in hospitals, factories, guard firms or call centers. It automatically finds the best employee for each shift, taking into account labor regulations, skill requirements, employee preferences and other constraints.
-    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.1/html/deploying_the_employee_roster_starter_application_for_red_hat_business_optimizer_on_red_hat_openshift_container_platform/
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.2/html/deploying_the_employee_roster_starter_application_for_red_hat_business_optimizer_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
-  name: rhdm71-optaweb-employee-rostering-mysql
+  name: rhdm72-optaweb-employee-rostering-postgresql
 labels:
-  template: rhdm71-optaweb-employee-rostering-mysql
+  template: rhdm72-optaweb-employee-rostering-postgresql
   rhdm: "1.0"
 message: |-
           A new Decision Manager Optaweb employee rostering application have been created in your project.
@@ -47,9 +47,9 @@ parameters:
   value: openshift
   required: true
 - displayName: Optaweb Employee Rostering ImageStream Name
-  description: The name of the image stream to use for Optaweb employee rostering. Default is "rhdm71-optaweb-employee-rostering-openshift".
+  description: The name of the image stream to use for Optaweb employee rostering. Default is "rhdm72-optaweb-employee-rostering-openshift".
   name: OPTAWEB_IMAGE_STREAM_NAME
-  value: "rhdm71-optaweb-employee-rostering-openshift"
+  value: "rhdm72-optaweb-employee-rostering-openshift"
   required: true
 - displayName: ImageStream Tag
   description: A named pointer to an image in an image stream. Default is "1.0".
@@ -66,42 +66,47 @@ parameters:
   name: OPTAWEB_PERSISTENCE_HBM2DDL_AUTO
   example: update
   required: false
-## MySQL database parameters BEGIN
-- displayName: MySQL ImageStream Namespace
-  description: Namespace in which the ImageStream for the MySQL image is
-    installed. The ImageStream is already installed in the openshift namespace.
-    You should only need to modify this if you've installed the ImageStream in a
-    different namespace/project. Default is "openshift".
-  name: MYSQL_IMAGE_STREAM_NAMESPACE
-  value: "openshift"
-  required: false
-- displayName: MySQL ImageStream Tag
-  description: The MySQL image version, which is intended to correspond to the MySQL version. Default is "5.7".
-  name: MYSQL_IMAGE_STREAM_TAG
-  value: "5.7"
-  required: false
-- displayName: Optaweb Employee Rostering MySQL Database User
-  description: Optaweb employee rostering MySQL database username
-  name: OPTAWEB_MYSQL_USER
+## PostgreSQL database parameters BEGIN
+- displayName: Optaweb Employee Rostering PostgreSQL Database User
+  description: Optaweb employee rostering PostgreSQL database username
+  name: OPTAWEB_POSTGRESQL_USER
   value: optaweb
   required: false
-- displayName: Optaweb Employee Rostering MySQL Database Password
-  description: Optaweb employee rostering MySQL database password
-  name: OPTAWEB_MYSQL_PWD
+- displayName: Optaweb Employee Rostering PostgreSQL Database Password
+  description: Optaweb employee rostering PostgreSQL database password
+  name: OPTAWEB_POSTGRESQL_PWD
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
   required: false
-- displayName: Optaweb Employee Rostering MySQL Database Name
-  description: Optaweb employee rostering MySQL database name
-  name: OPTAWEB_MYSQL_DB
+- displayName: Optaweb Employee Rostering PostgreSQL Database Name
+  description: Optaweb employee rostering PostgreSQL database name
+  name: OPTAWEB_POSTGRESQL_DB
   value: optaweb
   required: false
+- displayName: PostgreSQL ImageStream Namespace
+  description: Namespace in which the ImageStream for the PostgreSQL image is
+    installed. The ImageStream is already installed in the openshift namespace.
+    You should only need to modify this if you've installed the ImageStream in a
+    different namespace/project. Default is "openshift".
+  name: POSTGRESQL_IMAGE_STREAM_NAMESPACE
+  value: "openshift"
+  required: false
+- displayName: PostgreSQL ImageStream Tag
+  description: The PostgreSQL image version, which is intended to correspond to the PostgreSQL version. Default is "9.6".
+  name: POSTGRESQL_IMAGE_STREAM_TAG
+  value: "9.6"
+  required: false
+- displayName: PostgreSQL Database max prepared connections
+  description: Allows the PostgreSQL to handle XA transactions.
+  name: POSTGRESQL_MAX_PREPARED_TRANSACTIONS
+  value: '100'
+  required: true
 - displayName: Database Volume Capacity
   description: Size of persistent storage for database volume.
   name: DB_VOLUME_CAPACITY
   value: 1Gi
   required: true
-## MySQL database parameters END
+## PostgreSQL database parameters END
 - displayName: Optaweb Employee Rostering Custom http Route Hostname
   description: 'Custom hostname for http service route, if set will also configure the OPTAWEB_HOST. Leave blank for default hostname,
     e.g.: <application-name>-optaweb-employee-rostering-<project>.<default-domain-suffix>'
@@ -197,7 +202,7 @@ objects:
     annotations:
       service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
       description: "The JGroups ping port for clustering."
-## MySQL service BEGIN
+## PostgreSQL service BEGIN
 - apiVersion: v1
   kind: Service
   metadata:
@@ -205,15 +210,15 @@ objects:
       description: The database server's port.
     labels:
       application: ${APPLICATION_NAME}
-      service: "${APPLICATION_NAME}-mysql"
-    name: ${APPLICATION_NAME}-mysql
+      service: "${APPLICATION_NAME}-postgresql"
+    name: ${APPLICATION_NAME}-postgresql
   spec:
     ports:
-    - port: 3306
-      targetPort: 3306
+    - port: 5432
+      targetPort: 5432
     selector:
-      deploymentConfig: ${APPLICATION_NAME}-mysql
-## MySQL service END
+      deploymentConfig: ${APPLICATION_NAME}-postgresql
+## PostgreSQL service END
 - kind: Route
   apiVersion: v1
   id: "${APPLICATION_NAME}-optaweb-employee-rostering-http"
@@ -337,27 +342,27 @@ objects:
             value: "RHDM"
           - name: RHDM_JNDI
             value: "${OPTAWEB_PERSISTENCE_DS}"
-## MySQL driver settings BEGIN
+## PostgreSQL driver settings BEGIN
           - name: RHDM_PERSISTENCE_DIALECT
-            value: "org.hibernate.dialect.MySQL5Dialect"
+            value: "org.hibernate.dialect.PostgreSQLDialect"
           - name: RHDM_DATABASE
-            value: "${OPTAWEB_MYSQL_DB}"
+            value: "${OPTAWEB_POSTGRESQL_DB}"
           - name: RHDM_DRIVER
-            value: "mysql"
+            value: "postgresql"
           - name: RHDM_USERNAME
-            value: "${OPTAWEB_MYSQL_USER}"
+            value: "${OPTAWEB_POSTGRESQL_USER}"
           - name: RHDM_PASSWORD
-            value: "${OPTAWEB_MYSQL_PWD}"
+            value: "${OPTAWEB_POSTGRESQL_PWD}"
           - name: RHDM_SERVICE_HOST
-            value: "${APPLICATION_NAME}-mysql"
+            value: "${APPLICATION_NAME}-postgresql"
           - name: RHDM_SERVICE_PORT
-            value: "3306"
-## MySQL driver settings END
+            value: "5432"
+## PostgreSQL driver settings END
 ## OptaWeb employee rostering settings BEGIN
           - name: OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DATASOURCE
             value: "${OPTAWEB_PERSISTENCE_DS}"
           - name: OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT
-            value: "org.hibernate.dialect.MySQL5Dialect"
+            value: "org.hibernate.dialect.PostgreSQLDialect"
           - name: OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_HBM2DDL_AUTO
             value: "${OPTAWEB_PERSISTENCE_HBM2DDL_AUTO}"
           - name: OPTAWEB_GENERATOR_ZONE_ID
@@ -383,14 +388,14 @@ objects:
         - name: optaweb-employee-rostering-keystore-volume
           secret:
             secretName: "${OPTAWEB_HTTPS_SECRET}"
-## MySQL deployment config BEGIN
+## PostgreSQL deployment config BEGIN
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: "${APPLICATION_NAME}-mysql"
+    name: "${APPLICATION_NAME}-postgresql"
     labels:
       application: "${APPLICATION_NAME}"
-      service: "${APPLICATION_NAME}-mysql"
+      service: "${APPLICATION_NAME}-postgresql"
     annotations:
       template.alpha.openshift.io/wait-for-ready: "true"
   spec:
@@ -401,73 +406,73 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - "${APPLICATION_NAME}-mysql"
+        - "${APPLICATION_NAME}-postgresql"
         from:
           kind: ImageStreamTag
-          namespace: "${MYSQL_IMAGE_STREAM_NAMESPACE}"
-          name: "mysql:${MYSQL_IMAGE_STREAM_TAG}"
+          namespace: "${POSTGRESQL_IMAGE_STREAM_NAMESPACE}"
+          name: "postgresql:${POSTGRESQL_IMAGE_STREAM_TAG}"
     - type: ConfigChange
     replicas: 1
     selector:
-      deploymentConfig: "${APPLICATION_NAME}-mysql"
+      deploymentConfig: "${APPLICATION_NAME}-postgresql"
     template:
       metadata:
-        name: "${APPLICATION_NAME}-mysql"
+        name: "${APPLICATION_NAME}-postgresql"
         labels:
-          deploymentConfig: "${APPLICATION_NAME}-mysql"
+          deploymentConfig: "${APPLICATION_NAME}-postgresql"
           application: "${APPLICATION_NAME}"
-          service: "${APPLICATION_NAME}-mysql"
+          service: "${APPLICATION_NAME}-postgresql"
       spec:
         terminationGracePeriodSeconds: 60
         containers:
-        - name: "${APPLICATION_NAME}-mysql"
-          image: mysql
+        - name: "${APPLICATION_NAME}-postgresql"
+          image: postgresql
           imagePullPolicy: Always
           livenessProbe:
-            tcpSocket:
-              port: 3306
-            initialDelaySeconds: 30
-            timeoutSeconds: 1
+            exec:
+              command:
+              - "/usr/libexec/check-container"
+              - "--live"
+            initialDelaySeconds: 120
+            timeoutSeconds: 10
           readinessProbe:
             exec:
               command:
-                - "/bin/sh"
-                - "-i"
-                - "-c"
-                - "MYSQL_PWD=\"$MYSQL_PASSWORD\" mysql -h 127.0.0.1 -u $MYSQL_USER -D $MYSQL_DATABASE -e 'SELECT 1'"
-              port: 3306
+              - "/usr/libexec/check-container"
             initialDelaySeconds: 5
             timeoutSeconds: 1
           ports:
-          - containerPort: 3306
+          - containerPort: 5432
             protocol: TCP
           volumeMounts:
-          - mountPath: "/var/lib/mysql/data"
-            name: "${APPLICATION_NAME}-mysql-pvol"
+          - mountPath: "/var/lib/pgsql/data"
+            name: "${APPLICATION_NAME}-postgresql-pvol"
           env:
-          - name: MYSQL_USER
-            value: "${OPTAWEB_MYSQL_USER}"
-          - name: MYSQL_PASSWORD
-            value: "${OPTAWEB_MYSQL_PWD}"
-          - name: MYSQL_DATABASE
-            value: "${OPTAWEB_MYSQL_DB}"
+          - name: POSTGRESQL_USER
+            value: "${OPTAWEB_POSTGRESQL_USER}"
+          - name: POSTGRESQL_PASSWORD
+            value: "${OPTAWEB_POSTGRESQL_PWD}"
+          - name: POSTGRESQL_DATABASE
+            value: "${OPTAWEB_POSTGRESQL_DB}"
+          - name: POSTGRESQL_MAX_PREPARED_TRANSACTIONS
+            value: "${POSTGRESQL_MAX_PREPARED_TRANSACTIONS}"
         volumes:
-        - name: "${APPLICATION_NAME}-mysql-pvol"
+        - name: "${APPLICATION_NAME}-postgresql-pvol"
           persistentVolumeClaim:
-            claimName: "${APPLICATION_NAME}-mysql-claim"
-## MySQL deployment config END
-## MySQL persistent volume claim BEGIN
+            claimName: "${APPLICATION_NAME}-postgresql-claim"
+## PostgreSQL deployment config END
+## PostgreSQL persistent volume claim BEGIN
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-    name: "${APPLICATION_NAME}-mysql-claim"
+    name: "${APPLICATION_NAME}-postgresql-claim"
     labels:
       application: "${APPLICATION_NAME}"
-      service: "${APPLICATION_NAME}-mysql"
+      service: "${APPLICATION_NAME}-postgresql"
   spec:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
         storage: "${DB_VOLUME_CAPACITY}"
-## MySQL persistent volume claim END
+## PostgreSQL persistent volume claim END
