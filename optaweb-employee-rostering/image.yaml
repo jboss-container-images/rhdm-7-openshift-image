@@ -3,7 +3,7 @@ schema_version: 1
 name: "rhdm-7/rhdm72-optaweb-employee-rostering-openshift"
 description: "Red Hat Business Optimizer OptaWeb Employee Rostering 7.2 OpenShift container image"
 version: "1.0"
-from: "rhdm-7/rhdm72-optaweb-employee-rostering:latest"
+from: "rhdm-7/rhdm72-optaweb-employee-rostering:7.2.0"
 labels:
     - name: "com.redhat.component"
       value: "rhdm-7-rhdm72-optaweb-employee-rostering-openshift-container"
