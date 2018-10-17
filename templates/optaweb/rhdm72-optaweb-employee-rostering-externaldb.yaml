@@ -56,6 +56,7 @@ parameters:
   name: IMAGE_STREAM_TAG
   value: "1.0"
   required: true
+## External database parameters BEGIN
 - displayName: Optaweb Employee Rostering Persistence Datasource
   description: Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property)
   name: OPTAWEB_PERSISTENCE_DS
@@ -66,16 +67,43 @@ parameters:
   name: OPTAWEB_PERSISTENCE_HBM2DDL_AUTO
   example: update
   required: false
-## External database parameters BEGIN
+- displayName: Optaweb Empl yee Rostering Persistence Schema
+  description: Hibernate persistence schema.
+  name: OPTAWEB_PERSISTENCE_SCHEMA
+  example: db.schema
+  required: false
+- displayName: Optaweb Employee Rostering External Database Dialect
+  description: Optaweb employee rostering external database Hibernate dialect (Sets the org.optaweb.employeerostering.persistence.dialect system property)
+  name: OPTAWEB_EXTERNALDB_DIALECT
+  example: "org.hibernate.dialect.MySQL5Dialect"
+  required: true
+- displayName: Optaweb Empl yee Rostering External Database Host
+  description: Optaweb employee rostering external database host
+  name: OPTAWEB_EXTERNALDB_HOST
+  required: false
+- displayName: Optaweb Employee Rostering External Database Port
+  description: Optaweb employee rostering external database port
+  name: OPTAWEB_EXTERNALDB_PORT
+  required: false
+- displayName: Non XA datasource
+  description: Sets the datasources type. It can be XA or NONXA. For non XA set it to true. Default value is false.
+  name: OPTAWEB_EXTERNALDB_NONXA
+  example: true
+  required: false
+- displayName: Optaweb Employee Rostering External Database URL
+  description: Sets the datasources jdbc connection url. Note that, if you are using PostgreSQL do not use this field for XA datasources, use the SERVICE_HOST and PORT. If using SERVICE_PORT and HOST there is no need to fill this parameterL
+  name: OPTAWEB_EXTERNALDB_URL
+  example: "jdbc:mysql://127.0.0.1:3306/optaweb"
+  required: false
 - displayName: Optaweb Employee Rostering External Database Driver
-  description: Optaweb employee rostering external database driver
+  description: The predefined driver name, available values are mysql, postgresql or the preferred name for the external driver.
   name: OPTAWEB_EXTERNALDB_DRIVER
   example: "mysql"
   required: true
-- displayName: Optaweb Employee Rostering External Database Driver Type
-  description: Optaweb employee rostering external database driver type, applicable only for DB2, possible values are 4 (default) or 2
-  name: OPTAWEB_EXTERNALDB_DRIVER_TYPE
-  example: "4"
+- displayName: Optaweb Employee Rostering External Database name
+  description: Optaweb employee rostering external database name
+  name: OPTAWEB_EXTERNALDB_DB
+  value: optaweb
   required: false
 - displayName: Optaweb Employee Rostering External Database User
   description: Optaweb employee rostering external database username
@@ -86,30 +114,57 @@ parameters:
   description: Optaweb employee rostering external database password
   name: OPTAWEB_EXTERNALDB_PWD
   required: true
-- displayName: Optaweb Employee Rostering External Database URL
-  description: Optaweb employee rostering external database JDBC URL
-  name: OPTAWEB_EXTERNALDB_URL
-  example: "jdbc:mysql://127.0.0.1:3306/optaweb"
+- displayName: Optaweb Employee Rostering External Database Minimum Pool Size
+  description: Sets xa-pool/min-pool-size for the configured datasource
+  name: OPTAWEB_EXTERNALDB_MIN_POOL_SIZE
   required: false
-- displayName: Optaweb Employee Rostering External Database Dialect
-  description: Optaweb employee rostering external database Hibernate dialect (Sets the org.optaweb.employeerostering.persistence.dialect system property)
-  name: OPTAWEB_EXTERNALDB_DIALECT
-  example: "org.hibernate.dialect.MySQL5Dialect"
-  required: true
-- displayName: Optaweb Empl yee Rostering External Database Host
-  description: Optaweb employee rostering external database host
-  name: OPTAWEB_EXTERNALDB_HOST
-  required: true
-- displayName: Optaweb Employee Rostering External Database Port
-  description: Optaweb employee rostering external database port
-  name: OPTAWEB_EXTERNALDB_PORT
-  required: true
-- displayName: Optaweb Employee Rostering External Database name
-  description: Optaweb employee rostering external database name
-  name: OPTAWEB_EXTERNALDB_DB
-  value: optaweb
+- displayName: Optaweb Employee Rostering External Database Maximum Pool Size
+  description: Sets xa-pool/max-pool-size for the configured datasource
+  name: OPTAWEB_EXTERNALDB_MAX_POOL_SIZE
+  required: false
+- displayName: Optaweb Employee Rostering External Database JDBC Connection Checker class
+  description: An org.jboss.jca.adapters.jdbc.ValidConnectionChecker that provides a SQLException isValidConnection(Connection e) method to validate if a connection is valid
+  name: OPTAWEB_EXTERNALDB_CONNECTION_CHECKER
+  example: "org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"
+  required: false
+- displayName: Optaweb Employee Rostering External Database JDBC Exception Sorter class
+  description: An org.jboss.jca.adapters.jdbc.ExceptionSorter that provides a boolean isExceptionFatal(SQLException e) method to validate if an exception should be broadcast to all javax.resource.spi.ConnectionEventListener as a connectionErrorOccurred
+  name: OPTAWEB_EXTERNALDB_EXCEPTION_SORTER
+  example: "org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter"
+  required: false
+- displayName: Optaweb Employee Rostering External Database JDBC background validation
+  description: Sets the sql validation method to background-validation, if set to false the validate-on-match method will be used.
+  name: OPTAWEB_EXTERNALDB_BACKGROUND_VALIDATION
+  example: "true"
+  required: false
+- displayName: Optaweb Employee Rostering External Database JDBC Background Validation Millis
+  description: Defines the interval for the background-validation check for the jdbc connections
+  name: OPTAWEB_EXTERNALDB_BACKGROUND_VALIDATION_MILLIS
+  example: "10000"
+  required: false
+- displayName: Optaweb Employee Rostering External Database Driver Type
+  description: Optaweb employee rostering external database driver type, applicable only for DB2, possible values are 4 (default) or 2
+  name: OPTAWEB_EXTERNALDB_DRIVER_TYPE
+  example: "4"
   required: false
 ## External database parameters END
+## Extension image configuration BEGIN
+- displayName: Drivers Extension Image
+  description: ImageStreamTag definition for the image containing the drivers and configuration. i.e custom-driver-image:1.0
+  name: EXTENSIONS_IMAGE
+  value: custom-driver-extension:1.0
+  required: true
+- displayName: Drivers ImageStream Namespace
+  description: Namespace within which the ImageStream definition for the image containing the drivers and configuration is located.
+  name: EXTENSIONS_IMAGE_NAMESPACE
+  value: openshift
+  required: true
+- displayName: Drivers Image Install Directory
+  description: Full path to the directory within the extensions image where the extensions are located (e.g. install.sh, modules/, etc.)
+  name: EXTENSIONS_INSTALL_DIR
+  value: "/extensions"
+  required: true
+## Extension image configuration END
 - displayName: Optaweb Employee Rostering Custom http Route Hostname
   description: 'Custom hostname for http service route, if set will also configure the OPTAWEB_HOST. Leave blank for default hostname,
     e.g.: <application-name>-optaweb-employee-rostering-<project>.<default-domain-suffix>'
@@ -239,6 +294,57 @@ objects:
       targetPort: https
     tls:
       termination: passthrough
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-optaweb-employee-rostering"
+    labels:
+      application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-optaweb-employee-rostering"
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-optaweb-employee-rostering"
+    labels:
+      application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-optaweb-employee-rostering"
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
+  spec:
+    source:
+      images:
+      - from:
+          kind: ImageStreamTag
+          namespace: "${EXTENSIONS_IMAGE_NAMESPACE}"
+          name: "${EXTENSIONS_IMAGE}"
+        paths:
+        - destinationDir: "./extensions/extras"
+          sourcePath: "${EXTENSIONS_INSTALL_DIR}/."
+    strategy:
+      type: Source
+      sourceStrategy:
+        env:
+        - name: CUSTOM_INSTALL_DIRECTORIES
+          value: "extensions/*"
+        forcePull: true
+        from:
+          kind: ImageStreamTag
+          namespace: "${IMAGE_STREAM_NAMESPACE}"
+          name: "${OPTAWEB_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "${APPLICATION_NAME}-optaweb-employee-rostering:latest"
+    triggers:
+    - type: ImageChange
+      imageChange: {}
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          namespace: "${EXTENSIONS_IMAGE_NAMESPACE}"
+          name: "${EXTENSIONS_IMAGE}"
+    - type: ConfigChange
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -258,9 +364,8 @@ objects:
         containerNames:
         - "${APPLICATION_NAME}-optaweb-employee-rostering"
         from:
-          kind: ImageStreamTag
-          namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "${OPTAWEB_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
+          kind: ImageStream
+          name: "${APPLICATION_NAME}-optaweb-employee-rostering"
     - type: ConfigChange
     replicas: 1
     selector:
@@ -324,31 +429,51 @@ objects:
             value: "${OPTAWEB_ADMIN_USER}"
           - name: KIE_ADMIN_PWD
             value: "${OPTAWEB_ADMIN_PWD}"
+## External database settings BEGIN
           - name: DATASOURCES
-            value: "RHDM"
-          - name: RHDM_JNDI
+            value: "OPTAWEB"
+          - name: OPTAWEB_PERSISTENCE_SCHEMA
+            value: "${OPTAWEB_PERSISTENCE_SCHEMA}"
+          - name: OPTAWEB_PERSISTENCE_DS
             value: "${OPTAWEB_PERSISTENCE_DS}"
-## External database driver settings BEGIN
-          - name: RHDM_PERSISTENCE_DIALECT
+          - name: OPTAWEB_PERSISTENCE_DIALECT
             value: "${OPTAWEB_EXTERNALDB_DIALECT}"
-          - name: RHDM_DATABASE
+          - name: OPTAWEB_DATABASE
             value: "${OPTAWEB_EXTERNALDB_DB}"
-          - name: RHDM_DRIVER
-            value: "${OPTAWEB_EXTERNALDB_DRIVER}"
-          - name: RHDM_DRIVER_TYPE
-            value: "${OPTAWEB_EXTERNALDB_DRIVER_TYPE}"
-          - name: RHDM_USERNAME
-            value: "${OPTAWEB_EXTERNALDB_USER}"
-          - name: RHDM_PASSWORD
-            value: "${OPTAWEB_EXTERNALDB_PWD}"
-          - name: RHDM_SERVICE_HOST
+          - name: OPTAWEB_SERVICE_HOST
             value: "${OPTAWEB_EXTERNALDB_HOST}"
-          - name: RHDM_SERVICE_PORT
+          - name: OPTAWEB_SERVICE_PORT
             value: "${OPTAWEB_EXTERNALDB_PORT}"
-          - name: RHDM_XA_CONNECTION_PROPERTY_URL
+          - name: OPTAWEB_JNDI
+            value: "${OPTAWEB_PERSISTENCE_DS}"
+          - name: OPTAWEB_DRIVER
+            value: "${OPTAWEB_EXTERNALDB_DRIVER}"
+          - name: OPTAWEB_USERNAME
+            value: "${OPTAWEB_EXTERNALDB_USER}"
+          - name: OPTAWEB_PASSWORD
+            value: "${OPTAWEB_EXTERNALDB_PWD}"
+          - name: OPTAWEB_NONXA
+            value: "${OPTAWEB_EXTERNALDB_NONXA}"
+          - name: OPTAWEB_URL
             value: "${OPTAWEB_EXTERNALDB_URL}"
-## External database driver settings END
-## OptaWeb employee rostering settings BEGIN
+          - name: OPTAWEB_XA_CONNECTION_PROPERTY_URL
+            value: "${OPTAWEB_EXTERNALDB_URL}"
+          - name: OPTAWEB_MIN_POOL_SIZE
+            value: "${OPTAWEB_EXTERNALDB_MIN_POOL_SIZE}"
+          - name: OPTAWEB_MAX_POOL_SIZE
+            value: "${OPTAWEB_EXTERNALDB_MAX_POOL_SIZE}"
+          - name: OPTAWEB_CONNECTION_CHECKER
+            value: "${OPTAWEB_EXTERNALDB_CONNECTION_CHECKER}"
+          - name: OPTAWEB_EXCEPTION_SORTER
+            value: "${OPTAWEB_EXTERNALDB_EXCEPTION_SORTER}"
+          - name: OPTAWEB_BACKGROUND_VALIDATION
+            value: "${OPTAWEB_EXTERNALDB_BACKGROUND_VALIDATION}"
+          - name: OPTAWEB_VALIDATION_MILLIS
+            value: "${OPTAWEB_EXTERNALDB_BACKGROUND_VALIDATION_MILLIS}"
+          - name: OPTAWEB_DRIVER_TYPE
+            value: "${OPTAWEB_EXTERNALDB_DRIVER_TYPE}"
+          - name: OPTAWEB_JTA
+            value: "true"
           - name: OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DATASOURCE
             value: "${OPTAWEB_PERSISTENCE_DS}"
           - name: OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT
@@ -357,9 +482,7 @@ objects:
             value: "${OPTAWEB_PERSISTENCE_HBM2DDL_AUTO}"
           - name: OPTAWEB_GENERATOR_ZONE_ID
             value: "${OPTAWEB_GENERATOR_ZONE_ID}"
-## OptaWeb employee rostering settings END
-          - name: RHDM_JTA
-            value: "true"
+## External database settings END
           - name: HTTPS_KEYSTORE_DIR
             value: "/etc/optaweb-employee-rostering-secret-volume"
           - name: HTTPS_KEYSTORE
