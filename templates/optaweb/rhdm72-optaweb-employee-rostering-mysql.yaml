@@ -155,6 +155,8 @@ objects:
   apiVersion: v1
   metadata:
      name: "${APPLICATION_NAME}-optaweb-employee-rostering-view"
+     labels:
+       application: "${APPLICATION_NAME}"
   subjects:
   - kind: ServiceAccount
     name: "${APPLICATION_NAME}-optaweb-employee-rostering"
