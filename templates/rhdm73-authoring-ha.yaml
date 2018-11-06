@@ -215,7 +215,7 @@ parameters:
   value: ''
   required: false
 - displayName: Elasticsearch HTTP Port
-  description: Sets the ES http.port property. This will set the http port of the main ES cluster node. Used to interact with cluster rest api.
+  description: Sets the ES http.port property. This will set the http port of the main ES cluster node. Used to interact with the cluster REST API.
   name: ES_HTTP_PORT
   value: ''
   required: false
@@ -231,15 +231,15 @@ parameters:
   value: "openshift"
   required: true
 - displayName: AMQ Scaledown Controller ImageStream Name
-  description: The name of the image stream to use for the AMQ Scaledown Controller. Default is "amq-scaledown-controller-openshift".
+  description: The name of the image stream to use for the AMQ Scaledown Controller. Default is "amq-broker-72-scaledown-controller-openshift".
   name: AMQ_SCALEDOWN_CONTROLLER_IMAGE_STREAM_NAME
   value: "amq-broker-72-scaledown-controller-openshift"
   required: true
 - displayName: AMQ Scaledown Controller ImageStream Tag
-  description: The AMQ image stream tag. Default is "0.4".
+  description: The AMQ image stream tag. Default is "1.0".
   name: AMQ_SCALEDOWN_CONTROLLER_IMAGE_STREAM_TAG
   required: true
-  value: "0.4"
+  value: "1.0"
 - description: AMQ Broker Image
   displayName: Image
   name: AMQ_BROKER_IMAGE
@@ -620,6 +620,7 @@ objects:
     name: "${APPLICATION_NAME}-ping"
     labels:
       application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-ping"
     annotations:
       service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
       description: "The JGroups ping port for clustering."
@@ -635,6 +636,11 @@ objects:
       targetPort: 8443
     selector:
       deploymentConfig: "${APPLICATION_NAME}-kieserver"
+    sessionAffinity:
+      ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 3600
   metadata:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
@@ -673,19 +679,13 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-amq-tcp"
     labels:
-      application: "${APPLICATION_NAME}"
-      service: "${APPLICATION_NAME}-amq"
     annotations:
       description: The broker's OpenWire port.
+    labels:
+      application: "${APPLICATION_NAME}"
+      service: "${APPLICATION_NAME}-amq-tcp"
 - apiVersion: v1
   kind: Service
-  metadata:
-    annotations:
-      description: The JGroups ping port for clustering.
-      service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
-    labels:
-      application: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}-amq-ping
   spec:
     clusterIP: None
     ports:
@@ -694,6 +694,14 @@ objects:
         targetPort: 8888
     selector:
       deploymentConfig: ${APPLICATION_NAME}-amq
+  metadata:
+    name: ${APPLICATION_NAME}-amq-ping
+    annotations:
+      description: The JGroups ping port for clustering.
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+    labels:
+      application: ${APPLICATION_NAME}
+      service: ${APPLICATION_NAME}-amq-ping
 - kind: Route
   apiVersion: v1
   id: "${APPLICATION_NAME}-rhdmcentr-http"
@@ -1343,7 +1351,6 @@ objects:
         {
           "metadata": {
             "labels": {
-              "app": "${APPLICATION_NAME}",
               "application": "${APPLICATION_NAME}"
             },
             "name": "${APPLICATION_NAME}-amq-drainer-pod"
@@ -1424,6 +1431,14 @@ objects:
                     }
                   },
                   {
+                    "name": "JGROUPS_PING_PROTOCOL",
+                    "value": "openshift.DNS_PING"
+                  },
+                  {
+                    "name": "OPENSHIFT_DNS_PING_SERVICE_NAME",
+                    "value": "${APPLICATION_NAME}-amq-ping"
+                  },
+                  {
                     "name": "OPENSHIFT_DNS_PING_SERVICE_PORT",
                     "value": "8888"
                   }
@@ -1469,9 +1484,9 @@ objects:
           - name: AMQ_PASSWORD
             value: "${APPFORMER_JMS_BROKER_PASSWORD}"
           - name: AMQ_ROLE
-            value: "${AMQ_ROLE}"
+            value: ${AMQ_ROLE}
           - name: AMQ_NAME
-            value: "${AMQ_NAME}"
+            value: ${AMQ_NAME}
           - name: AMQ_TRANSPORTS
             value: "openwire"
           - name: AMQ_GLOBAL_MAX_SIZE
