@@ -1,6 +1,5 @@
 schema_version: 1
 
-from: "rhdm-7/rhdm72-optaweb-employee-rostering:7.2.0"
 modules:
       repositories:
           - name: cct_module
@@ -11,11 +10,19 @@ modules:
             git:
                   url: https://github.com/jboss-container-images/jboss-eap-modules.git
                   ref: TBD
+          - name: jboss-eap-7-image
+            git:
+                  url: https://github.com/jboss-container-images/jboss-eap-7-image.git
+                  ref: TBD
+          - name: rhdm-7-image
+            git:
+                  url: https://github.com/jboss-container-images/rhdm-7-image.git
+                  ref: 7.2.0.GA
           - name: jboss-kie-modules
             git:
                   url: https://github.com/jboss-container-images/jboss-kie-modules.git
                   ref: rhdm-7.2.0.GA
 osbs:
       repository:
-          name: containers/rhdm-7-kieserver-openshift
+          name: containers/rhdm-7-optaweb-employee-rostering-openshift
           branch: jb-rhdm-7.2-optaweb-employee-rostering-openshift-rhel-7
