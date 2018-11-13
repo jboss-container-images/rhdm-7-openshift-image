@@ -3,7 +3,7 @@ schema_version: 1
 name: "rhdm-7/rhdm72-optaweb-employee-rostering-openshift"
 description: "Red Hat Business Optimizer OptaWeb Employee Rostering 7.2 OpenShift container image"
 version: "1.0"
-from: "rhdm-7/rhdm72-optaweb-employee-rostering:7.2.0"
+from: "rhel7:7-released"
 labels:
     - name: "com.redhat.component"
       value: "rhdm-7-rhdm72-optaweb-employee-rostering-openshift-container"
@@ -47,32 +47,46 @@ modules:
             git:
                   url: https://github.com/jboss-container-images/jboss-eap-modules.git
                   ref: master
+          - name: jboss-eap-7-image
+            git:
+                  url: https://github.com/jboss-container-images/jboss-eap-7-image.git
+                  ref: eap72-dev
+          - name: rhdm-7-image
+            git:
+                  url: https://github.com/jboss-container-images/rhdm-7-image.git
+                  ref: master
           - name: jboss-kie-modules
             git:
                   url: https://github.com/jboss-container-images/jboss-kie-modules.git
                   ref: master
       install:
+          - name: jboss.container.openjdk.jdk
+            version: "8"
+          - name: eap-7.2-latest
+          - name: rhdm-7-optaweb-employee-rostering
           - name: dynamic-resources
-          - name: s2i-common
           - name: java-alternatives
-          - name: os-eap-s2i
           - name: os-java-jolokia
-          - name: jolokia
+          - name: jboss.eap.cd.jolokia
           - name: os-eap7-openshift
-          - name: os-eap71-openshift
-          - name: os-eap7-modules
-          - name: os-eap71-modules
+          - name: jboss.eap72.openshift
+          - name: jboss.eap.cd.openshift.modules
           - name: os-eap7-ping
           - name: os-eap-activemq-rar
           - name: os-java-run
           - name: os-eap-launch
           - name: os-eap7-launch
-          - name: jboss.eap.logging.ext
+          - name: jboss.eap.cd.openshift.launch
+          - name: jboss.eap.cd.logging
+          - name: jboss.eap.config.mp-config
           - name: jboss.eap.config.jgroups
           - name: jboss.eap.config.elytron
+          - name: jboss.eap.config.tracing
           - name: os-eap-probes
           - name: jboss-maven
           - name: os-eap-db-drivers
+          - name: os-eap-sso
+          - name: os-eap70-sso
           - name: os-java-hawkular
           - name: os-eap70-hawkular
           - name: os-eap-hawkular
@@ -81,21 +95,19 @@ modules:
           - name: openshift-layer
           - name: openshift-passwd
           - name: os-logging
-          - name: jboss.kie.common
-          - name: jboss.kie.optaweb.common
-          - name: jboss.kie.optaweb.employeerostering
+          - name: jboss-kie-wildfly-common
+          - name: jboss-kie-optaweb-common
+          - name: jboss-kie-optaweb-employeerostering
 packages:
       repositories:
+          - name: base
+            id: rhel-7-server-rpms
           - jboss-os
-          - jboss-rhscl
       install:
           - python-requests
           - python-enum34
           - PyYAML
           - hostname
-artifacts:
-    - url: slf4j-simple-1.7.22.redhat-1.jar
-      md5: 51c319582c16a07c21e41737e45cb03a
 run:
       user: 185
       cmd:
@@ -103,4 +115,4 @@ run:
 osbs:
       repository:
           name: containers/rhdm-7-optaweb-employee-rostering-openshift
-          branch: jb-rhdm-7.2-optaweb-employee-rostering-openshift-rhel-7
+          branch: jb-rhdm-7.2-optaweb-employee-rostering-openshift-dev-rhel-7
