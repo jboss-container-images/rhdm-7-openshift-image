@@ -17,11 +17,11 @@ modules:
           - name: rhdm-7-image
             git:
                   url: https://github.com/jboss-container-images/rhdm-7-image.git
-                  ref: master
+                  ref: 7.2.x
           - name: jboss-kie-modules
             git:
                   url: https://github.com/jboss-container-images/jboss-kie-modules.git
-                  ref: master
+                  ref: 7.2.x
 osbs:
       repository:
           name: containers/rhdm-7-controller-openshift
