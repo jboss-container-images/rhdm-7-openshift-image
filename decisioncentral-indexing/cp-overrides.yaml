@@ -14,7 +14,3 @@ modules:
             git:
                   url: https://github.com/jboss-container-images/jboss-kie-modules.git
                   ref: rhdm-7.2.0.GA
-osbs:
-      repository:
-          name: containers/rhdm-7-decisioncentral-indexing-openshift
-          branch: jb-rhdm-7.2-decisioncentral-indexing-openshift-cp-rhel-7
