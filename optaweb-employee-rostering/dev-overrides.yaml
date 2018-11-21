@@ -22,7 +22,3 @@ modules:
             git:
                   url: https://github.com/jboss-container-images/jboss-kie-modules.git
                   ref: master
-osbs:
-      repository:
-          name: containers/rhdm-7-optaweb-employee-rostering-openshift
-          branch: jb-rhdm-7.2-optaweb-employee-rostering-openshift-dev-rhel-7
