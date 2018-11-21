@@ -214,4 +214,4 @@ run:
 osbs:
       repository:
           name: containers/rhdm-7-kieserver-openshift
-          branch: jb-rhdm-7.2-kieserver-openshift-dev-rhel-7
+          branch: rhdm-7.2-openshift-rhel-7

@@ -116,4 +116,4 @@ run:
 osbs:
       repository:
           name: containers/rhdm-7-optaweb-employee-rostering-openshift
-          branch: jb-rhdm-7.2-optaweb-employee-rostering-openshift-dev-rhel-7
+          branch: rhdm-7.2-openshift-rhel-7
