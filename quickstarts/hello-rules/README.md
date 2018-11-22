@@ -96,7 +96,7 @@ $ oc new-app rhdm72-prod-immutable-kieserver \
         * KIE MBeans=enabled
         * KIE Server Custom http Route Hostname=
         * KIE Server Custom https Route Hostname=
-        * Use the secure route name to set KIE_SERVER_HOST.=false
+        * Use the secure route name to set KIE Server location.=false
         * KIE Server Keystore Secret Name=decisioncentral-app-secret
         * KIE Server Keystore Filename=keystore.jks
         * KIE Server Certificate Name=jboss
