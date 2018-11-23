@@ -6,7 +6,7 @@
 = Application Templates
 
 This project contains OpenShift v3 application templates which support applications based on RHDM products.
-Source can be found https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/master/templates[here].
+Source can be found https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/rhdm71-dev/templates[here].
 
 :icons: font
 :toc: macro
@@ -15,8 +15,8 @@ toc::[levels=1]
 
 == rhdm-7-openshift-image/templates
 
+* link:README.adoc[README]
 * link:docs.adoc[docs]
-* link:optaweb.adoc[optaweb]
 * link:rhdm72-authoring-ha.adoc[rhdm72-authoring-ha]
 * link:rhdm72-authoring.adoc[rhdm72-authoring]
 * link:rhdm72-kieserver.adoc[rhdm72-kieserver]
