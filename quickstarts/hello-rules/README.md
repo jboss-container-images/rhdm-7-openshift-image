@@ -4,7 +4,7 @@ This quickstart is intend to be used with the [RHDM Kie Server](https://github.c
 
 ## How to use it?
 
-[rhdm72-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/master/templates/rhdm72-prod-immutable-kieserver.yaml)
+[rhdm72-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/7.2.x/templates/rhdm72-prod-immutable-kieserver.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
 
@@ -22,7 +22,7 @@ Create a new project, i.e.:
 
 ```bash
 $ oc new-project rhdm
-Now using project "rhdm" on server "https://ocp-master.severinocloud.com:8443".
+Now using project "rhdm" on server "https://ocp-master.mycloud.com:8443".
 ```
 
 Make sure that you have the RHDM template installed in your OpenShift Instance:
@@ -33,15 +33,15 @@ Error from server (NotFound): templates "rhdm72-prod-immutable-kieserver" not fo
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/templates/rhdm72-prod-immutable-kieserver.yaml -n openshift
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/7.2.x/templates/rhdm72-prod-immutable-kieserver.yaml -n openshift
 template "rhdm72-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/example-app-secret-template.yaml
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/7.2.x/example-app-secret-template.yaml
 $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
---> Deploying template "rhdm1/example-app-secret" to project rhdm
+--> Deploying template "rhdm/example-app-secret" to project rhdm
 
      example-app-secret
      ---------
@@ -56,14 +56,31 @@ $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
     Run 'oc status' to view your app.
 ```
 
+Before proceed, make sure you have the RHDM imagestreams available under the 'openshift' namespace.
+```bash
+$ oc get imagestream rhdm71-kieserver-openshift -n openshift
+Error from server (NotFound): imagestreams.image.openshift.io "rhdm71-kieserver-openshift" not found
+```
+
+If the `rhdm71-kieserver-openshift` is not found, install it under the 'openshift' namespace:
+
+```bash
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/7.2.x/rhdm72-image-streams.yaml -n openshift
+```
+Note that, to pull the images the OpenShift must be able to pull images from registry.redhat.io, for more information
+please take a look [here](https://access.redhat.com/RegistryAuthentication)
+
+At this moment we are ready to instantiate the kieserver app:
+
 ```bash
 $ oc new-app rhdm72-prod-immutable-kieserver \
 -p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=master \
--p CONTEXT_DIR=quickstarts/hello-rules/hellorules
-  --> Deploying template "openshift/rhdm72-prod-immutable-kieserver" to project rhdm1
+-p SOURCE_REPOSITORY_REF=7.2.x \
+-p CONTEXT_DIR=quickstarts/hello-rules/hellorules \
+-p IMAGE_STREAM_NAMESPACE=openshift
+  --> Deploying template "openshift/rhdm72-prod-immutable-kieserver" to project rhdm
 
      Red Hat Decision Manager 7.2 immutable production environment
      ---------
@@ -104,7 +121,7 @@ $ oc new-app rhdm72-prod-immutable-kieserver \
         * KIE Server Bypass Auth User=false
         * KIE Server Container Deployment=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT
         * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
-        * Git Reference=master
+        * Git Reference=7.2.x
         * Context Directory=quickstarts/hello-rules/hellorules
         * Github Webhook Secret=Uhamio24 # generated
         * Generic Webhook Secret=GqA8F1TX # generated
@@ -142,8 +159,8 @@ W1009 15:35:32.176038   20956 newapp.go:1203] Unable to check for circular build
     buildconfig "myapp-kieserver" created
     deploymentconfig "myapp-kieserver" created
 --> Success
-    Access your application via route 'myapp-kieserver-rhdm1.severinocloud.com' 
-    Access your application via route 'secure-myapp-kieserver-rhdm1.severinocloud.com' 
+    Access your application via route 'myapp-kieserver-rhdm.mycloud.com' 
+    Access your application via route 'secure-myapp-kieserver-rhdm.mycloud.com' 
     Build scheduled, use 'oc logs -f bc/myapp-kieserver' to track its progress.
     Run 'oc status' to view your app.
 
@@ -157,7 +174,7 @@ To do so, execute the following commands:
 ```bash
 $ oc new-app eap71-basic-s2i \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=master \ 
+-p SOURCE_REPOSITORY_REF=7.2.x \
 -p CONTEXT_DIR=quickstarts/hello-rules
 ```
 
@@ -175,7 +192,7 @@ As result you should see something like this:
         * Application Name=eap-app
         * Custom http Route Hostname=
         * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
-        * Git Reference=master
+        * Git Reference=7.2.x
         * Context Directory=quickstarts/hello-rules
         * Queues=
         * Topics=
@@ -198,7 +215,7 @@ As result you should see something like this:
     buildconfig "eap-app" created
     deploymentconfig "eap-app" created
 --> Success
-    Access your application via route 'eap-app-rhdm1.severinocloud.com' 
+    Access your application via route 'eap-app-rhdm.mycloud.com' 
     Build scheduled, use 'oc logs -f bc/eap-app' to track its progress.
     Run 'oc status' to view your app.
 ```
@@ -216,7 +233,7 @@ Note that this route should be resolvable.
 And example of request would be something like this:
 
 ```bash
-http://eap-app-rhdm-kieserver.<your_openshift_suffix>/hellorules?command=runRemoteRest&protocol=http&host=myapp-kieserver-rhdm-kieserver.<your_openshift_suffix>&port=80&username=executionUser&password=<the_generated_kie_password>
+http://eap-app-rhdm-kieserver.<your_openshift_suffix>/hellorules?command=runRemoteRest&protocol=http&host=myapp-kieserver&port=8080&username=executionUser&password=<the_generated_kie_password>
 ```
 
 The password was generated during the app creation in the previous steps, look for **KIE Server Password**.
