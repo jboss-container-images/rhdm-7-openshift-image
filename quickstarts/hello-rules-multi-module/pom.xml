@@ -59,7 +59,7 @@
             <dependency>
                 <groupId>org.openshift.quickstarts</groupId>
                 <artifactId>rhdm-kieserver-hellorules-model</artifactId>
-                <version>1.4.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -67,7 +67,6 @@
 
     <modules>
         <module>hellorules</module>
-        <module>hellorules-client</module>
         <module>hellorules-model</module>
     </modules>
 
