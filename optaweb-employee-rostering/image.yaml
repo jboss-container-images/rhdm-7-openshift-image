@@ -99,21 +99,19 @@ modules:
           - name: jboss-kie-optaweb-common
           - name: jboss-kie-optaweb-employeerostering
 packages:
-      repositories:
-          - name: base
-            id: rhel-7-server-rpms
-          - name: scl
-            id: rhel-server-rhscl-7-rpms
+      content_sets_file: content_sets.yml
       install:
           - python-requests
           - python-enum34
           - PyYAML
           - hostname
+osbs:
+      configuration:
+          container_file: container.yaml
+      repository:
+          name: containers/rhdm-7-optaweb-employee-rostering-openshift
+          branch: rhdm-7.2-openshift-rhel-7
 run:
       user: 185
       cmd:
           - "/opt/eap/bin/openshift-launch.sh"
-osbs:
-      repository:
-          name: containers/rhdm-7-optaweb-employee-rostering-openshift
-          branch: rhdm-7.2-openshift-rhel-7
