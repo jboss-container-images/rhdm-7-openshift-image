@@ -16,12 +16,12 @@ toc::[levels=1]
 == rhdm-7-openshift-image/templates
 
 * link:README.adoc[README]
-* link:docs.adoc[docs]
 * link:rhdm72-authoring-ha.adoc[rhdm72-authoring-ha]
 * link:rhdm72-authoring.adoc[rhdm72-authoring]
 * link:rhdm72-kieserver.adoc[rhdm72-kieserver]
 * link:rhdm72-prod-immutable-kieserver.adoc[rhdm72-prod-immutable-kieserver]
 * link:rhdm72-trial-ephemeral.adoc[rhdm72-trial-ephemeral]
+* link:rhdm72-optaweb-employee-rostering-trial-ephemeral.adoc[rhdm72-optaweb-employee-rostering-trial-ephemeral]
 
 ////
   the source for the release notes part of this page is in the file
