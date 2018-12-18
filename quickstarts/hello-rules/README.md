@@ -8,7 +8,7 @@ This quickstart is intend to be used with the [RHDM Kie Server](https://github.c
 
 The template below will be used for this quickstart:
 
-[rhdm72-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/master/templates/rhdm72-prod-immutable-kieserver.yaml)
+[rhdm73-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/master/templates/rhdm73-prod-immutable-kieserver.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
 
@@ -31,14 +31,14 @@ Now using project "rhdm" on server "https://ocp-master.mycloud.com:8443".
 
 Make sure that you have the RHDM template installed in your OpenShift Instance:
 ```bash
-$ oc get template rhdm72-prod-immutable-kieserver -n openshift
-Error from server (NotFound): templates "rhdm72-prod-immutable-kieserver" not found
+$ oc get template rhdm73-prod-immutable-kieserver -n openshift
+Error from server (NotFound): templates "rhdm73-prod-immutable-kieserver" not found
 ```
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/templates/rhdm72-prod-immutable-kieserver.yaml -n openshift
-template "rhdm72-prod-immutable-kieserver" created
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/templates/rhdm73-prod-immutable-kieserver.yaml -n openshift
+template "rhdm73-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
@@ -64,13 +64,13 @@ $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
 Before proceed, make sure you have the RHDM imagestreams available under the 'openshift' namespace.
 
  ```bash
-$ oc get imagestream rhdm72-kieserver-openshift -n openshift
-Error from server (NotFound): imagestreams.image.openshift.io "rhdm72-kieserver-openshift" not found
+$ oc get imagestream rhdm73-kieserver-openshift -n openshift
+Error from server (NotFound): imagestreams.image.openshift.io "rhdm73-kieserver-openshift" not found
 ```
 
-If the `rhdm72-kieserver-openshift` is not found, install it under the 'openshift' namespace:
+If the `rhdm73-kieserver-openshift` is not found, install it under the 'openshift' namespace:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/rhdm72-image-streams.yaml -n openshift
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/rhdm73-image-streams.yaml -n openshift
 ```
 Note that, to pull the images the OpenShift must be able to pull images from registry.redhat.io, for more information
 please take a look [here](https://access.redhat.com/RegistryAuthentication)
@@ -79,18 +79,18 @@ At this moment we are ready to instantiate the kieserver app:
 
 
 ```bash
-$ oc new-app rhdm72-prod-immutable-kieserver \
+$ oc new-app rhdm73-prod-immutable-kieserver \
 -p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
 -p SOURCE_REPOSITORY_REF=master \
 -p CONTEXT_DIR=quickstarts/hello-rules/hellorules \
 -p IMAGE_STREAM_NAMESPACE=openshift
-  --> Deploying template "openshift/rhdm72-prod-immutable-kieserver" to project rhdm
+  --> Deploying template "openshift/rhdm73-prod-immutable-kieserver" to project rhdm
 
-     Red Hat Decision Manager 7.2 immutable production environment
+     Red Hat Decision Manager 7.3 immutable production environment
      ---------
-     Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.2
+     Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.3
 
      A new immutable Red Hat Decision Manager KIE server have been created in your project.
      The username/password for accessing the KIE server is
@@ -107,7 +107,7 @@ $ oc new-app rhdm72-prod-immutable-kieserver \
         * KIE Server User=executionUser
         * KIE Server Password=QTSdSM4! # generated
         * ImageStream Namespace=openshift
-        * KIE Server ImageStream Name=rhdm72-kieserver-openshift
+        * KIE Server ImageStream Name=rhdm73-kieserver-openshift
         * ImageStream Tag=1.0
         * KIE Server Controller User=controllerUser
         * KIE Server Controller Password=

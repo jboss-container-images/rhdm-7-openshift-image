@@ -3,12 +3,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (./*.in)
 ////
-= rhdm72-optaweb-employee-rostering-mysql
+= rhdm73-optaweb-employee-rostering-trial-ephemeral
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for a Optaweb Employee Rostering with a MySQL database, for Red Hat Decision Manager 7.2
+Application template for an ephemeral Optaweb Employee Rostering for Red Hat Decision Manager 7.3
 
 toc::[]
 
@@ -23,25 +23,12 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |Variable name |Image Environment Variable |Description |Example value |Required
 
 |`APPLICATION_NAME` | -- | The name for the application. | myapp | True
-|`OPTAWEB_ADMIN_USER` | -- | OptaWeb administrator username | adminUser | False
-|`OPTAWEB_ADMIN_PWD` | -- | OptaWeb administrator password | -- | False
+|`OPTAWEB_ADMIN_USER` | -- | OptaWeb administrator username. | adminUser | False
+|`OPTAWEB_ADMIN_PWD` | -- | OptaWeb administrator password. Default is "RedHat". | RedHat | True
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
-|`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm72-optaweb-employee-rostering-openshift". | rhdm72-optaweb-employee-rostering-openshift | True
+|`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm73-optaweb-employee-rostering-openshift". | rhdm73-optaweb-employee-rostering-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
-|`OPTAWEB_PERSISTENCE_DS` | -- | Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property) | java:/jboss/datasources/optaweb | True
-|OPTAWEB_PERSISTENCE_HBM2DDL_AUTO | -- | Optaweb employee rostering persistence hbm2ddl auto (Sets the org.optaweb.employeerostering.persistence.hbm2ddl.auto system property) | -- | False
-|`MYSQL_IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStream for the MySQL image is installed. The ImageStream is already installed in the openshift namespace. You should only need to modify this if you installed the ImageStream in a different namespace/project. Default is "openshift". | openshift | False
-|`MYSQL_IMAGE_STREAM_TAG` | -- | The MySQL image version, which is intended to correspond to the MySQL version. Default is "5.7". | 5.7 | False
-|`OPTAWEB_MYSQL_USER` | `MYSQL_USER` | Optaweb employee rostering MySQL database username | optaweb | False
-|`OPTAWEB_MYSQL_PWD` | -- | Optaweb employee rostering MySQL database password | -- | False
-|`OPTAWEB_MYSQL_DB` | -- | Optaweb employee rostering MySQL database name | optaweb | False
-|`DB_VOLUME_CAPACITY` | -- | Size of persistent storage for database volume. | 1Gi | True
 |`OPTAWEB_HOSTNAME_HTTP` | -- | Custom hostname for http service route, if set will also configure the OPTAWEB_HOST. Leave blank for default hostname, e.g.: <application-name>-optaweb-employee-rostering-<project>.<default-domain-suffix> | -- | False
-|`OPTAWEB_HOSTNAME_HTTPS` | -- | Custom hostname for https service route.  Leave blank for default hostname, e.g.: secure-<application-name>-optaweb-employee-rostering-<project>.<default-domain-suffix> | -- | False
-|`OPTAWEB_HTTPS_SECRET` | -- | The name of the secret containing the keystore file | -- | True
-|`OPTAWEB_HTTPS_KEYSTORE` | `HTTPS_KEYSTORE` | The name of the keystore file within the secret | keystore.jks | False
-|`OPTAWEB_HTTPS_NAME` | `HTTPS_NAME` | The name associated with the server certificate | jboss | False
-|`OPTAWEB_HTTPS_PASSWORD` | `HTTPS_PASSWORD` | The password for the keystore and certificate | mykeystorepass | False
 |`OPTAWEB_MEMORY_LIMIT` | -- | Optaweb employee rostering Container memory limit | 1Gi | False
 |`OPTAWEB_GENERATOR_ZONE_ID` | `OPTAWEB_GENERATOR_ZONE_ID` | The timezone id used by the OptaWeb Generator (Sets the optaweb.generator.zoneId system property; defaults to local timezone) | `${OPTAWEB_GENERATOR_ZONE_ID}` | False
 |=======================================================================
@@ -62,16 +49,9 @@ https://cloud.google.com/container-engine/docs/services/[container-engine docume
 |=============
 |Service        |Port  |Name | Description
 
-.2+| `${APPLICATION_NAME}-optaweb-employee-rostering`
+.1+| `${APPLICATION_NAME}-optaweb-employee-rostering`
 |8080 | http
-.2+| All the Optaweb employee rostering web server's ports.
-|8443 | https
-.1+| `${APPLICATION_NAME}-optaweb-employee-rostering-ping`
-|8888 | ping
-.1+| The JGroups ping port for clustering.
-.1+| `${APPLICATION_NAME}-mysql`
-|3306 | --
-.1+| The database server's port.
+.1+| All the Optaweb employee rostering web server's ports.
 |=============
 
 
@@ -87,7 +67,6 @@ https://docs.openshift.com/enterprise/3.0/architecture/core_concepts/routes.html
 | Service    | Security | Hostname
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering-http` | none | `${OPTAWEB_HOSTNAME_HTTP}`
-|`${APPLICATION_NAME}-optaweb-employee-rostering-https` | TLS passthrough | `${OPTAWEB_HOSTNAME_HTTPS}`
 |=============
 
 
@@ -108,7 +87,6 @@ https://access.redhat.com/beta/documentation/en/openshift-enterprise-30-develope
 |Deployment | Triggers
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering` | ImageChange
-|`${APPLICATION_NAME}-mysql` | ImageChange
 |============
 
 
@@ -124,7 +102,6 @@ for more information.
 |Deployment | Replicas
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering` | 1
-|`${APPLICATION_NAME}-mysql` | 1
 |============
 
 
@@ -151,7 +128,6 @@ information.
 |Deployment | Image
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering` | `${OPTAWEB_IMAGE_STREAM_NAME}`
-|`${APPLICATION_NAME}-mysql` | mysql
 |============
 
 
@@ -162,11 +138,6 @@ information.
 .${APPLICATION_NAME}-optaweb-employee-rostering
 ----
 /bin/bash -c curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/swagger/index.html
-----
-
-.${APPLICATION_NAME}-mysql
-----
-/bin/sh -i -c MYSQL_PWD="$MYSQL_PASSWORD" mysql -h 127.0.0.1 -u $MYSQL_USER -D $MYSQL_DATABASE -e 'SELECT 1'
 ----
 
 
@@ -188,13 +159,9 @@ information.
 |=============
 |Deployments | Name  | Port  | Protocol
 
-.4+| `${APPLICATION_NAME}-optaweb-employee-rostering`
+.2+| `${APPLICATION_NAME}-optaweb-employee-rostering`
 |jolokia | 8778 | `TCP`
 |http | 8080 | `TCP`
-|https | 8443 | `TCP`
-|ping | 8888 | `TCP`
-.1+| `${APPLICATION_NAME}-mysql`
-|-- | 3306 | `TCP`
 |=============
 
 
@@ -204,63 +171,19 @@ information.
 |=======================================================================
 |Deployment |Variable name |Description |Example value
 
-.23+| `${APPLICATION_NAME}-optaweb-employee-rostering`
+.6+| `${APPLICATION_NAME}-optaweb-employee-rostering`
 |`KIE_ADMIN_USER` | -- | `${OPTAWEB_ADMIN_USER}`
 |`KIE_ADMIN_PWD` | -- | `${OPTAWEB_ADMIN_PWD}`
-|`DATASOURCES` | -- | `RHDM`
-|`RHDM_JNDI` | -- | `${OPTAWEB_PERSISTENCE_DS}`
-|`RHDM_PERSISTENCE_DIALECT` | -- | org.hibernate.dialect.MySQL5Dialect
-|`RHDM_DATABASE` | -- | `${OPTAWEB_MYSQL_DB}`
-|`RHDM_DRIVER` | -- | mysql
-|`RHDM_USERNAME` | -- | `${OPTAWEB_MYSQL_USER}`
-|`RHDM_PASSWORD` | -- | `${OPTAWEB_MYSQL_PWD}`
-|`RHDM_SERVICE_HOST` | -- | `${APPLICATION_NAME}-mysql`
-|`RHDM_SERVICE_PORT` | -- | 3306
-|`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DATASOURCE` | -- | `${OPTAWEB_PERSISTENCE_DS}`
-|`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT` | -- | org.hibernate.dialect.MySQL5Dialect
-|OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_HBM2DDL_AUTO | -- | `${OPTAWEB_PERSISTENCE_HBM2DDL_AUTO}`
+|`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DATASOURCE` | -- | java:jboss/datasources/ExampleDS
+|`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT` | -- | org.hibernate.dialect.H2Dialect
+|OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_HBM2DDL_AUTO | -- | create
 |`OPTAWEB_GENERATOR_ZONE_ID` | The timezone id used by the OptaWeb Generator (Sets the optaweb.generator.zoneId system property; defaults to local timezone) | `${OPTAWEB_GENERATOR_ZONE_ID}`
-|`RHDM_JTA` | -- | true
-|`HTTPS_KEYSTORE_DIR` | -- | `/etc/optaweb-employee-rostering-secret-volume`
-|`HTTPS_KEYSTORE` | The name of the keystore file within the secret | `${OPTAWEB_HTTPS_KEYSTORE}`
-|`HTTPS_NAME` | The name associated with the server certificate | `${OPTAWEB_HTTPS_NAME}`
-|`HTTPS_PASSWORD` | The password for the keystore and certificate | `${OPTAWEB_HTTPS_PASSWORD}`
-|`JGROUPS_PING_PROTOCOL` | -- | openshift.DNS_PING
-|`OPENSHIFT_DNS_PING_SERVICE_NAME` | -- | `${APPLICATION_NAME}-optaweb-employee-rostering-ping`
-|`OPENSHIFT_DNS_PING_SERVICE_PORT` | -- | 8888
-.3+| `${APPLICATION_NAME}-mysql`
-|`MYSQL_USER` | Optaweb employee rostering MySQL database username | `${OPTAWEB_MYSQL_USER}`
-|`MYSQL_PASSWORD` | -- | `${OPTAWEB_MYSQL_PWD}`
-|`MYSQL_DATABASE` | -- | `${OPTAWEB_MYSQL_DB}`
 |=======================================================================
 
 
 
-=====  Volumes
-
-|=============
-|Deployment |Name  | mountPath | Purpose | readOnly 
-
-|`${APPLICATION_NAME}-optaweb-employee-rostering` | optaweb-employee-rostering-keystore-volume | `/etc/optaweb-employee-rostering-secret-volume` | ssl certs | True
-|`${APPLICATION_NAME}-mysql` | `${APPLICATION_NAME}-mysql-pvol` | `/var/lib/mysql/data` | mysql | false
-|=============
-
 
 === External Dependencies
-
-
-==== Volume Claims
-
-A `PersistentVolume` object is a storage resource in an OpenShift cluster. Storage is provisioned by an administrator
-by creating `PersistentVolume` objects from sources such as GCE Persistent Disks, AWS Elastic Block Stores (EBS), and NFS mounts.
-Refer to the https://docs.openshift.com/enterprise/3.0/dev_guide/persistent_volumes.html#overview[Openshift documentation] for
-more information.
-
-|=============
-|Name | Access Mode
-
-|`${APPLICATION_NAME}-mysql-claim` | ReadWriteOnce
-|=============
 
 
 
@@ -269,7 +192,6 @@ more information.
 
 This template requires the following secrets to be installed for the application to run.
 
-optaweb-employee-rostering-app-secret
 
 
 

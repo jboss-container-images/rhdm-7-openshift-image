@@ -1,4 +1,4 @@
-# Red Hat Business Optimizer OptaWeb Employee Rostering 7.2 OpenShift container image
+# Red Hat Business Optimizer OptaWeb Employee Rostering 7.3 OpenShift container image
 
 NOTE: Extends link:https://github.com/jboss-container-images/jboss-eap-7-image[JBoss EAP 7 image]
 
