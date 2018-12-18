@@ -3,12 +3,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (./*.in)
 ////
-= rhdm72-optaweb-employee-rostering-externaldb
+= rhdm73-optaweb-employee-rostering-postgresql
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for a Optaweb Employee Rostering with an external database, for Red Hat Decision Manager 7.2
+Application template for a Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.3
 
 toc::[]
 
@@ -26,27 +26,17 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`OPTAWEB_ADMIN_USER` | -- | OptaWeb administrator username | adminUser | False
 |`OPTAWEB_ADMIN_PWD` | -- | OptaWeb administrator password | -- | False
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
-|`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm72-optaweb-employee-rostering-openshift". | rhdm72-optaweb-employee-rostering-openshift | True
+|`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm73-optaweb-employee-rostering-openshift". | rhdm73-optaweb-employee-rostering-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
-|`OPTAWEB_PERSISTENCE_DS` | `OPTAWEB_PERSISTENCE_DS` | Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property) | java:/jboss/datasources/optaweb | True
+|`OPTAWEB_PERSISTENCE_DS` | -- | Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property) | java:/jboss/datasources/optaweb | True
 |OPTAWEB_PERSISTENCE_HBM2DDL_AUTO | -- | Optaweb employee rostering persistence hbm2ddl auto (Sets the org.optaweb.employeerostering.persistence.hbm2ddl.auto system property) | -- | False
-|`OPTAWEB_PERSISTENCE_SCHEMA` | `OPTAWEB_PERSISTENCE_SCHEMA` | Hibernate persistence schema. | `${OPTAWEB_PERSISTENCE_SCHEMA}` | False
-|`OPTAWEB_EXTERNALDB_DIALECT` | -- | Optaweb employee rostering external database Hibernate dialect (Sets the org.optaweb.employeerostering.persistence.dialect system property) | -- | True
-|`OPTAWEB_EXTERNALDB_HOST` | -- | Optaweb employee rostering external database host | -- | False
-|`OPTAWEB_EXTERNALDB_PORT` | -- | Optaweb employee rostering external database port | -- | False
-|`OPTAWEB_EXTERNALDB_NONXA` | -- | Sets the datasources type. It can be XA or NONXA. For non XA set it to true. Default value is false. | -- | False
-|`OPTAWEB_EXTERNALDB_URL` | -- | Sets the datasources jdbc connection url. Note that, if you are using PostgreSQL do not use this field for XA datasources, use the SERVICE_HOST and PORT. If using SERVICE_PORT and HOST there is no need to fill this parameterL | -- | False
-|`OPTAWEB_EXTERNALDB_DRIVER` | -- | The predefined driver name, available values are mysql, postgresql or the preferred name for the external driver. | -- | True
-|`OPTAWEB_EXTERNALDB_DB` | -- | Optaweb employee rostering external database name | optaweb | False
-|`OPTAWEB_EXTERNALDB_USER` | -- | Optaweb employee rostering external database username | -- | True
-|`OPTAWEB_EXTERNALDB_PWD` | -- | Optaweb employee rostering external database password | -- | True
-|`OPTAWEB_EXTERNALDB_MIN_POOL_SIZE` | -- | Sets xa-pool/min-pool-size for the configured datasource | -- | False
-|`OPTAWEB_EXTERNALDB_MAX_POOL_SIZE` | -- | Sets xa-pool/max-pool-size for the configured datasource | -- | False
-|`OPTAWEB_EXTERNALDB_CONNECTION_CHECKER` | -- | An org.jboss.jca.adapters.jdbc.ValidConnectionChecker that provides a SQLException isValidConnection(Connection e) method to validate if a connection is valid | -- | False
-|`OPTAWEB_EXTERNALDB_EXCEPTION_SORTER` | -- | An org.jboss.jca.adapters.jdbc.ExceptionSorter that provides a boolean isExceptionFatal(SQLException e) method to validate if an exception should be broadcast to all javax.resource.spi.ConnectionEventListener as a connectionErrorOccurred | -- | False
-|`OPTAWEB_EXTERNALDB_BACKGROUND_VALIDATION` | -- | Sets the sql validation method to background-validation, if set to false the validate-on-match method will be used. | -- | False
-|`OPTAWEB_EXTERNALDB_BACKGROUND_VALIDATION_MILLIS` | -- | Defines the interval for the background-validation check for the jdbc connections | -- | False
-|`OPTAWEB_EXTERNALDB_DRIVER_TYPE` | -- | Optaweb employee rostering external database driver type, applicable only for DB2, possible values are 4 (default) or 2 | -- | False
+|`OPTAWEB_POSTGRESQL_USER` | `POSTGRESQL_USER` | Optaweb employee rostering PostgreSQL database username | optaweb | False
+|`OPTAWEB_POSTGRESQL_PWD` | -- | Optaweb employee rostering PostgreSQL database password | -- | False
+|`OPTAWEB_POSTGRESQL_DB` | -- | Optaweb employee rostering PostgreSQL database name | optaweb | False
+|`POSTGRESQL_IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStream for the PostgreSQL image is installed. The ImageStream is already installed in the openshift namespace. You should only need to modify this if you installed the ImageStream in a different namespace/project. Default is "openshift". | openshift | False
+|`POSTGRESQL_IMAGE_STREAM_TAG` | -- | The PostgreSQL image version, which is intended to correspond to the PostgreSQL version. Default is "10". | 10 | False
+|`POSTGRESQL_MAX_PREPARED_TRANSACTIONS` | `POSTGRESQL_MAX_PREPARED_TRANSACTIONS` | Allows the PostgreSQL to handle XA transactions. | 100 | True
+|`DB_VOLUME_CAPACITY` | -- | Size of persistent storage for database volume. | 1Gi | True
 |`OPTAWEB_HOSTNAME_HTTP` | -- | Custom hostname for http service route, if set will also configure the OPTAWEB_HOST. Leave blank for default hostname, e.g.: <application-name>-optaweb-employee-rostering-<project>.<default-domain-suffix> | -- | False
 |`OPTAWEB_HOSTNAME_HTTPS` | -- | Custom hostname for https service route.  Leave blank for default hostname, e.g.: secure-<application-name>-optaweb-employee-rostering-<project>.<default-domain-suffix> | -- | False
 |`OPTAWEB_HTTPS_SECRET` | -- | The name of the secret containing the keystore file | -- | True
@@ -80,6 +70,9 @@ https://cloud.google.com/container-engine/docs/services/[container-engine docume
 .1+| `${APPLICATION_NAME}-optaweb-employee-rostering-ping`
 |8888 | ping
 .1+| The JGroups ping port for clustering.
+.1+| `${APPLICATION_NAME}-postgresql`
+|5432 | --
+.1+| The database server's port.
 |=============
 
 
@@ -116,6 +109,7 @@ https://access.redhat.com/beta/documentation/en/openshift-enterprise-30-develope
 |Deployment | Triggers
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering` | ImageChange
+|`${APPLICATION_NAME}-postgresql` | ImageChange
 |============
 
 
@@ -131,6 +125,7 @@ for more information.
 |Deployment | Replicas
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering` | 1
+|`${APPLICATION_NAME}-postgresql` | 1
 |============
 
 
@@ -157,6 +152,7 @@ information.
 |Deployment | Image
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering` | `${OPTAWEB_IMAGE_STREAM_NAME}`
+|`${APPLICATION_NAME}-postgresql` | postgresql
 |============
 
 
@@ -169,6 +165,11 @@ information.
 /bin/bash -c curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/swagger/index.html
 ----
 
+.${APPLICATION_NAME}-postgresql
+----
+/usr/libexec/check-container
+----
+
 
 
 
@@ -178,6 +179,11 @@ information.
 .${APPLICATION_NAME}-optaweb-employee-rostering
 ----
 /bin/bash -c curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/swagger/index.html
+----
+
+.${APPLICATION_NAME}-postgresql
+----
+/usr/libexec/check-container
 ----
 
 
@@ -193,6 +199,8 @@ information.
 |http | 8080 | `TCP`
 |https | 8443 | `TCP`
 |ping | 8888 | `TCP`
+.1+| `${APPLICATION_NAME}-postgresql`
+|-- | 5432 | `TCP`
 |=============
 
 
@@ -202,35 +210,23 @@ information.
 |=======================================================================
 |Deployment |Variable name |Description |Example value
 
-.35+| `${APPLICATION_NAME}-optaweb-employee-rostering`
+.23+| `${APPLICATION_NAME}-optaweb-employee-rostering`
 |`KIE_ADMIN_USER` | -- | `${OPTAWEB_ADMIN_USER}`
 |`KIE_ADMIN_PWD` | -- | `${OPTAWEB_ADMIN_PWD}`
-|`DATASOURCES` | -- | `OPTAWEB`
-|`OPTAWEB_PERSISTENCE_SCHEMA` | Hibernate persistence schema. | `${OPTAWEB_PERSISTENCE_SCHEMA}`
-|`OPTAWEB_PERSISTENCE_DS` | Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property) | `${OPTAWEB_PERSISTENCE_DS}`
-|`OPTAWEB_PERSISTENCE_DIALECT` | -- | `${OPTAWEB_EXTERNALDB_DIALECT}`
-|`OPTAWEB_DATABASE` | -- | `${OPTAWEB_EXTERNALDB_DB}`
-|`OPTAWEB_SERVICE_HOST` | -- | `${OPTAWEB_EXTERNALDB_HOST}`
-|`OPTAWEB_SERVICE_PORT` | -- | `${OPTAWEB_EXTERNALDB_PORT}`
-|`OPTAWEB_JNDI` | -- | `${OPTAWEB_PERSISTENCE_DS}`
-|`OPTAWEB_DRIVER` | -- | `${OPTAWEB_EXTERNALDB_DRIVER}`
-|`OPTAWEB_USERNAME` | -- | `${OPTAWEB_EXTERNALDB_USER}`
-|`OPTAWEB_PASSWORD` | -- | `${OPTAWEB_EXTERNALDB_PWD}`
-|`OPTAWEB_NONXA` | -- | `${OPTAWEB_EXTERNALDB_NONXA}`
-|`OPTAWEB_URL` | -- | `${OPTAWEB_EXTERNALDB_URL}`
-|`OPTAWEB_XA_CONNECTION_PROPERTY_URL` | -- | `${OPTAWEB_EXTERNALDB_URL}`
-|`OPTAWEB_MIN_POOL_SIZE` | -- | `${OPTAWEB_EXTERNALDB_MIN_POOL_SIZE}`
-|`OPTAWEB_MAX_POOL_SIZE` | -- | `${OPTAWEB_EXTERNALDB_MAX_POOL_SIZE}`
-|`OPTAWEB_CONNECTION_CHECKER` | -- | `${OPTAWEB_EXTERNALDB_CONNECTION_CHECKER}`
-|`OPTAWEB_EXCEPTION_SORTER` | -- | `${OPTAWEB_EXTERNALDB_EXCEPTION_SORTER}`
-|`OPTAWEB_BACKGROUND_VALIDATION` | -- | `${OPTAWEB_EXTERNALDB_BACKGROUND_VALIDATION}`
-|`OPTAWEB_VALIDATION_MILLIS` | -- | `${OPTAWEB_EXTERNALDB_BACKGROUND_VALIDATION_MILLIS}`
-|`OPTAWEB_DRIVER_TYPE` | -- | `${OPTAWEB_EXTERNALDB_DRIVER_TYPE}`
-|`OPTAWEB_JTA` | -- | true
+|`DATASOURCES` | -- | `RHDM`
+|`RHDM_JNDI` | -- | `${OPTAWEB_PERSISTENCE_DS}`
+|`RHDM_PERSISTENCE_DIALECT` | -- | org.hibernate.dialect.PostgreSQLDialect
+|`RHDM_DATABASE` | -- | `${OPTAWEB_POSTGRESQL_DB}`
+|`RHDM_DRIVER` | -- | postgresql
+|`RHDM_USERNAME` | -- | `${OPTAWEB_POSTGRESQL_USER}`
+|`RHDM_PASSWORD` | -- | `${OPTAWEB_POSTGRESQL_PWD}`
+|`RHDM_SERVICE_HOST` | -- | `${APPLICATION_NAME}-postgresql`
+|`RHDM_SERVICE_PORT` | -- | 5432
 |`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DATASOURCE` | -- | `${OPTAWEB_PERSISTENCE_DS}`
-|`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT` | -- | `${OPTAWEB_EXTERNALDB_DIALECT}`
+|`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT` | -- | org.hibernate.dialect.PostgreSQLDialect
 |OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_HBM2DDL_AUTO | -- | `${OPTAWEB_PERSISTENCE_HBM2DDL_AUTO}`
 |`OPTAWEB_GENERATOR_ZONE_ID` | The timezone id used by the OptaWeb Generator (Sets the optaweb.generator.zoneId system property; defaults to local timezone) | `${OPTAWEB_GENERATOR_ZONE_ID}`
+|`RHDM_JTA` | -- | true
 |`HTTPS_KEYSTORE_DIR` | -- | `/etc/optaweb-employee-rostering-secret-volume`
 |`HTTPS_KEYSTORE` | The name of the keystore file within the secret | `${OPTAWEB_HTTPS_KEYSTORE}`
 |`HTTPS_NAME` | The name associated with the server certificate | `${OPTAWEB_HTTPS_NAME}`
@@ -238,6 +234,11 @@ information.
 |`JGROUPS_PING_PROTOCOL` | -- | openshift.DNS_PING
 |`OPENSHIFT_DNS_PING_SERVICE_NAME` | -- | `${APPLICATION_NAME}-optaweb-employee-rostering-ping`
 |`OPENSHIFT_DNS_PING_SERVICE_PORT` | -- | 8888
+.4+| `${APPLICATION_NAME}-postgresql`
+|`POSTGRESQL_USER` | Optaweb employee rostering PostgreSQL database username | `${OPTAWEB_POSTGRESQL_USER}`
+|`POSTGRESQL_PASSWORD` | -- | `${OPTAWEB_POSTGRESQL_PWD}`
+|`POSTGRESQL_DATABASE` | -- | `${OPTAWEB_POSTGRESQL_DB}`
+|`POSTGRESQL_MAX_PREPARED_TRANSACTIONS` | Allows the PostgreSQL to handle XA transactions. | `${POSTGRESQL_MAX_PREPARED_TRANSACTIONS}`
 |=======================================================================
 
 
@@ -248,10 +249,25 @@ information.
 |Deployment |Name  | mountPath | Purpose | readOnly 
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering` | optaweb-employee-rostering-keystore-volume | `/etc/optaweb-employee-rostering-secret-volume` | ssl certs | True
+|`${APPLICATION_NAME}-postgresql` | `${APPLICATION_NAME}-postgresql-pvol` | `/var/lib/pgsql/data` | postgresql | false
 |=============
 
 
 === External Dependencies
+
+
+==== Volume Claims
+
+A `PersistentVolume` object is a storage resource in an OpenShift cluster. Storage is provisioned by an administrator
+by creating `PersistentVolume` objects from sources such as GCE Persistent Disks, AWS Elastic Block Stores (EBS), and NFS mounts.
+Refer to the https://docs.openshift.com/enterprise/3.0/dev_guide/persistent_volumes.html#overview[Openshift documentation] for
+more information.
+
+|=============
+|Name | Access Mode
+
+|`${APPLICATION_NAME}-postgresql-claim` | ReadWriteOnce
+|=============
 
 
 
