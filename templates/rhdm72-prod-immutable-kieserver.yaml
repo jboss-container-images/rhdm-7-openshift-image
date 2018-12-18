@@ -8,8 +8,8 @@ metadata:
     version: "1.0"
     openshift.io/display-name: Red Hat Decision Manager 7.2 immutable production environment
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.2
-    template.openshift.io/long-description: This template defines resources needed for a immultable production runtime environment for Red Hat Decision Manager 7.2, including application deployment configuration, secure and insecure http communication and persistent volume to store data that needs to survive to a restart.
+    description: Application template for an immutable KIE server in a production environment, for Red Hat Decision Manager 7.2
+    template.openshift.io/long-description: This template defines resources needed for an immutable production runtime environment for Red Hat Decision Manager 7.2, including a source to image (S2I) build of your services, application deployment configuration, secure and insecure http communication.
     template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.2/html/deploying_a_red_hat_decision_manager_7.2_immutable_server_environment_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
@@ -18,7 +18,7 @@ labels:
   template: rhdm72-prod-immutable-kieserver
   rhdm: "1.0"
 message: |-
-          A new immutable Red Hat Decision Manager KIE server have been created in your project.
+          A new immutable Red Hat Decision Manager KIE server has been created in your project.
           The username/password for accessing the KIE server is
 
               Username: ${KIE_SERVER_USER}
@@ -56,7 +56,7 @@ parameters:
 - displayName: ImageStream Namespace
   description: Namespace in which the ImageStreams for Red Hat Middleware images are
     installed. These ImageStreams are normally installed in the openshift namespace.
-    You should only need to modify this if you've installed the ImageStreams in a
+    You should only need to modify this if you installed the ImageStreams in a
     different namespace/project.
   name: IMAGE_STREAM_NAMESPACE
   value: openshift
@@ -85,8 +85,7 @@ parameters:
   name: KIE_SERVER_CONTROLLER_TOKEN
   required: false
 - displayName: KIE Server Controller Service
-  description: The service name for the optional standalone controller, where it can be reached to
-    allow service lookup, and registered with (If set, will be used to discover host and port)
+  description: The service name for the optional standalone controller. The application uses this service name to register with the controller. (If set, will be used to discover host and port)
   name: KIE_SERVER_CONTROLLER_SERVICE
   required: false
 - displayName: KIE Server Controller host
@@ -230,7 +229,7 @@ parameters:
   value: 1Gi
   required: false
 - displayName: Disable KIE Server Management
-  description: "Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy."
+  description: "Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped. Sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy."
   name: KIE_SERVER_MGMT_DISABLED
   value: "true"
   required: true
@@ -373,7 +372,7 @@ parameters:
   example: "false"
   required: false
 - displayName: LDAP Referral user attribute ID
-  description: If you are not using referrals, this option can be ignored. When using referrals, this option denotes the attribute name which contains users defined for a certain role, for example member, if the role object is inside the referral. Users are checked against the content of this attribute name. If this option is not set, the check will always fail, so role objects cannot be stored in a referral tree.
+  description: If you are not using referrals, you can ignore this option. When using referrals, this option denotes the attribute name which contains users defined for a certain role, for example member, if the role object is inside the referral. Users are checked against the content of this attribute name. If this option is not set, the check will always fail, so role objects cannot be stored in a referral tree.
   name: AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK
   required: false
 - displayName: RoleMapping rolesProperties file path

@@ -28,19 +28,19 @@ parameters:
   value: myapp
   required: true
 - displayName: OptaWeb Admin User
-  description: OptaWeb administrator username
+  description: OptaWeb administrator username.
   name: OPTAWEB_ADMIN_USER
   value: adminUser
   required: false
 - displayName: OptaWeb Admin Password
-  description: OptaWeb administrator password (Default is "RedHat")
+  description: OptaWeb administrator password. Default is "RedHat".
   name: OPTAWEB_ADMIN_PWD
   value: RedHat
   required: true
 - displayName: ImageStream Namespace
   description: Namespace in which the ImageStreams for Red Hat Middleware images are
     installed. These ImageStreams are normally installed in the openshift namespace.
-    You should only need to modify this if you've installed the ImageStreams in a
+    You should only need to modify this if you installed the ImageStreams in a
     different namespace/project.
   name: IMAGE_STREAM_NAMESPACE
   value: openshift
