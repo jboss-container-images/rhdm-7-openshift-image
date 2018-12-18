@@ -41,7 +41,7 @@ parameters:
 - displayName: ImageStream Namespace
   description: Namespace in which the ImageStreams for Red Hat Middleware images are
     installed. These ImageStreams are normally installed in the openshift namespace.
-    You should only need to modify this if you've installed the ImageStreams in a
+    You should only need to modify this if you installed the ImageStreams in a
     different namespace/project.
   name: IMAGE_STREAM_NAMESPACE
   value: openshift
@@ -86,7 +86,7 @@ parameters:
 - displayName: PostgreSQL ImageStream Namespace
   description: Namespace in which the ImageStream for the PostgreSQL image is
     installed. The ImageStream is already installed in the openshift namespace.
-    You should only need to modify this if you've installed the ImageStream in a
+    You should only need to modify this if you installed the ImageStream in a
     different namespace/project. Default is "openshift".
   name: POSTGRESQL_IMAGE_STREAM_NAMESPACE
   value: "openshift"
