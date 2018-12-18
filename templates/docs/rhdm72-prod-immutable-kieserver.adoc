@@ -8,7 +8,7 @@
 :toc-placement!:
 :toclevels: 5
 
-Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.2
+Application template for an immutable KIE server in a production environment, for Red Hat Decision Manager 7.2
 
 toc::[]
 
@@ -27,13 +27,13 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`KIE_ADMIN_PWD` | `KIE_ADMIN_PWD` | KIE administrator password | `${KIE_ADMIN_PWD}` | False
 |`KIE_SERVER_USER` | `KIE_SERVER_USER` | KIE server username (Sets the org.kie.server.user system property) | executionUser | False
 |`KIE_SERVER_PWD` | `KIE_SERVER_PWD` | KIE server password, used to connect to KIE servers. Generated value can be a suggestion to use for thew s2i various (Sets the org.kie.server.pwd system property) | `${KIE_SERVER_PWD}` | False
-|`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you've installed the ImageStreams in a different namespace/project. | openshift | True
+|`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
 |`KIE_SERVER_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for KIE server. Default is "rhdm72-kieserver-openshift". | rhdm72-kieserver-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
 |`KIE_SERVER_CONTROLLER_USER` | `KIE_SERVER_CONTROLLER_USER` | KIE server controller username (Sets the org.kie.server.controller.user system property) | controllerUser | False
 |`KIE_SERVER_CONTROLLER_PWD` | `KIE_SERVER_CONTROLLER_PWD` | KIE server controller password (Sets the org.kie.server.controller.pwd system property) | `${KIE_SERVER_CONTROLLER_PWD}` | False
 |`KIE_SERVER_CONTROLLER_TOKEN` | `KIE_SERVER_CONTROLLER_TOKEN` | KIE server controller token for bearer authentication (Sets the org.kie.server.controller.token system property) | `${KIE_SERVER_CONTROLLER_TOKEN}` | False
-|`KIE_SERVER_CONTROLLER_SERVICE` | `KIE_SERVER_CONTROLLER_SERVICE` | The service name for the optional standalone controller, where it can be reached to allow service lookup, and registered with (If set, will be used to discover host and port) | `${KIE_SERVER_CONTROLLER_SERVICE}` | False
+|`KIE_SERVER_CONTROLLER_SERVICE` | `KIE_SERVER_CONTROLLER_SERVICE` | The service name for the optional standalone controller. The application uses this service name to register with the controller. (If set, will be used to discover host and port) | `${KIE_SERVER_CONTROLLER_SERVICE}` | False
 |`KIE_SERVER_CONTROLLER_HOST` | `KIE_SERVER_CONTROLLER_HOST` | KIE server controller host (Used to set the org.kie.server.controller system property) | `${KIE_SERVER_CONTROLLER_HOST}` | False
 |`KIE_SERVER_CONTROLLER_PORT` | `KIE_SERVER_CONTROLLER_PORT` | KIE server controller port (Used to set the org.kie.server.controller system property) | `${KIE_SERVER_CONTROLLER_PORT}` | False
 |`DROOLS_SERVER_FILTER_CLASSES` | `DROOLS_SERVER_FILTER_CLASSES` | KIE server class filtering (Sets the org.drools.server.filter.classes system property) | true | False
@@ -62,7 +62,7 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`DECISION_CENTRAL_MAVEN_PASSWORD` | -- | Password to access the Maven service hosted by Decision Central inside EAP. | -- | False
 |`ARTIFACT_DIR` | -- | List of directories from which archives will be copied into the deployment folder. If unspecified, all archives in /target will be copied. | -- | False
 |`KIE_SERVER_MEMORY_LIMIT` | -- | KIE server Container memory limit | 1Gi | False
-|`KIE_SERVER_MGMT_DISABLED` | `KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | true | True
+|`KIE_SERVER_MGMT_DISABLED` | `KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped. Sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | true | True
 |`KIE_SERVER_STARTUP_STRATEGY` | `KIE_SERVER_STARTUP_STRATEGY` | When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable. | LocalContainersStartupStrategy | True
 |`SSO_URL` | `SSO_URL` | RH-SSO URL | `${SSO_URL}` | False
 |`SSO_REALM` | `SSO_REALM` | RH-SSO Realm name | `${SSO_REALM}` | False
@@ -92,7 +92,7 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`AUTH_LDAP_ROLE_NAME_ATTRIBUTE_ID` | `AUTH_LDAP_ROLE_NAME_ATTRIBUTE_ID` | Name of the attribute within the roleCtxDN context which contains the role name. If the roleAttributeIsDN property is set to true, this property is used to find the role object's name attribute. | `${AUTH_LDAP_ROLE_NAME_ATTRIBUTE_ID}` | False
 |`AUTH_LDAP_PARSE_ROLE_NAME_FROM_DN` | `AUTH_LDAP_PARSE_ROLE_NAME_FROM_DN` | A flag indicating if the DN returned by a query contains the roleNameAttributeID. If set to true, the DN is checked for the roleNameAttributeID. If set to false, the DN is not checked for the roleNameAttributeID. This flag can improve the performance of LDAP queries. | `${AUTH_LDAP_PARSE_ROLE_NAME_FROM_DN}` | False
 |`AUTH_LDAP_ROLE_ATTRIBUTE_IS_DN` | `AUTH_LDAP_ROLE_ATTRIBUTE_IS_DN` | Whether or not the roleAttributeID contains the fully-qualified DN of a role object. If false, the role name is taken from the value of the roleNameAttributeId attribute of the context name. Certain directory schemas, such as Microsoft Active Directory, require this attribute to be set to true. | `${AUTH_LDAP_ROLE_ATTRIBUTE_IS_DN}` | False
-|`AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK` | `AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK` | If you are not using referrals, this option can be ignored. When using referrals, this option denotes the attribute name which contains users defined for a certain role, for example member, if the role object is inside the referral. Users are checked against the content of this attribute name. If this option is not set, the check will always fail, so role objects cannot be stored in a referral tree. | `${AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK}` | False
+|`AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK` | `AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK` | If you are not using referrals, you can ignore this option. When using referrals, this option denotes the attribute name which contains users defined for a certain role, for example member, if the role object is inside the referral. Users are checked against the content of this attribute name. If this option is not set, the check will always fail, so role objects cannot be stored in a referral tree. | `${AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK}` | False
 |`AUTH_ROLE_MAPPER_ROLES_PROPERTIES` | `AUTH_ROLE_MAPPER_ROLES_PROPERTIES` | When present, the RoleMapping Login Module will be configured to use the provided file. This property defines the fully-qualified file path and name of a properties file or resource which maps roles to replacement roles. The format is original_role=role1,role2,role3 | `${AUTH_ROLE_MAPPER_ROLES_PROPERTIES}` | False
 |`AUTH_ROLE_MAPPER_REPLACE_ROLE` | `AUTH_ROLE_MAPPER_REPLACE_ROLE` | Whether to add to the current roles, or replace the current roles with the mapped ones. Replaces if set to true. | `${AUTH_ROLE_MAPPER_REPLACE_ROLE}` | False
 |=======================================================================
@@ -264,7 +264,7 @@ information.
 |`KIE_SERVER_CONTROLLER_USER` | KIE server controller username (Sets the org.kie.server.controller.user system property) | `${KIE_SERVER_CONTROLLER_USER}`
 |`KIE_SERVER_CONTROLLER_PWD` | KIE server controller password (Sets the org.kie.server.controller.pwd system property) | `${KIE_SERVER_CONTROLLER_PWD}`
 |`KIE_SERVER_CONTROLLER_TOKEN` | KIE server controller token for bearer authentication (Sets the org.kie.server.controller.token system property) | `${KIE_SERVER_CONTROLLER_TOKEN}`
-|`KIE_SERVER_CONTROLLER_SERVICE` | The service name for the optional standalone controller, where it can be reached to allow service lookup, and registered with (If set, will be used to discover host and port) | `${KIE_SERVER_CONTROLLER_SERVICE}`
+|`KIE_SERVER_CONTROLLER_SERVICE` | The service name for the optional standalone controller. The application uses this service name to register with the controller. (If set, will be used to discover host and port) | `${KIE_SERVER_CONTROLLER_SERVICE}`
 |`KIE_SERVER_CONTROLLER_PROTOCOL` | -- | ws
 |`KIE_SERVER_CONTROLLER_HOST` | KIE server controller host (Used to set the org.kie.server.controller system property) | `${KIE_SERVER_CONTROLLER_HOST}`
 |`KIE_SERVER_CONTROLLER_PORT` | KIE server controller port (Used to set the org.kie.server.controller system property) | `${KIE_SERVER_CONTROLLER_PORT}`
@@ -287,7 +287,7 @@ information.
 |`HTTPS_KEYSTORE` | The name of the keystore file within the secret | `${KIE_SERVER_HTTPS_KEYSTORE}`
 |`HTTPS_NAME` | The name associated with the server certificate | `${KIE_SERVER_HTTPS_NAME}`
 |`HTTPS_PASSWORD` | The password for the keystore and certificate | `${KIE_SERVER_HTTPS_PASSWORD}`
-|`KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | `${KIE_SERVER_MGMT_DISABLED}`
+|`KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped. Sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | `${KIE_SERVER_MGMT_DISABLED}`
 |`KIE_SERVER_STARTUP_STRATEGY` | When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable. | `${KIE_SERVER_STARTUP_STRATEGY}`
 |`JGROUPS_PING_PROTOCOL` | -- | openshift.DNS_PING
 |`OPENSHIFT_DNS_PING_SERVICE_NAME` | -- | `${APPLICATION_NAME}-kieserver-ping`
@@ -323,7 +323,7 @@ information.
 |`AUTH_LDAP_ROLE_NAME_ATTRIBUTE_ID` | Name of the attribute within the roleCtxDN context which contains the role name. If the roleAttributeIsDN property is set to true, this property is used to find the role object's name attribute. | `${AUTH_LDAP_ROLE_NAME_ATTRIBUTE_ID}`
 |`AUTH_LDAP_PARSE_ROLE_NAME_FROM_DN` | A flag indicating if the DN returned by a query contains the roleNameAttributeID. If set to true, the DN is checked for the roleNameAttributeID. If set to false, the DN is not checked for the roleNameAttributeID. This flag can improve the performance of LDAP queries. | `${AUTH_LDAP_PARSE_ROLE_NAME_FROM_DN}`
 |`AUTH_LDAP_ROLE_ATTRIBUTE_IS_DN` | Whether or not the roleAttributeID contains the fully-qualified DN of a role object. If false, the role name is taken from the value of the roleNameAttributeId attribute of the context name. Certain directory schemas, such as Microsoft Active Directory, require this attribute to be set to true. | `${AUTH_LDAP_ROLE_ATTRIBUTE_IS_DN}`
-|`AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK` | If you are not using referrals, this option can be ignored. When using referrals, this option denotes the attribute name which contains users defined for a certain role, for example member, if the role object is inside the referral. Users are checked against the content of this attribute name. If this option is not set, the check will always fail, so role objects cannot be stored in a referral tree. | `${AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK}`
+|`AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK` | If you are not using referrals, you can ignore this option. When using referrals, this option denotes the attribute name which contains users defined for a certain role, for example member, if the role object is inside the referral. Users are checked against the content of this attribute name. If this option is not set, the check will always fail, so role objects cannot be stored in a referral tree. | `${AUTH_LDAP_REFERRAL_USER_ATTRIBUTE_ID_TO_CHECK}`
 |`AUTH_ROLE_MAPPER_ROLES_PROPERTIES` | When present, the RoleMapping Login Module will be configured to use the provided file. This property defines the fully-qualified file path and name of a properties file or resource which maps roles to replacement roles. The format is original_role=role1,role2,role3 | `${AUTH_ROLE_MAPPER_ROLES_PROPERTIES}`
 |`AUTH_ROLE_MAPPER_REPLACE_ROLE` | Whether to add to the current roles, or replace the current roles with the mapped ones. Replaces if set to true. | `${AUTH_ROLE_MAPPER_REPLACE_ROLE}`
 |=======================================================================

@@ -23,9 +23,9 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |Variable name |Image Environment Variable |Description |Example value |Required
 
 |`APPLICATION_NAME` | -- | The name for the application. | myapp | True
-|`OPTAWEB_ADMIN_USER` | -- | OptaWeb administrator username | adminUser | False
-|`OPTAWEB_ADMIN_PWD` | -- | OptaWeb administrator password (Default is "RedHat") | RedHat | True
-|`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you've installed the ImageStreams in a different namespace/project. | openshift | True
+|`OPTAWEB_ADMIN_USER` | -- | OptaWeb administrator username. | adminUser | False
+|`OPTAWEB_ADMIN_PWD` | -- | OptaWeb administrator password. Default is "RedHat". | RedHat | True
+|`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
 |`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm72-optaweb-employee-rostering-openshift". | rhdm72-optaweb-employee-rostering-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
 |`OPTAWEB_HOSTNAME_HTTP` | -- | Custom hostname for http service route, if set will also configure the OPTAWEB_HOST. Leave blank for default hostname, e.g.: <application-name>-optaweb-employee-rostering-<project>.<default-domain-suffix> | -- | False
