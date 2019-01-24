@@ -143,7 +143,7 @@ items:
   metadata:
     name: rhdm72-optaweb-employee-rostering-openshift
     annotations:
-      openshift.io/display-name: Red Hat Decision Manager KIE Server 7.2
+      openshift.io/display-name: Red Hat Decision Manager Business Optimizer OptaWeb Employee Rostering 7.2
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
