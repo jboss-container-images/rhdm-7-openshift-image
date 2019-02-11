@@ -303,21 +303,19 @@ objects:
             mountPath: "/etc/optaweb-employee-rostering-secret-volume"
             readOnly: true
           livenessProbe:
-            exec:
-              command:
-              - "/bin/bash"
-              - "-c"
-              - "curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/swagger/index.html"
+            httpGet:
+              path: /swagger/index.html
+              port: 8080
+              scheme: HTTP
             initialDelaySeconds: 180
             timeoutSeconds: 2
             periodSeconds: 15
             failureThreshold: 3
           readinessProbe:
-            exec:
-              command:
-              - "/bin/bash"
-              - "-c"
-              - "curl --fail --silent -u '${KIE_ADMIN_USER}:${KIE_ADMIN_PWD}' http://localhost:8080/swagger/index.html"
+            httpGet:
+              path: /swagger/index.html
+              port: 8080
+              scheme: HTTP
             initialDelaySeconds: 60
             timeoutSeconds: 2
             periodSeconds: 30
