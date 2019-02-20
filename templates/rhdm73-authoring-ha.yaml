@@ -496,7 +496,6 @@ objects:
   metadata:
     name: ${APPLICATION_NAME}-amq-role
     labels:
-      app: ${APPLICATION_NAME}
       application: ${APPLICATION_NAME}
   rules:
   - apiGroups:
@@ -524,7 +523,6 @@ objects:
   metadata:
     name: ${APPLICATION_NAME}-amq-scaledown-controller-role
     labels:
-      app: ${APPLICATION_NAME}
       application: ${APPLICATION_NAME}
   rules:
   - apiGroups:
@@ -569,7 +567,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-rhdmsvc"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
 - kind: RoleBinding
   apiVersion: v1
@@ -600,7 +597,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-rhdmcentr"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-rhdmcentr"
     annotations:
@@ -618,7 +614,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-ping"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
     annotations:
       service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
@@ -638,7 +633,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-kieserver"
     annotations:
@@ -658,7 +652,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-rhdmindex"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-rhdmindex"
     annotations:
@@ -675,7 +668,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-amq-tcp"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-amq"
     annotations:
@@ -687,7 +679,6 @@ objects:
       description: The JGroups ping port for clustering.
       service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
     labels:
-      app: ${APPLICATION_NAME}
       application: ${APPLICATION_NAME}
     name: ${APPLICATION_NAME}-amq-ping
   spec:
@@ -704,7 +695,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-rhdmcentr"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-rhdmcentr"
     annotations:
@@ -722,7 +712,6 @@ objects:
   metadata:
     name: "secure-${APPLICATION_NAME}-rhdmcentr"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-rhdmcentr"
     annotations:
@@ -742,7 +731,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-kieserver"
     annotations:
@@ -759,7 +747,6 @@ objects:
   metadata:
     name: "secure-${APPLICATION_NAME}-kieserver"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-kieserver"
     annotations:
@@ -778,7 +765,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-rhdmindex"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
     annotations:
       description: Route for Decision Central Indexing's Elasticsearch http service.
@@ -793,7 +779,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-rhdmcentr"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-rhdmcentr"
     annotations:
@@ -820,7 +805,6 @@ objects:
       metadata:
         name: "${APPLICATION_NAME}-rhdmcentr"
         labels:
-          app: ${APPLICATION_NAME}
           deploymentConfig: "${APPLICATION_NAME}-rhdmcentr"
           application: "${APPLICATION_NAME}"
       spec:
@@ -1016,7 +1000,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-kieserver"
     annotations:
@@ -1042,7 +1025,6 @@ objects:
       metadata:
         name: "${APPLICATION_NAME}-kieserver"
         labels:
-          app: ${APPLICATION_NAME}
           deploymentConfig: "${APPLICATION_NAME}-kieserver"
           application: "${APPLICATION_NAME}"
       spec:
@@ -1225,7 +1207,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-rhdmindex"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-rhdmindex"
     annotations:
@@ -1304,7 +1285,6 @@ objects:
   apiVersion: v1
   metadata:
     labels:
-      app: ${APPLICATION_NAME}
       application: ${APPLICATION_NAME}
       service: ${APPLICATION_NAME}-amq-scaledown-controller
     name: ${APPLICATION_NAME}-amq-scaledown-controller
@@ -1322,7 +1302,6 @@ objects:
     template:
       metadata:
         labels:
-          app: ${APPLICATION_NAME}
           application: ${APPLICATION_NAME}
           deploymentConfig: ${APPLICATION_NAME}-amq-scaledown-controller
         name: ${APPLICATION_NAME}-amq-scaledown-controller
@@ -1458,7 +1437,6 @@ objects:
     creationTimestamp: null
     generation: 3
     labels:
-      app: ${APPLICATION_NAME}
       application: ${APPLICATION_NAME}
     name: ${APPLICATION_NAME}-amq
   spec:
@@ -1467,13 +1445,12 @@ objects:
     revisionHistoryLimit: 10
     selector:
       matchLabels:
-        app: ${APPLICATION_NAME}
+        deploymentConfig: ${APPLICATION_NAME}-amq
     serviceName: ${APPLICATION_NAME}-amq-tcp
     template:
       metadata:
         creationTimestamp: null
         labels:
-          app: ${APPLICATION_NAME}
           application: ${APPLICATION_NAME}
           deploymentConfig: ${APPLICATION_NAME}-amq
         name: ${APPLICATION_NAME}-amq
@@ -1570,7 +1547,6 @@ objects:
   metadata:
     name: ${APPLICATION_NAME}-amq-scaledown-controller-openshift-rb
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
   subjects:
     - kind: ServiceAccount
@@ -1584,7 +1560,6 @@ objects:
   metadata:
     name: ${APPLICATION_NAME}-amq-rb
     labels:
-      app: ${APPLICATION_NAME}
       application: ${APPLICATION_NAME}
   subjects:
     - kind: ServiceAccount
@@ -1597,14 +1572,12 @@ objects:
   kind: ServiceAccount
   metadata:
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
     name: ${APPLICATION_NAME}-amq-sa
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
     name: ${APPLICATION_NAME}-amq-scaledown-controller-sa
 - apiVersion: v1
@@ -1624,7 +1597,6 @@ objects:
   metadata:
     name: "${APPLICATION_NAME}-rhdmindex-claim"
     labels:
-      app: ${APPLICATION_NAME}
       application: "${APPLICATION_NAME}"
   spec:
     accessModes:
