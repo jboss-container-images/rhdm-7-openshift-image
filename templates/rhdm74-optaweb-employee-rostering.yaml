@@ -6,16 +6,16 @@ metadata:
     iconClass: icon-jboss
     tags: rhdm,decisionserver,jboss,optaweb,employee-rostering,postgresql
     version: "1.0"
-    openshift.io/display-name: Red Hat Decision Manager 7.3 Business Optimizer Employee Rostering with a PostgreSQL database
+    openshift.io/display-name: Red Hat Decision Manager 7.4 Business Optimizer Employee Rostering with a PostgreSQL database
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for a Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.3
+    description: Application template for a Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.4
     template.openshift.io/long-description: This web application assists the operations department to assign shifts to employees, for example in hospitals, factories, guard firms or call centers. It automatically finds the best employee for each shift, taking into account labor regulations, skill requirements, employee preferences and other constraints.
-    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.3/html/deploying_the_employee_roster_starter_application_for_red_hat_business_optimizer_on_red_hat_openshift_container_platform/
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.4/html/deploying_the_employee_roster_starter_application_for_red_hat_business_optimizer_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
-  name: rhdm73-optaweb-employee-rostering
+  name: rhdm74-optaweb-employee-rostering
 labels:
-  template: rhdm73-optaweb-employee-rostering
+  template: rhdm74-optaweb-employee-rostering
   rhdm: "1.0"
 message: |-
           A new Decision Manager Optaweb employee rostering application have been created in your project.
@@ -47,9 +47,9 @@ parameters:
   value: openshift
   required: true
 - displayName: Optaweb Employee Rostering ImageStream Name
-  description: The name of the image stream to use for Optaweb employee rostering. Default is "rhdm73-optaweb-employee-rostering-openshift".
+  description: The name of the image stream to use for Optaweb employee rostering. Default is "rhdm74-optaweb-employee-rostering-openshift".
   name: OPTAWEB_IMAGE_STREAM_NAME
-  value: "rhdm73-optaweb-employee-rostering-openshift"
+  value: "rhdm74-optaweb-employee-rostering-openshift"
   required: true
 - displayName: ImageStream Tag
   description: A named pointer to an image in an image stream. Default is "1.0".

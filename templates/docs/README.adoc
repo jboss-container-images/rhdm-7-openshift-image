@@ -16,15 +16,15 @@ toc::[levels=1]
 == rhdm-7-openshift-image/templates
 
 * link:README.adoc[README]
-* link:rhdm73-authoring-ha.adoc[rhdm73-authoring-ha]
-* link:rhdm73-authoring.adoc[rhdm73-authoring]
-* link:rhdm73-kieserver.adoc[rhdm73-kieserver]
-* link:rhdm73-prod-immutable-kieserver.adoc[rhdm73-prod-immutable-kieserver]
-* link:rhdm73-trial-ephemeral.adoc[rhdm73-trial-ephemeral]
-* link:rhdm73-optaweb-employee-rostering-externaldb.adoc[rhdm73-optaweb-employee-rostering-externaldb]
-* link:rhdm73-optaweb-employee-rostering-mysql.adoc[rhdm73-optaweb-employee-rostering-mysql]
-* link:rhdm73-optaweb-employee-rostering-postgresql.adoc[rhdm73-optaweb-employee-rostering-postgresql]
-* link:rhdm73-optaweb-employee-rostering-trial-ephemeral.adoc[rhdm73-optaweb-employee-rostering-trial-ephemeral]
+* link:rhdm74-authoring-ha.adoc[rhdm74-authoring-ha]
+* link:rhdm74-authoring.adoc[rhdm74-authoring]
+* link:rhdm74-kieserver.adoc[rhdm74-kieserver]
+* link:rhdm74-prod-immutable-kieserver.adoc[rhdm74-prod-immutable-kieserver]
+* link:rhdm74-trial-ephemeral.adoc[rhdm74-trial-ephemeral]
+* link:rhdm74-optaweb-employee-rostering-externaldb.adoc[rhdm74-optaweb-employee-rostering-externaldb]
+* link:rhdm74-optaweb-employee-rostering-mysql.adoc[rhdm74-optaweb-employee-rostering-mysql]
+* link:rhdm74-optaweb-employee-rostering-postgresql.adoc[rhdm74-optaweb-employee-rostering-postgresql]
+* link:rhdm74-optaweb-employee-rostering-trial-ephemeral.adoc[rhdm74-optaweb-employee-rostering-trial-ephemeral]
 
 ////
   the source for the release notes part of this page is in the file
