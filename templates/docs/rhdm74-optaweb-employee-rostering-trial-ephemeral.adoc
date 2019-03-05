@@ -3,12 +3,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (./*.in)
 ////
-= rhdm73-optaweb-employee-rostering-trial-ephemeral
+= rhdm74-optaweb-employee-rostering-trial-ephemeral
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for an ephemeral Optaweb Employee Rostering for Red Hat Decision Manager 7.3
+Application template for an ephemeral Optaweb Employee Rostering for Red Hat Decision Manager 7.4
 
 toc::[]
 
@@ -26,7 +26,7 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`OPTAWEB_ADMIN_USER` | -- | OptaWeb administrator username. | adminUser | False
 |`OPTAWEB_ADMIN_PWD` | -- | OptaWeb administrator password. Default is "RedHat". | RedHat | True
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
-|`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm73-optaweb-employee-rostering-openshift". | rhdm73-optaweb-employee-rostering-openshift | True
+|`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm74-optaweb-employee-rostering-openshift". | rhdm74-optaweb-employee-rostering-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
 |`OPTAWEB_HOSTNAME_HTTP` | -- | Custom hostname for http service route, if set will also configure the OPTAWEB_HOST. Leave blank for default hostname, e.g.: <application-name>-optaweb-employee-rostering-<project>.<default-domain-suffix> | -- | False
 |`OPTAWEB_MEMORY_LIMIT` | -- | Optaweb employee rostering Container memory limit | 1Gi | False
@@ -191,10 +191,3 @@ information.
 ==== Secrets
 
 This template requires the following secrets to be installed for the application to run.
-
-
-
-
-
-
-

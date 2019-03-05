@@ -6,16 +6,16 @@ metadata:
     iconClass: icon-jboss
     tags: rhdm,decisionserver,jboss,authoring,ha
     version: "1.0"
-    openshift.io/display-name: Red Hat Decision Manager 7.3 authoring environment (HA, persistent, with https)
+    openshift.io/display-name: Red Hat Decision Manager 7.4 authoring environment (HA, persistent, with https)
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for a HA persistent authoring environment, for Red Hat Decision Manager 7.3
-    template.openshift.io/long-description: This template defines resources needed to develop and execute Rules on Red Hat Decision Manager 7.3 with High Availability enabled as tech preview, including application deployment configuration, secure and insecure http communication and persistent volumes to store data that needs to survive a restart.
-    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.3/html/deploying_a_red_hat_decision_manager_7.3_authoring_environment_on_red_hat_openshift_container_platform/
+    description: Application template for a HA persistent authoring environment, for Red Hat Decision Manager 7.4
+    template.openshift.io/long-description: This template defines resources needed to develop and execute Rules on Red Hat Decision Manager 7.4 with High Availability enabled as tech preview, including application deployment configuration, secure and insecure http communication and persistent volumes to store data that needs to survive a restart.
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.4/html/deploying_a_red_hat_decision_manager_7.4_authoring_environment_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
-  name: rhdm73-authoring-ha
+  name: rhdm74-authoring-ha
 labels:
-  template: rhdm73-authoring-ha
+  template: rhdm74-authoring-ha
   rhdm: "1.0"
 message: |-
           A new persistent HA Decision Manager application has been created in your project.
@@ -279,9 +279,9 @@ parameters:
   value: openshift
   required: true
 - displayName: KIE Server ImageStream Name
-  description: The name of the image stream to use for KIE server. Default is "rhdm73-kieserver-openshift".
+  description: The name of the image stream to use for KIE server. Default is "rhdm74-kieserver-openshift".
   name: KIE_SERVER_IMAGE_STREAM_NAME
-  value: "rhdm73-kieserver-openshift"
+  value: "rhdm74-kieserver-openshift"
   required: true
 - displayName: ImageStream Tag
   description: A named pointer to an image in an image stream. Default is "1.0".
@@ -808,7 +808,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "rhdm73-decisioncentral-openshift:${IMAGE_STREAM_TAG}"
+          name: "rhdm74-decisioncentral-openshift:${IMAGE_STREAM_TAG}"
     - type: ConfigChange
 ## Replicas for Decision Central
     replicas: 2
@@ -825,7 +825,7 @@ objects:
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-rhdmcentr"
-          image: rhdm73-decisioncentral-openshift
+          image: rhdm74-decisioncentral-openshift
           imagePullPolicy: Always
           resources:
             limits:
@@ -1238,7 +1238,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "rhdm73-decisioncentral-indexing-openshift:${IMAGE_STREAM_TAG}"
+          name: "rhdm74-decisioncentral-indexing-openshift:${IMAGE_STREAM_TAG}"
     - type: ConfigChange
     replicas: 1
     selector:
@@ -1253,7 +1253,7 @@ objects:
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-rhdmindex"
-          image: rhdm73-decisioncentral-indexing-openshift
+          image: rhdm74-decisioncentral-indexing-openshift
           imagePullPolicy: Always
           volumeMounts:
           - name: "${APPLICATION_NAME}-rhdmindex-pvol"

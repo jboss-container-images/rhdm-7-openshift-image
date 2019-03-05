@@ -3,12 +3,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (./*.in)
 ////
-= rhdm73-optaweb-employee-rostering-postgresql
+= rhdm74-optaweb-employee-rostering-postgresql
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for a Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.3
+Application template for a Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.4
 
 toc::[]
 
@@ -26,7 +26,7 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |`OPTAWEB_ADMIN_USER` | -- | OptaWeb administrator username | adminUser | False
 |`OPTAWEB_ADMIN_PWD` | -- | OptaWeb administrator password | -- | False
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
-|`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm73-optaweb-employee-rostering-openshift". | rhdm73-optaweb-employee-rostering-openshift | True
+|`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm74-optaweb-employee-rostering-openshift". | rhdm74-optaweb-employee-rostering-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
 |`OPTAWEB_PERSISTENCE_DS` | -- | Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property) | java:/jboss/datasources/optaweb | True
 |OPTAWEB_PERSISTENCE_HBM2DDL_AUTO | -- | Optaweb employee rostering persistence hbm2ddl auto (Sets the org.optaweb.employeerostering.persistence.hbm2ddl.auto system property) | -- | False
@@ -246,7 +246,7 @@ information.
 =====  Volumes
 
 |=============
-|Deployment |Name  | mountPath | Purpose | readOnly 
+|Deployment |Name  | mountPath | Purpose | readOnly
 
 |`${APPLICATION_NAME}-optaweb-employee-rostering` | optaweb-employee-rostering-keystore-volume | `/etc/optaweb-employee-rostering-secret-volume` | ssl certs | True
 |`${APPLICATION_NAME}-postgresql` | `${APPLICATION_NAME}-postgresql-pvol` | `/var/lib/pgsql/data` | postgresql | false
@@ -277,9 +277,3 @@ more information.
 This template requires the following secrets to be installed for the application to run.
 
 optaweb-employee-rostering-app-secret
-
-
-
-
-
-
