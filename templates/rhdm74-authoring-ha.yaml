@@ -695,13 +695,13 @@ objects:
     selector:
       deploymentConfig: ${APPLICATION_NAME}-amq
   metadata:
-    name: ${APPLICATION_NAME}-amq-ping
+    name: ping
     annotations:
       description: The JGroups ping port for clustering.
       service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
     labels:
       application: ${APPLICATION_NAME}
-      service: ${APPLICATION_NAME}-amq-ping
+      service: ping
 - kind: Route
   apiVersion: v1
   id: "${APPLICATION_NAME}-rhdmcentr-http"
@@ -1436,7 +1436,7 @@ objects:
                   },
                   {
                     "name": "OPENSHIFT_DNS_PING_SERVICE_NAME",
-                    "value": "${APPLICATION_NAME}-amq-ping"
+                    "value": "ping"
                   },
                   {
                     "name": "OPENSHIFT_DNS_PING_SERVICE_PORT",
