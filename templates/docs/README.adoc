@@ -6,7 +6,7 @@
 = Application Templates
 
 This project contains OpenShift v3 application templates which support applications based on RHDM products.
-Source can be found https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/master/templates[here].
+Source can be found https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.3.x/templates[here].
 
 :icons: font
 :toc: macro
@@ -19,12 +19,9 @@ toc::[levels=1]
 * link:rhdm73-authoring-ha.adoc[rhdm73-authoring-ha]
 * link:rhdm73-authoring.adoc[rhdm73-authoring]
 * link:rhdm73-kieserver.adoc[rhdm73-kieserver]
+* link:rhdm73-optaweb-employee-rostering.adoc[rhdm73-optaweb-employee-rostering]
 * link:rhdm73-prod-immutable-kieserver.adoc[rhdm73-prod-immutable-kieserver]
 * link:rhdm73-trial-ephemeral.adoc[rhdm73-trial-ephemeral]
-* link:rhdm73-optaweb-employee-rostering-externaldb.adoc[rhdm73-optaweb-employee-rostering-externaldb]
-* link:rhdm73-optaweb-employee-rostering-mysql.adoc[rhdm73-optaweb-employee-rostering-mysql]
-* link:rhdm73-optaweb-employee-rostering-postgresql.adoc[rhdm73-optaweb-employee-rostering-postgresql]
-* link:rhdm73-optaweb-employee-rostering-trial-ephemeral.adoc[rhdm73-optaweb-employee-rostering-trial-ephemeral]
 
 ////
   the source for the release notes part of this page is in the file
