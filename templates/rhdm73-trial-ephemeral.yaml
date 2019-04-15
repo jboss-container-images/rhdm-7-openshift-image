@@ -61,6 +61,7 @@ parameters:
   name: KIE_SERVER_CONTROLLER_USER
   value: controllerUser
   required: false
+- displayName: KIE Server Mode
   description: "The KIE Server mode. Valid values are 'DEVELOPMENT' or 'PRODUCTION'. In production mode, you can not deploy SNAPSHOT versions of artifacts on the KIE server and can not change the version of an artifact in an existing container. (Sets the org.kie.server.mode system property)."
   name: KIE_SERVER_MODE
   value: "DEVELOPMENT"
