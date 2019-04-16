@@ -1,6 +1,6 @@
 ## Red Hat Decision Manager Kie Server Quickstart
 
-Note that, this is the development branch, the target images might not be available here, instead you can look at the [released branch](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.1.x/quickstarts/hello-rules)
+Note that, this is the development branch, the target images might not be available here, instead you can look at the [released branch](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.3.x/quickstarts/hello-rules)
 
 This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/master/kieserver) image.
 
@@ -81,7 +81,7 @@ At this moment we are ready to instantiate the kieserver app:
 ```bash
 $ oc new-app rhdm74-prod-immutable-kieserver \
 -p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
--p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT \
+-p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.5.0-SNAPSHOT \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
 -p SOURCE_REPOSITORY_REF=master \
 -p CONTEXT_DIR=quickstarts/hello-rules/hellorules \
@@ -125,7 +125,7 @@ $ oc new-app rhdm74-prod-immutable-kieserver \
         * KIE Server Certificate Name=jboss
         * KIE Server Keystore Password=mykeystorepass
         * KIE Server Bypass Auth User=false
-        * KIE Server Container Deployment=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.4.0-SNAPSHOT
+        * KIE Server Container Deployment=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.5.0-SNAPSHOT
         * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
         * Git Reference=master
         * Context Directory=quickstarts/hello-rules/hellorules
@@ -173,11 +173,11 @@ $ oc new-app rhdm74-prod-immutable-kieserver \
 
 Now you can deploy the [hellorules-client](hellorules-client) in the same or another project and test RHDM Kie Server container.
 
-To deploy the hello rules client you can use the **eap71-basic-s2i** (It is available in the OpenShift Catalog) template and specify the above quickstart to be deployed.
+To deploy the hello rules client you can use the **eap72-basic-s2i** (It is available in the OpenShift Catalog) template and specify the above quickstart to be deployed.
 To do so, execute the following commands:
 
 ```bash
-$ oc new-app eap71-basic-s2i \
+$ oc new-app eap72-basic-s2i \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
 -p SOURCE_REPOSITORY_REF=master \
 -p CONTEXT_DIR=quickstarts/hello-rules
@@ -185,9 +185,9 @@ $ oc new-app eap71-basic-s2i \
 
 As result you should see something like this:
 ```bash
---> Deploying template "openshift/eap71-basic-s2i" to project rhdm
+--> Deploying template "openshift/eap72-basic-s2i" to project rhdm
 
-     JBoss EAP 7.1 (no https)
+     JBoss EAP 7.2 (no https)
      ---------
      An example EAP 7 application. For more information about using this template, see https://github.com/jboss-openshift/application-templates.
 

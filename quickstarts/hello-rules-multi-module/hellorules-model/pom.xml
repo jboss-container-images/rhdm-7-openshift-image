@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.openshift.quickstarts</groupId>
-        <artifactId>rhdm-kieserver-parent</artifactId>
-        <version>1.4.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.openshift.quickstarts</groupId>
+		<artifactId>rhdm-kieserver-parent</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>rhdm-kieserver-hellorules-model</artifactId>
-    <packaging>jar</packaging>
+	<artifactId>rhdm-kieserver-hellorules-model</artifactId>
+	<packaging>jar</packaging>
 
-    <name>OpenShift Quickstarts: RHDM Kie Server: Multi Module Hello Rules Model</name>
-    <description>A simple example application demonstrating the use of a business rule.</description>
+	<name>OpenShift Quickstarts: RHDM Kie Server: Multi Module Hello Rules Model</name>
+	<description>A simple example application demonstrating the use of a business rule.</description>
 
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <distribution>repo</distribution>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-        </license>
-    </licenses>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<distribution>repo</distribution>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+		</license>
+	</licenses>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
 </project>
