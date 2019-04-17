@@ -33,15 +33,12 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.StatelessKieSession;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
-import org.kie.remote.common.rest.KieRemoteHttpRequest;
-
 import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
 import org.kie.server.client.RuleServicesClient;
-
-
+import org.kie.server.common.rest.KieServerHttpRequest;
 import org.openshift.quickstarts.rhdm.kieserver.hellorules.Greeting;
 import org.openshift.quickstarts.rhdm.kieserver.hellorules.Person;
 import org.slf4j.Logger;
@@ -129,7 +126,7 @@ public class HelloRulesClient {
             Set<Class<?>> classes = new HashSet<Class<?>>();
             classes.add(Greeting.class);
             classes.add(Person.class);
-            config.addJaxbClasses(classes);
+            config.addExtraClasses(classes);
         }
         RuleServicesClient client = KieServicesFactory.newKieServicesClient(config).getServicesClient(RuleServicesClient.class);
         BatchExecutionCommand batch = createBatch();
@@ -243,7 +240,7 @@ public class HelloRulesClient {
 
     // only needed for non-production test scenarios where the TLS certificate isn't set up properly
     private void forgiveUnknownCert() throws Exception {
-        KieRemoteHttpRequest.ConnectionFactory connf = new KieRemoteHttpRequest.ConnectionFactory() {
+        KieServerHttpRequest.ConnectionFactory connf = new KieServerHttpRequest.ConnectionFactory() {
             public HttpURLConnection create(URL u) throws IOException {
                 return forgiveUnknownCert((HttpURLConnection)u.openConnection());
             }
@@ -277,7 +274,7 @@ public class HelloRulesClient {
                 return conn;
             }
         };
-        Field field = KieRemoteHttpRequest.class.getDeclaredField("CONNECTION_FACTORY");
+        Field field = KieServerHttpRequest.class.getDeclaredField("CONNECTION_FACTORY");
         field.setAccessible(true);
         field.set(null, connf);
     }
