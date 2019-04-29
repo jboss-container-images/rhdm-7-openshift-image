@@ -489,7 +489,7 @@ objects:
   apiVersion: v1
   spec:
     ports:
-    - name: "amq-jolokia"
+    - name: "amq-jolokia-console"
       port: 8161
       targetPort: 8161
     selector:
