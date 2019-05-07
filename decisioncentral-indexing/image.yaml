@@ -3,7 +3,7 @@ schema_version: 1
 name: "rhdm-7/rhdm74-decisioncentral-indexing-openshift"
 description: "Red Hat Decision Central Indexing 7.4 OpenShift container image"
 version: "1.0"
-from: "rhel7:7-released"
+from: "ubi8:8-released"
 labels:
     - name: "com.redhat.component"
       value: "rhdm-7-rhdm74-decisioncentral-indexing-openshift-container"
@@ -59,11 +59,11 @@ modules:
                   ref: master
       install:
           - name: jboss.container.openjdk.jdk
+            # elasticsearch 5.6.5 is incompatible with jdk 11
             version: "8"
-          - name: rhdm-7-decisioncentral-indexing
-          - name: dynamic-resources
           - name: java-alternatives
-          - name: os-java-run
+          - name: dynamic-resources
+          - name: rhdm-7-decisioncentral-indexing
           - name: jboss-kie-workbench-indexing
 packages:
       content_sets_file: content_sets.yml
@@ -74,7 +74,7 @@ osbs:
           container_file: container.yaml
       repository:
           name: containers/rhdm-7-decisioncentral-indexing-openshift
-          branch: rhdm-7.4-openshift-rhel-7
+          branch: rhdm-7.4-openshift-ubi-8
 run:
       user: 185
       cmd:
