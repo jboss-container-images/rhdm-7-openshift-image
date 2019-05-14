@@ -94,6 +94,11 @@ parameters:
   name: DROOLS_SERVER_FILTER_CLASSES
   value: 'true'
   required: false
+- displayName: Prometheus Server Extension Disabled
+  description: If set to false, the prometheus server extension will be enabled. (Sets the org.kie.prometheus.server.ext.disabled system property)
+  name: PROMETHEUS_SERVER_EXT_DISABLED
+  example: 'false'
+  required: false
 - displayName: Decision Central Custom http Route Hostname
   description: 'Custom hostname for http service route for Decision Central.  Leave blank for default hostname, e.g.: <application-name>-rhdmcentr-<project>.<default-domain-suffix>'
   name: DECISION_CENTRAL_HOSTNAME_HTTP
@@ -1095,6 +1100,8 @@ objects:
             value: "${KIE_MBEANS}"
           - name: DROOLS_SERVER_FILTER_CLASSES
             value: "${DROOLS_SERVER_FILTER_CLASSES}"
+          - name: PROMETHEUS_SERVER_EXT_DISABLED
+            value: "${PROMETHEUS_SERVER_EXT_DISABLED}"
           - name: KIE_SERVER_BYPASS_AUTH_USER
             value: "${KIE_SERVER_BYPASS_AUTH_USER}"
           - name: KIE_SERVER_CONTROLLER_USER
