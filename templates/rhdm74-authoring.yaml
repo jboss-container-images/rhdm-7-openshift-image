@@ -223,7 +223,7 @@ parameters:
 - displayName: Git hooks directory
   description: The directory to use for git hooks, if required.
   name: GIT_HOOKS_DIR
-  example: /opt/eap/standalone/data/kie/git/hooks
+  example: /opt/kie/data/git/hooks
   required: false
 - displayName: Decision Central Volume Capacity
   description: Size of the persistent storage for Decision Central's runtime data.
@@ -571,7 +571,7 @@ objects:
             mountPath: "/etc/decisioncentral-secret-volume"
             readOnly: true
           - name: "${APPLICATION_NAME}-rhdmcentr-pvol"
-            mountPath: "/opt/eap/standalone/data/kie"
+            mountPath: "/opt/kie/data"
           livenessProbe:
             httpGet:
               path: /rest/healthy
