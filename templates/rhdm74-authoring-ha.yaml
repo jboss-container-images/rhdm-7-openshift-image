@@ -105,7 +105,7 @@ parameters:
   value: ''
   required: false
 - displayName: Decision Central Custom https Route Hostname
-  description: 'Custom hostname for https service route for Decision Central. Leave blank for default hostname, e.g.: secure-<application-name>-rhdmcentr-<project>.<default-domain-suffix>'
+  description: 'Custom hostname for https service route for Decision Central.  Leave blank for default hostname, e.g.: secure-<application-name>-rhdmcentr-<project>.<default-domain-suffix>'
   name: DECISION_CENTRAL_HOSTNAME_HTTPS
   value: ''
   required: false
@@ -130,17 +130,17 @@ parameters:
   example: decisioncentral-app-secret
   required: true
 - displayName: Decision Central Server Keystore Filename
-  description: The name of the keystore file within the secret.
+  description: The name of the keystore file within the secret for Decision Central.
   name: DECISION_CENTRAL_HTTPS_KEYSTORE
   value: keystore.jks
   required: false
 - displayName: Decision Central Server Certificate Name
-  description: The name associated with the server certificate.
+  description: The name associated with the server certificate for Decision Central.
   name: DECISION_CENTRAL_HTTPS_NAME
   value: jboss
   required: false
 - displayName: Decision Central Server Keystore Password
-  description: The password for the keystore and certificate.
+  description: The password for the keystore and certificate for Decision Central.
   name: DECISION_CENTRAL_HTTPS_PASSWORD
   value: mykeystorepass
   required: false
@@ -150,28 +150,19 @@ parameters:
   example: kieserver-app-secret
   required: true
 - displayName: KIE Server Keystore Filename
-  description: The name of the keystore file within the secret.
+  description: The name of the keystore file within the secret for KIE Server.
   name: KIE_SERVER_HTTPS_KEYSTORE
   value: keystore.jks
   required: false
 - displayName: KIE Server Certificate Name
-  description: The name associated with the server certificate.
+  description: The name associated with the server certificate for KIE Server.
   name: KIE_SERVER_HTTPS_NAME
   value: jboss
   required: false
 - displayName: KIE Server Keystore Password
-  description: The password for the keystore and certificate.
+  description: The password for the keystore and certificate for KIE Server.
   name: KIE_SERVER_HTTPS_PASSWORD
   value: mykeystorepass
-  required: false
-- displayName: AppFormer elastic search reconnection tries
-  description: The number of times that appformer will try to connect to the elasticsearch node before give up.
-  name: APPFORMER_ELASTIC_RETRIES
-  required: false
-- displayName: AppFormer JMS Broker port
-  description: The port to connect to the JMS broker. Defaults to 61616.
-  name: APPFORMER_JMS_BROKER_PORT
-  value: '61616'
   required: false
 - displayName: AppFormer JMS Broker username
   description: The username to connect to the JMS broker.
@@ -184,48 +175,21 @@ parameters:
   from: "[a-zA-Z]{6}[0-9]{1}!"
   generate: expression
   required: true
-- displayName: Elasticsearch Custom http Route Hostname
-  description: 'Custom hostname for http service route.  Leave blank for default hostname,
-    e.g.: <application-name>-rhdmindex-<project>.<default-domain-suffix>'
-  name: ES_HOSTNAME_HTTP
-  value: ''
-  required: false
-- displayName: Elasticsearch Cluster name
-  description: Sets the ES cluster.name and configure it on Decision Central. Defaults to kie-cluster.
-  name: APPFORMER_ELASTIC_CLUSTER_NAME
-  value: ''
-  required: false
-- displayName: Elasticsearch Node name
-  description: Sets the ES node.name property. Defaults to HOSTNAME env value.
-  name: ES_NODE_NAME
-  value: ''
-  required: false
-- displayName: Elasticsearch Transport Host
-  description: Sets the ES transport.host property. This will set the transport address of the main ES cluster node. Used for communication between nodes in the cluster. Defaults to container address.
-  name: ES_TRANSPORT_HOST
-  value: ''
-  required: false
-- displayName: Elasticsearch Transport TCP Port
-  description: Sets the ES http.host property. This will set the http address of the main ES cluster node. Used for communication between nodes in the cluster and for communication with Decision Central.
-  name: APPFORMER_ELASTIC_PORT
-  value: ''
-  required: false
-- displayName: Elasticsearch HTTP Host
-  description: Sets the ES http.host property. This will set the http address of the main ES cluster node. Used to interact with the cluster REST API. Defaults to the container IP address.
-  name: ES_HTTP_HOST
-  value: ''
-  required: false
-- displayName: Elasticsearch HTTP Port
-  description: Sets the ES http.port property. This will set the http port of the main ES cluster node. Used to interact with the cluster REST API.
-  name: ES_HTTP_PORT
-  value: ''
-  required: false
-- displayName: Elasticsearch Additional Java Options
-  description: Appends custom jvm configurations/properties to ES jvm.options configuration file.
-  name: ES_JAVA_OPTS
-  value: ''
-  example: "-Xms1024m -Xmx1024m"
-  required: false
+- displayName: DataGrid Image
+  description: DataGrid image.
+  name: DATAGRID_IMAGE
+  value: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift:1.1
+  required: true
+- displayName: DataGrid Container Memory Limit
+  description: DataGrid Container memory limit.
+  name: DATAGRID_MEMORY_LIMIT
+  value: "512Mi"
+  required: true
+- displayName: DataGrid Volume Capacity
+  description: Size of the persistent storage for DataGrid's runtime data.
+  name: DATAGRID_VOLUME_CAPACITY
+  value: "1Gi"
+  required: true
 - displayName: AMQ Scaledown Controller ImageStream Namespace
   description: Namespace in which the ImageStream for the AMQ Scaledown Controller image is installed. Default is "openshift".
   name: AMQ_SCALEDOWN_CONTROLLER_IMAGE_STREAM_NAMESPACE
@@ -237,7 +201,7 @@ parameters:
   value: "amq-broker-72-scaledown-controller-openshift"
   required: true
 - displayName: AMQ Scaledown Controller ImageStream Tag
-  description: The AMQ image stream tag. Default is "1.0".
+  description: The AMQ scaledown controller image stream tag. Default is "1.0".
   name: AMQ_SCALEDOWN_CONTROLLER_IMAGE_STREAM_TAG
   required: true
   value: "1.0"
@@ -266,11 +230,6 @@ parameters:
   name: AMQ_VOLUME_CAPACITY
   value: 1Gi
   required: true
-- displayName: Elasticsearch Volume Capacity
-  description: Size of persistent storage for Elasticsearch volume.
-  name: ES_VOLUME_CAPACITY
-  value: 1Gi
-  required: true
 - displayName: ImageStream Namespace
   description: Namespace in which the ImageStreams for Red Hat Middleware images are
     installed. These ImageStreams are normally installed in the openshift namespace.
@@ -278,6 +237,11 @@ parameters:
     different namespace/project.
   name: IMAGE_STREAM_NAMESPACE
   value: openshift
+  required: true
+- displayName: Decision Central ImageStream Name
+  description: The name of the image stream to use for Decision Central. Default is "rhdm74-decisioncentral-openshift".
+  name: DECISION_CENTRAL_IMAGE_STREAM_NAME
+  value: "rhdm74-decisioncentral-openshift"
   required: true
 - displayName: KIE Server ImageStream Name
   description: The name of the image stream to use for KIE server. Default is "rhdm74-kieserver-openshift".
@@ -346,6 +310,11 @@ parameters:
   description: KIE server Container memory limit.
   name: KIE_SERVER_MEMORY_LIMIT
   value: 1Gi
+  required: false
+- displayName: KIE Server Startup Strategy
+  description: "When set to OpenShiftStartupStrategy, allows KIE server to start up independently used shared state from OpenShift API service. Default: ControllerBasedStartupStrategy"
+  name: KIE_SERVER_STARTUP_STRATEGY
+  value: ControllerBasedStartupStrategy
   required: false
 - displayName: RH-SSO URL
   description: RH-SSO URL.
@@ -623,13 +592,46 @@ objects:
     selector:
       deploymentConfig: "${APPLICATION_NAME}-rhdmcentr"
   metadata:
-    name: "${APPLICATION_NAME}-ping"
+    name: "${APPLICATION_NAME}-rhdmcentr-ping"
     labels:
       application: "${APPLICATION_NAME}"
-      service: "${APPLICATION_NAME}-ping"
+      service: "${APPLICATION_NAME}-rhdmcentr-ping"
     annotations:
       service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
-      description: "The JGroups ping port for clustering."
+      description: "The JGroups ping port for rhdmcentr clustering."
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${APPLICATION_NAME}-datagrid-ping
+    labels:
+      application: ${APPLICATION_NAME}
+    annotations:
+      description: Provides a ping service for clustered applications.
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  spec:
+    clusterIP: None
+    ports:
+    - name: ping
+      port: 8888
+      targetPort: 8888
+    selector:
+      deploymentConfig: ${APPLICATION_NAME}-datagrid
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${APPLICATION_NAME}-datagrid
+    labels:
+      application: ${APPLICATION_NAME}
+    annotations:
+      description: Provides a service for accessing the application over Hot Rod protocol.
+      service.alpha.openshift.io/serving-cert-secret-name: datagrid-service-certs
+  spec:
+    ports:
+    - name: hotrod
+      port: 11222
+      targetPort: 11222
+    selector:
+      deploymentConfig: ${APPLICATION_NAME}-datagrid
 - kind: Service
   apiVersion: v1
   spec:
@@ -654,25 +656,6 @@ objects:
       service: "${APPLICATION_NAME}-kieserver"
     annotations:
       description: All the KIE server web server's ports.
-- kind: Service
-  apiVersion: v1
-  spec:
-    ports:
-    - name: rest
-      port: 9200
-      targetPort: 9200
-    - name: transport
-      port: 9300
-      targetPort: 9300
-    selector:
-      deploymentConfig: "${APPLICATION_NAME}-rhdmindex"
-  metadata:
-    name: "${APPLICATION_NAME}-rhdmindex"
-    labels:
-      application: "${APPLICATION_NAME}"
-      service: "${APPLICATION_NAME}-rhdmindex"
-    annotations:
-      description: All the Decision Central Indexing Elasticsearch ports.
 - apiVersion: v1
   kind: Service
   spec:
@@ -684,7 +667,6 @@ objects:
       deploymentConfig: "${APPLICATION_NAME}-amq"
   metadata:
     name: "${APPLICATION_NAME}-amq-tcp"
-    labels:
     annotations:
       description: The broker's OpenWire port.
     labels:
@@ -703,7 +685,7 @@ objects:
   metadata:
     name: ping
     annotations:
-      description: The JGroups ping port for clustering.
+      description: The JGroups ping port for amq clustering.
       service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
     labels:
       application: ${APPLICATION_NAME}
@@ -778,21 +760,109 @@ objects:
       targetPort: https
     tls:
       termination: passthrough
-- kind: Route
-  apiVersion: v1
-  id: "${APPLICATION_NAME}-rhdmindex-http"
+- kind: StatefulSet
+  apiVersion: apps/v1
   metadata:
-    name: "${APPLICATION_NAME}-rhdmindex"
+    name: ${APPLICATION_NAME}-datagrid
     labels:
-      application: "${APPLICATION_NAME}"
-    annotations:
-      description: Route for Decision Central Indexing's Elasticsearch http service.
+      application: ${APPLICATION_NAME}
   spec:
-    host: "${ES_HOSTNAME_HTTP}"
-    to:
-      name: "${APPLICATION_NAME}-rhdmindex"
-    port:
-      targetPort: rest
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    selector:
+      matchLabels:
+        deploymentConfig: ${APPLICATION_NAME}-datagrid
+    serviceName: ${APPLICATION_NAME}-datagrid
+    strategy:
+      rollingParams:
+        intervalSeconds: 20
+        maxSurge: 1
+        maxUnavailable: 1
+        timeoutSeconds: 1200
+        updatePeriodSeconds: 20
+      type: Rolling
+    template:
+      metadata:
+        name: ${APPLICATION_NAME}-datagrid
+        labels:
+          application: ${APPLICATION_NAME}
+          deploymentConfig: ${APPLICATION_NAME}-datagrid
+      spec:
+        containers:
+        - env:
+          - name: SERVICE_NAME
+            value: ${APPLICATION_NAME}-datagrid
+          - name: SERVICE_PROFILE
+            value: ${APPLICATION_NAME}-datagrid
+          - name: JGROUPS_PING_PROTOCOL
+            value: openshift.DNS_PING
+          - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+            value: ${APPLICATION_NAME}-datagrid-ping
+          - name: INFINISPAN_CONNECTORS
+            value: "hotrod"
+          image: ${DATAGRID_IMAGE}
+          imagePullPolicy: IfNotPresent
+          name: ${APPLICATION_NAME}-datagrid
+          ports:
+          - containerPort: 8888
+            name: ping
+            protocol: TCP
+          - containerPort: 11222
+            name: hotrod
+            protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+              - /opt/datagrid/bin/livenessProbe.sh
+            failureThreshold: 5
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+              - /opt/datagrid/bin/readinessProbe.sh
+            failureThreshold: 5
+            initialDelaySeconds: 17
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              memory: ${DATAGRID_MEMORY_LIMIT}
+            requests:
+              cpu: "0.5"
+              memory: ${DATAGRID_MEMORY_LIMIT}
+          volumeMounts:
+          - mountPath: /opt/datagrid/standalone/data
+            name: srv-data
+          - mountPath: /var/run/secrets/java.io/keystores
+            name: datagrid-keystore-volume
+          - mountPath: /var/run/secrets/openshift.io/serviceaccount
+            name: datagrid-service-certs
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 60
+        volumes:
+        - empty-dir: {}
+          name: datagrid-keystore-volume
+        - name: datagrid-service-certs
+          secret:
+            secretName: datagrid-service-certs
+    triggers:
+    - type: ConfigChange
+    volumeClaimTemplates:
+    - metadata:
+        name: srv-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: ${DATAGRID_VOLUME_CAPACITY}
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -814,9 +884,8 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "rhdm74-decisioncentral-openshift:${IMAGE_STREAM_TAG}"
+          name: "${DECISION_CENTRAL_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
     - type: ConfigChange
-## Replicas for Decision Central
     replicas: 2
     selector:
       deploymentConfig: "${APPLICATION_NAME}-rhdmcentr"
@@ -831,7 +900,7 @@ objects:
         terminationGracePeriodSeconds: 60
         containers:
         - name: "${APPLICATION_NAME}-rhdmcentr"
-          image: rhdm74-decisioncentral-openshift
+          image: "${DECISION_CENTRAL_IMAGE_STREAM_NAME}"
           imagePullPolicy: Always
           resources:
             limits:
@@ -921,21 +990,17 @@ objects:
           - name: JGROUPS_PING_PROTOCOL
             value: "openshift.DNS_PING"
           - name: OPENSHIFT_DNS_PING_SERVICE_NAME
-            value: "${APPLICATION_NAME}-ping"
+            value: "${APPLICATION_NAME}-rhdmcentr-ping"
           - name: OPENSHIFT_DNS_PING_SERVICE_PORT
             value: "8888"
-          - name: APPFORMER_ELASTIC_PORT
-            value: "${APPFORMER_ELASTIC_PORT}"
-          - name: APPFORMER_ELASTIC_CLUSTER_NAME
-            value: "${APPFORMER_ELASTIC_CLUSTER_NAME}"
-          - name: APPFORMER_ELASTIC_RETRIES
-            value: "${APPFORMER_ELASTIC_RETRIES}"
-          - name: APPFORMER_ELASTIC_HOST
-            value: "${APPLICATION_NAME}-rhdmindex"
+          - name: APPFORMER_INFINISPAN_SERVICE_NAME
+            value: "${APPLICATION_NAME}-datagrid"
+          - name: APPFORMER_INFINISPAN_PORT
+            value: "11222"
           - name: APPFORMER_JMS_BROKER_ADDRESS
             value: "${APPLICATION_NAME}-amq-tcp"
           - name: APPFORMER_JMS_BROKER_PORT
-            value: "${APPFORMER_JMS_BROKER_PORT}"
+            value: "61616"
           - name: APPFORMER_JMS_BROKER_USER
             value: "${APPFORMER_JMS_BROKER_USER}"
           - name: APPFORMER_JMS_BROKER_PASSWORD
@@ -1118,6 +1183,8 @@ objects:
             value: "${APPLICATION_NAME}-kieserver"
           - name: KIE_SERVER_ROUTE_NAME
             value: "${APPLICATION_NAME}-kieserver"
+          - name: KIE_SERVER_STARTUP_STRATEGY
+            value: "${KIE_SERVER_STARTUP_STRATEGY}"
           - name: KIE_SERVER_USE_SECURE_ROUTE_NAME
             value: "${KIE_SERVER_USE_SECURE_ROUTE_NAME}"
           - name: KIE_SERVER_PWD
@@ -1228,85 +1295,6 @@ objects:
         - name: kieserver-keystore-volume
           secret:
             secretName: "${KIE_SERVER_HTTPS_SECRET}"
-- kind: DeploymentConfig
-  apiVersion: v1
-  metadata:
-    name: "${APPLICATION_NAME}-rhdmindex"
-    labels:
-      application: "${APPLICATION_NAME}"
-      service: "${APPLICATION_NAME}-rhdmindex"
-    annotations:
-      template.alpha.openshift.io/wait-for-ready: "true"
-  spec:
-    strategy:
-      type: Recreate
-    triggers:
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-        - "${APPLICATION_NAME}-rhdmindex"
-        from:
-          kind: ImageStreamTag
-          namespace: "${IMAGE_STREAM_NAMESPACE}"
-          name: "rhdm74-decisioncentral-indexing-openshift:${IMAGE_STREAM_TAG}"
-    - type: ConfigChange
-    replicas: 1
-    selector:
-      deploymentConfig: "${APPLICATION_NAME}-rhdmindex"
-    template:
-      metadata:
-        name: "${APPLICATION_NAME}-rhdmindex"
-        labels:
-          deploymentConfig: "${APPLICATION_NAME}-rhdmindex"
-          application: "${APPLICATION_NAME}"
-      spec:
-        terminationGracePeriodSeconds: 60
-        containers:
-        - name: "${APPLICATION_NAME}-rhdmindex"
-          image: rhdm74-decisioncentral-indexing-openshift
-          imagePullPolicy: Always
-          volumeMounts:
-          - name: "${APPLICATION_NAME}-rhdmindex-pvol"
-            mountPath: "/opt/elasticsearch/data"
-          livenessProbe:
-            tcpSocket:
-              port: 9300
-            initialDelaySeconds: 15
-            timeoutSeconds: 1
-          readinessProbe:
-            httpGet:
-              scheme: HTTP
-              path: /_cluster/health
-              port: 9200
-            initialDelaySeconds: 15
-            timeoutSeconds: 2
-          ports:
-          - name: es
-            containerPort: 9300
-            protocol: TCP
-          - name: http
-            containerPort: 9200
-            protocol: TCP
-          env:
-          - name: ES_CLUSTER_NAME
-            value: "${APPFORMER_ELASTIC_CLUSTER_NAME}"
-          - name: ES_NODE_NAME
-            value: "${ES_NODE_NAME}"
-          - name: ES_TRANSPORT_HOST
-            value: "${ES_TRANSPORT_HOST}"
-          - name: ES_TRANSPORT_TCP_PORT
-            value: "${APPFORMER_ELASTIC_PORT}"
-          - name: ES_HTTP_PORT
-            value: "${ES_HTTP_PORT}"
-          - name: ES_HTTP_HOST
-            value: "${ES_HTTP_HOST}"
-          - name: ES_JAVA_OPTS
-            value: "${ES_JAVA_OPTS}"
-        volumes:
-        - name: "${APPLICATION_NAME}-rhdmindex-pvol"
-          persistentVolumeClaim:
-            claimName: "${APPLICATION_NAME}-rhdmindex-claim"
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -1467,7 +1455,6 @@ objects:
             ]
           }
         }
-    creationTimestamp: null
     generation: 3
     labels:
       application: ${APPLICATION_NAME}
@@ -1482,11 +1469,10 @@ objects:
     serviceName: ${APPLICATION_NAME}-amq-tcp
     template:
       metadata:
-        creationTimestamp: null
+        name: ${APPLICATION_NAME}-amq
         labels:
           application: ${APPLICATION_NAME}
           deploymentConfig: ${APPLICATION_NAME}-amq
-        name: ${APPLICATION_NAME}-amq
       spec:
         containers:
         - env:
@@ -1567,7 +1553,6 @@ objects:
       type: OnDelete
     volumeClaimTemplates:
     - metadata:
-        creationTimestamp: null
         name: ${APPLICATION_NAME}-amq-pvol
       spec:
         accessModes:
@@ -1625,15 +1610,3 @@ objects:
     resources:
       requests:
         storage: "${DECISION_CENTRAL_VOLUME_CAPACITY}"
-- apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: "${APPLICATION_NAME}-rhdmindex-claim"
-    labels:
-      application: "${APPLICATION_NAME}"
-  spec:
-    accessModes:
-    - ReadWriteOnce
-    resources:
-      requests:
-        storage: "${ES_VOLUME_CAPACITY}"
