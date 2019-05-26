@@ -71,33 +71,6 @@ parameters:
   name: IMAGE_STREAM_TAG
   value: "1.0"
   required: true
-- displayName: KIE Server Controller User
-  description: KIE server controller username. (Sets the org.kie.server.controller.user system property)
-  name: KIE_SERVER_CONTROLLER_USER
-  value: controllerUser
-  required: false
-- displayName: KIE Server Controller Password
-  description: KIE server controller password. (Sets the org.kie.server.controller.pwd system property)
-  name: KIE_SERVER_CONTROLLER_PWD
-  required: false
-- displayName: KIE Server Controller Token
-  description: KIE server controller token for bearer authentication. (Sets the org.kie.server.controller.token system property)
-  name: KIE_SERVER_CONTROLLER_TOKEN
-  required: false
-- displayName: KIE Server Controller Service
-  description: The service name for the optional standalone controller. The application uses this service name to register with the controller. (If set, will be used to discover host and port)
-  name: KIE_SERVER_CONTROLLER_SERVICE
-  required: false
-- displayName: KIE Server Controller host
-  description: KIE server controller host. (Used to set the org.kie.server.controller system property)
-  name: KIE_SERVER_CONTROLLER_HOST
-  example: my-app-controller-ocpuser.os.example.com
-  required: false
-- displayName: KIE Server Controller port
-  description: KIE server controller port. (Used to set the org.kie.server.controller system property)
-  name: KIE_SERVER_CONTROLLER_PORT
-  example: '8080'
-  required: false
 - displayName: KIE MBeans
   description: KIE server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties)
   name: KIE_MBEANS
@@ -213,9 +186,9 @@ parameters:
   description: Password to access the Maven repository, if required.
   name: MAVEN_REPO_PASSWORD
   required: false
-- displayName: Name of the Maven service hosted by Decision Central
-  description: The service name for the optional Decision Central, where it can be reached, to allow service lookups (for maven repo usage), if required.
-  name: DECISION_CENTRAL_MAVEN_SERVICE
+- displayName: Name of the Decision Central service
+  description: The Service name for the optional Decision Central, where it can be reached, to allow service lookups (for example, maven repo usage), if required.
+  name: DECISION_CENTRAL_SERVICE
   example: "myapp-rhdmcentr"
   required: false
 - displayName: Username for the Maven service hosted by Decision Central
@@ -242,11 +215,6 @@ parameters:
   description: "Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped. Sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy."
   name: KIE_SERVER_MGMT_DISABLED
   value: "true"
-  required: true
-- displayName: KIE Server Startup Strategy
-  description: "When set to LocalContainersStartupStrategy, allows KIE server to start up and function with local config, even when a controller is configured and unavailable."
-  name: KIE_SERVER_STARTUP_STRATEGY
-  value: LocalContainersStartupStrategy
   required: true
 - displayName: RH-SSO URL
   description: RH-SSO URL
@@ -403,14 +371,14 @@ objects:
 - kind: RoleBinding
   apiVersion: v1
   metadata:
-     name: "${APPLICATION_NAME}-kieserver-view"
+     name: "${APPLICATION_NAME}-kieserver-edit"
      labels:
        application: "${APPLICATION_NAME}"
   subjects:
   - kind: ServiceAccount
     name: "${APPLICATION_NAME}-kieserver"
   roleRef:
-    name: view
+    name: edit
 - kind: Service
   apiVersion: v1
   spec:
@@ -423,6 +391,11 @@ objects:
       targetPort: 8443
     selector:
       deploymentConfig: "${APPLICATION_NAME}-kieserver"
+    sessionAffinity:
+      ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 3600
   metadata:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
@@ -458,6 +431,7 @@ objects:
       service: "${APPLICATION_NAME}-kieserver"
     annotations:
       description: Route for KIE server's http service.
+      haproxy.router.openshift.io/balance: source
   spec:
     host: "${KIE_SERVER_HOSTNAME_HTTP}"
     to:
@@ -541,11 +515,16 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-kieserver"
+      services.server.kie.org/kie-server-id: "${APPLICATION_NAME}-kieserver"
     annotations:
       template.alpha.openshift.io/wait-for-ready: "true"
   spec:
+    revisionHistoryLimit: 10
     strategy:
-      type: Recreate
+      rollingParams:
+        maxSurge: 100%
+        maxUnavailable: 0
+      type: Rolling
     triggers:
     - type: ImageChange
       imageChangeParams:
@@ -566,13 +545,25 @@ objects:
           deploymentConfig: "${APPLICATION_NAME}-kieserver"
           application: "${APPLICATION_NAME}"
           service: "${APPLICATION_NAME}-kieserver"
+          services.server.kie.org/kie-server-id: "${APPLICATION_NAME}-kieserver"
       spec:
         serviceAccountName: "${APPLICATION_NAME}-kieserver"
-        terminationGracePeriodSeconds: 60
+        terminationGracePeriodSeconds: 90
         containers:
         - name: "${APPLICATION_NAME}-kieserver"
           image: "${APPLICATION_NAME}-kieserver"
           imagePullPolicy: Always
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                - /bin/sh
+                - /opt/eap/bin/launch/jboss-kie-kieserver-hooks.sh
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - /opt/eap/bin/launch/jboss-kie-kieserver-hooks.sh
           resources:
             limits:
               memory: "${KIE_SERVER_MEMORY_LIMIT}"
@@ -612,6 +603,8 @@ objects:
             containerPort: 8888
             protocol: TCP
           env:
+          - name: WORKBENCH_SERVICE_NAME
+            value: "${DECISION_CENTRAL_SERVICE}"
           - name: KIE_ADMIN_USER
             value: "${KIE_ADMIN_USER}"
           - name: KIE_ADMIN_PWD
@@ -626,22 +619,10 @@ objects:
             value: "${PROMETHEUS_SERVER_EXT_DISABLED}"
           - name: KIE_SERVER_BYPASS_AUTH_USER
             value: "${KIE_SERVER_BYPASS_AUTH_USER}"
-          - name: KIE_SERVER_CONTROLLER_USER
-            value: "${KIE_SERVER_CONTROLLER_USER}"
-          - name: KIE_SERVER_CONTROLLER_PWD
-            value: "${KIE_SERVER_CONTROLLER_PWD}"
-          - name: KIE_SERVER_CONTROLLER_TOKEN
-            value: "${KIE_SERVER_CONTROLLER_TOKEN}"
-          - name: KIE_SERVER_CONTROLLER_SERVICE
-            value: "${KIE_SERVER_CONTROLLER_SERVICE}"
-          - name: KIE_SERVER_CONTROLLER_PROTOCOL
-            value: "ws"
-          - name: KIE_SERVER_CONTROLLER_HOST
-            value: "${KIE_SERVER_CONTROLLER_HOST}"
-          - name: KIE_SERVER_CONTROLLER_PORT
-            value: "${KIE_SERVER_CONTROLLER_PORT}"
           - name: KIE_SERVER_ID
-            value: "${APPLICATION_NAME}-kieserver"
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['services.server.kie.org/kie-server-id']
           - name: KIE_SERVER_ROUTE_NAME
             value: "${APPLICATION_NAME}-kieserver"
           - name: KIE_SERVER_USE_SECURE_ROUTE_NAME
@@ -661,7 +642,7 @@ objects:
           - name: RHDMCENTR_MAVEN_REPO_ID
             value: "repo-rhdmcentr"
           - name: RHDMCENTR_MAVEN_REPO_SERVICE
-            value: "${DECISION_CENTRAL_MAVEN_SERVICE}"
+            value: "${DECISION_CENTRAL_SERVICE}"
           - name: RHDMCENTR_MAVEN_REPO_PATH
             value: "/maven2/"
           - name: RHDMCENTR_MAVEN_REPO_USERNAME
@@ -687,7 +668,7 @@ objects:
           - name: KIE_SERVER_MGMT_DISABLED
             value: "${KIE_SERVER_MGMT_DISABLED}"
           - name: KIE_SERVER_STARTUP_STRATEGY
-            value: "${KIE_SERVER_STARTUP_STRATEGY}"
+            value: "OpenShiftStartupStrategy"
           - name: JGROUPS_PING_PROTOCOL
             value: "openshift.DNS_PING"
           - name: OPENSHIFT_DNS_PING_SERVICE_NAME
