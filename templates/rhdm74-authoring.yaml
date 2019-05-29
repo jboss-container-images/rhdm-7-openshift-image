@@ -164,6 +164,23 @@ parameters:
   name: KIE_SERVER_HTTPS_PASSWORD
   value: mykeystorepass
   required: false
+## OpenShift Enhancement BEGIN
+- displayName: Enable KIE server global discovery
+  description: "If set to true, turns on KIE server global discovery feature (Sets the org.kie.server.controller.openshift.global.discovery.enabled system property)"
+  name: KIE_SERVER_CONTROLLER_OPENSHIFT_GLOBAL_DISCOVERY_ENABLED
+  value: "false"
+  required: false
+- displayName: Prefer KIE Server OpenShift Service
+  description: If OpenShift integration of Business Central is turned on, setting this parameter to true enables connection to KIE Server via an OpenShift internal Service endpoint. (Sets the org.kie.server.controller.openshift.prefer.kieserver.service system property)
+  name: KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE
+  value: "false"
+  required: false
+- displayName: KIE ServerTemplate Cache TTL
+  description: KIE ServerTemplate Cache TTL in milliseconds. (Sets the org.kie.server.controller.template.cache.ttl system property)
+  name: KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL
+  value: "60000"
+  required: false
+## OpenShift Enhancement END
 - displayName: ImageStream Namespace
   description: Namespace in which the ImageStreams for Red Hat Middleware images are
     installed. These ImageStreams are normally installed in the openshift namespace.
@@ -404,14 +421,14 @@ objects:
 - kind: RoleBinding
   apiVersion: v1
   metadata:
-     name: "${APPLICATION_NAME}-rhdmsvc-view"
+     name: "${APPLICATION_NAME}-rhdmsvc-edit"
      labels:
        application: "${APPLICATION_NAME}"
   subjects:
   - kind: ServiceAccount
     name: "${APPLICATION_NAME}-rhdmsvc"
   roleRef:
-    name: view
+    name: edit
 - kind: Service
   apiVersion: v1
   spec:
@@ -446,6 +463,11 @@ objects:
       targetPort: 8443
     selector:
       deploymentConfig: "${APPLICATION_NAME}-kieserver"
+    sessionAffinity:
+      ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 3600
   metadata:
     name: "${APPLICATION_NAME}-kieserver"
     labels:
@@ -499,6 +521,7 @@ objects:
       service: "${APPLICATION_NAME}-kieserver"
     annotations:
       description: Route for KIE server's http service.
+      haproxy.router.openshift.io/balance: source
   spec:
     host: "${KIE_SERVER_HOSTNAME_HTTP}"
     to:
@@ -609,6 +632,16 @@ objects:
             value: "${KIE_ADMIN_PWD}"
           - name: KIE_MBEANS
             value: "${KIE_MBEANS}"
+## OpenShift Enhancement BEGIN
+          - name: KIE_SERVER_CONTROLLER_OPENSHIFT_GLOBAL_DISCOVERY_ENABLED
+            value: "${KIE_SERVER_CONTROLLER_OPENSHIFT_GLOBAL_DISCOVERY_ENABLED}"
+          - name: KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE
+            value: "${KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE}"
+          - name: KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL
+            value: "${KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL}"
+          - name: KIE_WORKBENCH_CONTROLLER_OPENSHIFT_ENABLED
+            value: "true"
+## OpenShift Enhancement END
           - name: KIE_SERVER_CONTROLLER_USER
             value: "${KIE_SERVER_CONTROLLER_USER}"
           - name: KIE_SERVER_CONTROLLER_PWD
@@ -727,11 +760,16 @@ objects:
     labels:
       application: "${APPLICATION_NAME}"
       service: "${APPLICATION_NAME}-kieserver"
+      services.server.kie.org/kie-server-id: "${APPLICATION_NAME}-kieserver"
     annotations:
       template.alpha.openshift.io/wait-for-ready: "true"
   spec:
+    revisionHistoryLimit: 10
     strategy:
-      type: Recreate
+      rollingParams:
+        maxSurge: 100%
+        maxUnavailable: 0
+      type: Rolling
     triggers:
     - type: ImageChange
       imageChangeParams:
@@ -753,13 +791,25 @@ objects:
           deploymentConfig: "${APPLICATION_NAME}-kieserver"
           application: "${APPLICATION_NAME}"
           service: "${APPLICATION_NAME}-kieserver"
+          services.server.kie.org/kie-server-id: "${APPLICATION_NAME}-kieserver"
       spec:
         serviceAccountName: "${APPLICATION_NAME}-rhdmsvc"
-        terminationGracePeriodSeconds: 60
+        terminationGracePeriodSeconds: 90
         containers:
         - name: "${APPLICATION_NAME}-kieserver"
           image: "${KIE_SERVER_IMAGE_STREAM_NAME}"
           imagePullPolicy: Always
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                - /bin/sh
+                - /opt/eap/bin/launch/jboss-kie-kieserver-hooks.sh
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - /opt/eap/bin/launch/jboss-kie-kieserver-hooks.sh
           resources:
             limits:
               memory: "${KIE_SERVER_MEMORY_LIMIT}"
@@ -796,6 +846,8 @@ objects:
             containerPort: 8443
             protocol: TCP
           env:
+          - name: WORKBENCH_SERVICE_NAME
+            value: "${APPLICATION_NAME}-rhdmcentr"
           - name: KIE_ADMIN_USER
             value: "${KIE_ADMIN_USER}"
           - name: KIE_ADMIN_PWD
@@ -810,22 +862,16 @@ objects:
             value: "${PROMETHEUS_SERVER_EXT_DISABLED}"
           - name: KIE_SERVER_BYPASS_AUTH_USER
             value: "${KIE_SERVER_BYPASS_AUTH_USER}"
-          - name: KIE_SERVER_CONTROLLER_USER
-            value: "${KIE_SERVER_CONTROLLER_USER}"
-          - name: KIE_SERVER_CONTROLLER_PWD
-            value: "${KIE_SERVER_CONTROLLER_PWD}"
-          - name: KIE_SERVER_CONTROLLER_TOKEN
-            value: "${KIE_SERVER_CONTROLLER_TOKEN}"
-          - name: KIE_SERVER_CONTROLLER_SERVICE
-            value: "${APPLICATION_NAME}-rhdmcentr"
-          - name: KIE_SERVER_CONTROLLER_PROTOCOL
-            value: "ws"
           - name: KIE_SERVER_ID
-            value: "${APPLICATION_NAME}-kieserver"
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['services.server.kie.org/kie-server-id']
           - name: KIE_SERVER_ROUTE_NAME
             value: "${APPLICATION_NAME}-kieserver"
           - name: KIE_SERVER_USE_SECURE_ROUTE_NAME
             value: "${KIE_SERVER_USE_SECURE_ROUTE_NAME}"
+          - name: KIE_SERVER_STARTUP_STRATEGY
+            value: "OpenShiftStartupStrategy"
           - name: KIE_SERVER_USER
             value: "${KIE_SERVER_USER}"
           - name: KIE_SERVER_PWD
