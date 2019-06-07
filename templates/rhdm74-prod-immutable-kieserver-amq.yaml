@@ -71,7 +71,8 @@ parameters:
   name: IMAGE_STREAM_TAG
   value: "1.0"
   required: true
-  description: KIE server mbeans enabled/disabled (Sets the kie.mbeans and kie.scanner.mbeans system properties)
+- displayName: KIE MBeans
+  description: KIE server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties)
   name: KIE_MBEANS
   value: enabled
   required: false
