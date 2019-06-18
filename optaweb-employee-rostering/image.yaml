@@ -116,7 +116,7 @@ osbs:
           container_file: container.yaml
       repository:
           name: containers/rhdm-7-optaweb-employee-rostering-openshift
-          branch: rhdm-7.4-openshift-rhel-8
+          branch: rhba-7.4-openshift-rhel-8
 run:
       user: 185
       cmd:
