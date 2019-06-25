@@ -345,7 +345,7 @@ objects:
 ## PostgreSQL driver settings BEGIN
           - name: RHDM_PERSISTENCE_DIALECT
             value: "org.hibernate.dialect.PostgreSQLDialect"
-          - name: RHDM_DATABASE
+          - name: RHDM_XA_CONNECTION_PROPERTY_DatabaseName
             value: "${OPTAWEB_POSTGRESQL_DB}"
           - name: RHDM_DRIVER
             value: "postgresql"
@@ -353,9 +353,9 @@ objects:
             value: "${OPTAWEB_POSTGRESQL_USER}"
           - name: RHDM_PASSWORD
             value: "${OPTAWEB_POSTGRESQL_PWD}"
-          - name: RHDM_SERVICE_HOST
+          - name: RHDM_XA_CONNECTION_PROPERTY_ServerName
             value: "${APPLICATION_NAME}-postgresql"
-          - name: RHDM_SERVICE_PORT
+          - name: RHDM_XA_CONNECTION_PROPERTY_PortNumber
             value: "5432"
 ## PostgreSQL driver settings END
 ## OptaWeb employee rostering settings BEGIN
