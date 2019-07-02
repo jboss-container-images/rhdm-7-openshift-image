@@ -8,7 +8,6 @@ Also includes the application templates.
 rhdm-7-openshift-image \
 ├── [controller](controller): RHDM Controller  image descriptor files. \
 ├── [decisioncentral](decisioncentral): Decision Central image descriptor files. \
-├── [decisioncentral-indexing](decisioncentral-indexing): Decision Central Indexing (elasticsearch) image descriptor files. \
 ├── [kieserver](kieserver): Execution Server image descriptor files. \
 ├── [optaweb-employee-rostering](optaweb-employee-rostering): Optaweb Employee Rostering image descriptor files. \
 ├── [quickstarts](quickstarts): quickstarts used as example in some of the application templates. \
