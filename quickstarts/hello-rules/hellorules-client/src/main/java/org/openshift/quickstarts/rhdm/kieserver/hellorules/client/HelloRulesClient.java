@@ -55,7 +55,7 @@ public class HelloRulesClient {
         if (client.runCommand(command, callback)) {
             logger.info("********** " + callback.getSalutation() + " **********");
         } else {
-            throw new Exception("Nothing run! Must specify -Dexec.args=runLocal (or runRemoteRest, runRemoteHornetMQ, runRemoteActiveMQ).");
+            throw new Exception("Nothing run! Must specify -Dexec.args=runLocal (or runRemoteRest, runRemoteHornetMQ, runRemoteActiveMQ, runRemoteActiveMQExternal).");
         }
     }
 
@@ -72,6 +72,11 @@ public class HelloRulesClient {
             run = true;
         } else if ("runRemoteActiveMQ".equals(command)) {
             client.runRemoteActiveMQ(callback);
+            run = true;
+        } else if ("runRemoteActiveMQExternal".equals(command)) {
+            callback.setPort("443");
+            callback.setProtocol("failover://ssl");
+            runRemoteActiveMQ(callback);
             run = true;
         }
         return run;
@@ -106,6 +111,9 @@ public class HelloRulesClient {
         String password = getPassword(callback);
         String qusername = getQUsername(callback);
         String qpassword = getQPassword(callback);
+        System.out.println("runRemoteActiveMQ, using properties: url=" + baseurl);
+        System.out.println("runRemoteActiveMQ, using properties: username=" + username);
+        System.out.println("runRemoteActiveMQ, using properties: password=" + password);
         Properties props = new Properties();
         props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
         props.setProperty(Context.PROVIDER_URL, baseurl);
@@ -131,7 +139,6 @@ public class HelloRulesClient {
         RuleServicesClient client = KieServicesFactory.newKieServicesClient(config).getServicesClient(RuleServicesClient.class);
         BatchExecutionCommand batch = createBatch();
         ServiceResponse<ExecutionResults> response = client.executeCommandsWithResults("rhdm-kieserver-hellorules", batch);
-        //logger.info(String.valueOf(response));
         ExecutionResults execResults = response.getResult();
         handleResults(callback, execResults);
     }
