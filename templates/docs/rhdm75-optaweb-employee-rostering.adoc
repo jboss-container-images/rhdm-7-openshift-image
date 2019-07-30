@@ -18,7 +18,7 @@ toc::[]
 
 Templates allow you to define parameters which take on a value. That value is then substituted wherever the parameter is referenced.
 References can be defined in any text field in the objects list field. Refer to the
-https://docs.openshift.org/latest/architecture/core_concepts/templates.html#parameters[Openshift documentation] for more information.
+https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[Openshift documentation] for more information.
 
 |=======================================================================
 |Variable name |Image Environment Variable |Description |Example value |Required
@@ -33,7 +33,7 @@ https://docs.openshift.org/latest/architecture/core_concepts/templates.html#para
 |OPTAWEB_PERSISTENCE_HBM2DDL_AUTO | OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_HBM2DDL_AUTO | Optaweb employee rostering persistence hbm2ddl auto (Sets the org.optaweb.employeerostering.persistence.hbm2ddl.auto system property) | update | False
 |`OPTAWEB_POSTGRESQL_USER` | `RHDM_USERNAME` | Optaweb employee rostering PostgreSQL database username | optaweb | False
 |`OPTAWEB_POSTGRESQL_PWD` | `RHDM_PASSWORD` | Optaweb employee rostering PostgreSQL database password | -- | False
-|`OPTAWEB_POSTGRESQL_DB` | `RHDM_DATABASE` | Optaweb employee rostering PostgreSQL database name | optaweb | False
+|`OPTAWEB_POSTGRESQL_DB` | RHDM_XA_CONNECTION_PROPERTY_DatabaseName | Optaweb employee rostering PostgreSQL database name | optaweb | False
 |`POSTGRESQL_IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStream for the PostgreSQL image is installed. The ImageStream is already installed in the openshift namespace. You should only need to modify this if you installed the ImageStream in a different namespace/project. Default is "openshift". | openshift | False
 |`POSTGRESQL_IMAGE_STREAM_TAG` | -- | The PostgreSQL image version, which is intended to correspond to the PostgreSQL version. Default is "10". | 10 | False
 |`POSTGRESQL_MAX_PREPARED_TRANSACTIONS` | `POSTGRESQL_MAX_PREPARED_TRANSACTIONS` | Allows the PostgreSQL to handle XA transactions. | 100 | True
@@ -217,12 +217,12 @@ Http Get on http://localhost:8080/swagger/index.html
 |`DATASOURCES` | -- | `RHDM`
 |`RHDM_JNDI` | Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property) | `${OPTAWEB_PERSISTENCE_DS}`
 |`RHDM_PERSISTENCE_DIALECT` | -- | org.hibernate.dialect.PostgreSQLDialect
-|`RHDM_DATABASE` | Optaweb employee rostering PostgreSQL database name | `${OPTAWEB_POSTGRESQL_DB}`
+|RHDM_XA_CONNECTION_PROPERTY_DatabaseName | Optaweb employee rostering PostgreSQL database name | `${OPTAWEB_POSTGRESQL_DB}`
 |`RHDM_DRIVER` | -- | postgresql
 |`RHDM_USERNAME` | Optaweb employee rostering PostgreSQL database username | `${OPTAWEB_POSTGRESQL_USER}`
 |`RHDM_PASSWORD` | Optaweb employee rostering PostgreSQL database password | `${OPTAWEB_POSTGRESQL_PWD}`
-|`RHDM_SERVICE_HOST` | -- | `${APPLICATION_NAME}-postgresql`
-|`RHDM_SERVICE_PORT` | -- | 5432
+|RHDM_XA_CONNECTION_PROPERTY_ServerName | -- | `${APPLICATION_NAME}-postgresql`
+|RHDM_XA_CONNECTION_PROPERTY_PortNumber | -- | 5432
 |`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DATASOURCE` | Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property) | `${OPTAWEB_PERSISTENCE_DS}`
 |`OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_DIALECT` | -- | org.hibernate.dialect.PostgreSQLDialect
 |OPTAWEB_EMPLOYEE_ROSTERING_PERSISTENCE_HBM2DDL_AUTO | Optaweb employee rostering persistence hbm2ddl auto (Sets the org.optaweb.employeerostering.persistence.hbm2ddl.auto system property) | `${OPTAWEB_PERSISTENCE_HBM2DDL_AUTO}`
@@ -272,9 +272,12 @@ more information.
 
 
 
-
 ==== Secrets
 
 This template requires the following secrets to be installed for the application to run.
 
 optaweb-employee-rostering-app-secret
+
+
+
+
