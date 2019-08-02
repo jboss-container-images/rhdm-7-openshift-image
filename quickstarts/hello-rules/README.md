@@ -244,5 +244,46 @@ http://eap-app-rhdm-kieserver.<your_openshift_suffix>/hellorules?command=runRemo
 
 The password was generated during the app creation in the previous steps, look for **KIE Server Password**.
 
+
+### JMS integration outside OpenShift
+Remember, the certificates are required, for more information about how to configure the AMQ properties, please see:
+https://access.redhat.com/documentation/en-us/red_hat_amq/7.3/html/deploying_amq_broker_on_openshift_container_platform/configure-ssl-broker-ocp#configuring-ssl_broker-ocp
+This client allows you to test if your JMS setup is working properly and if you are able to perform JMS calls outside OpenShift
+by using the *hello-rules* quickstart and this client to interact with ActiveMQ.
+First of all, install this quickstart on OpenShift using the [rhdm75-prod-immutable-kieserver-amq.yaml](../../templates/rhdm75-prod-immutable-kieserver-amq.yaml)
+and do not forget to properly configure the s2i build and the AMQ parameters, mainly the credentials.
+Execute a maven install on the root directory of the hello-rules:
+
+```sh
+$pwd .../rhdm-7-openshift-image/quickstarts/hello-rules
+$ mvn clean install
+```
+
+After the quickstart is properly deployed on OpenShift, execute the following commands
+
+```bash
+$ mvn exec:java  -Dexec.args=runRemoteActiveMQExternal -Dhost=myapp-amq-tcp-ssl-kieserver.apps.test.cloud \
+-Dusername=admin -Dpassword=redhat@123 \
+-Djavax.net.ssl.trustStore=/tmp/broker/client.ts \
+-Djavax.net.ssl.trustStorePassword=123456
+```
+
+Remember to update the properties above properly according your environment. Note that, the url is the exported route for the 
+${APPLICATION_NAME}-amq-tcp-ssl service, which should point to the port *61617*
+Not that, the url should be configured without protocol and port.
+If the setup is correct, a similar message will be printed:
+
+```bash
+...
+[org.openshift.quickstarts.rhdm.kieserver.hellorules.client.HelloRulesClient.main()] INFO org.openshift.quickstarts.rhdm.kieserver.hellorules.client.HelloRulesClient - ---------> baseurl: failover://ssl://myapp-amq-tcp-ssl-kieserver.apps.test.cloud:443
+runRemoteActiveMQ, using properties: url=failover://ssl://myapp-amq-tcp-ssl-kieserver.apps.test.cloud:443
+runRemoteActiveMQ, using properties: username=admin
+runRemoteActiveMQ, using properties: password=redhat@123
+...
+[ActiveMQ Task-1] INFO org.apache.activemq.transport.failover.FailoverTransport - Successfully connected to ssl://myapp-amq-tcp-ssl-kieserver.apps.test.cloud:443
+[org.openshift.quickstarts.rhdm.kieserver.hellorules.client.HelloRulesClient.main()] INFO org.openshift.quickstarts.rhdm.kieserver.hellorules.client.HelloRulesClient - ********** Hello spolti! **********
+```
+
+
 #### Found an issue?
 Feel free to report it [here](https://github.com/jboss-container-images/rhdm-7-openshift-image/issues/new).
