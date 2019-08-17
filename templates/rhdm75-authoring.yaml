@@ -980,7 +980,7 @@ objects:
       service: "${APPLICATION_NAME}-rhdmcentr"
   spec:
     accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
     resources:
       requests:
         storage: "${DECISION_CENTRAL_VOLUME_CAPACITY}"
