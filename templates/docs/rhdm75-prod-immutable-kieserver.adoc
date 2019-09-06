@@ -9,7 +9,7 @@
 :toc-placement!:
 :toclevels: 5
 
-Application template for an immutable KIE server in a production environment, for Red Hat Decision Manager 7.5
+Application template for an immutable KIE server in a production environment, for Red Hat Decision Manager 7.5 - Deprecated
 
 toc::[]
 

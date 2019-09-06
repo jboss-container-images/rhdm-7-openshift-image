@@ -9,7 +9,7 @@
 :toc-placement!:
 :toclevels: 5
 
-Application template for a managed KIE Server, for Red Hat Decision Manager 7.5
+Application template for a managed KIE Server, for Red Hat Decision Manager 7.5 - Deprecated
 
 toc::[]
 
