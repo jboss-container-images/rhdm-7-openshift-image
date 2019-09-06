@@ -43,7 +43,7 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`KIE_SERVER_BYPASS_AUTH_USER` | `KIE_SERVER_BYPASS_AUTH_USER` | Allows the KIE server to bypass the authenticated user for task related operations e.g. queries. (Sets the org.kie.server.bypass.auth.user system property) | false | False
 |`KIE_SERVER_CONTAINER_DEPLOYMENT` | `KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2 | rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.5.0-SNAPSHOT | True
 |`SOURCE_REPOSITORY_URL` | -- | Git source URI for application. | https://github.com/jboss-container-images/rhdm-7-openshift-image.git | True
-|`SOURCE_REPOSITORY_REF` | -- | Git branch/tag reference. | master | False
+|`SOURCE_REPOSITORY_REF` | -- | Git branch/tag reference. | 7.5.x | False
 |`CONTEXT_DIR` | -- | Path within Git project to build; empty for root project directory. | quickstarts/hello-rules/hellorules | False
 |`GITHUB_WEBHOOK_SECRET` | -- | GitHub trigger secret. | -- | True
 |`GENERIC_WEBHOOK_SECRET` | -- | Generic build trigger secret. | -- | True
