@@ -7,7 +7,7 @@
 = Application Templates
 
 This project contains OpenShift v3 application templates which support applications based on RHDM products.
-Source can be found https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.5.x/templates[here].
+Source can be found https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.6.x/templates[here].
 
 :icons: font
 :toc: macro
@@ -17,13 +17,13 @@ toc::[levels=1]
 == rhdm-7-openshift-image/templates
 
 * link:README.adoc[README]
-* link:rhdm75-authoring-ha.adoc[rhdm75-authoring-ha]
-* link:rhdm75-authoring.adoc[rhdm75-authoring]
-* link:rhdm75-kieserver.adoc[rhdm75-kieserver]
-* link:rhdm75-optaweb-employee-rostering.adoc[rhdm75-optaweb-employee-rostering]
-* link:rhdm75-prod-immutable-kieserver-amq.adoc[rhdm75-prod-immutable-kieserver-amq]
-* link:rhdm75-prod-immutable-kieserver.adoc[rhdm75-prod-immutable-kieserver]
-* link:rhdm75-trial-ephemeral.adoc[rhdm75-trial-ephemeral]
+* link:rhdm76-authoring-ha.adoc[rhdm76-authoring-ha]
+* link:rhdm76-authoring.adoc[rhdm76-authoring]
+* link:rhdm76-kieserver.adoc[rhdm76-kieserver]
+* link:rhdm76-optaweb-employee-rostering.adoc[rhdm76-optaweb-employee-rostering]
+* link:rhdm76-prod-immutable-kieserver-amq.adoc[rhdm76-prod-immutable-kieserver-amq]
+* link:rhdm76-prod-immutable-kieserver.adoc[rhdm76-prod-immutable-kieserver]
+* link:rhdm76-trial-ephemeral.adoc[rhdm76-trial-ephemeral]
 
 ////
   the source for the release notes part of this page is in the file

@@ -6,16 +6,16 @@ metadata:
     iconClass: icon-jboss
     tags: rhdm,decisionserver,jboss,authoring,ha
     version: "1.0"
-    openshift.io/display-name: Red Hat Decision Manager 7.5 authoring environment (HA, persistent, with https)
+    openshift.io/display-name: Red Hat Decision Manager 7.6 authoring environment (HA, persistent, with https)
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for a HA persistent authoring environment, for Red Hat Decision Manager 7.5 - Deprecated
-    template.openshift.io/long-description: This template defines resources needed to develop and execute Rules on Red Hat Decision Manager 7.5 with High Availability enabled as tech preview, including application deployment configuration, secure and insecure http communication and persistent volumes to store data that needs to survive a restart. Deprecated in 7.5; using the Red Hat Business Automation Operator is recommended.
-    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.5/html/deploying_a_red_hat_decision_manager_7.5_authoring_environment_on_red_hat_openshift_container_platform/
+    description: Application template for a HA persistent authoring environment, for Red Hat Decision Manager 7.6 - Deprecated
+    template.openshift.io/long-description: This template defines resources needed to develop and execute Rules on Red Hat Decision Manager 7.6 with High Availability enabled as tech preview, including application deployment configuration, secure and insecure http communication and persistent volumes to store data that needs to survive a restart. Deprecated in 7.6; using the Red Hat Business Automation Operator is recommended.
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.6/html/deploying_a_red_hat_decision_manager_7.6_authoring_environment_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
-  name: rhdm75-authoring-ha
+  name: rhdm76-authoring-ha
 labels:
-  template: rhdm75-authoring-ha
+  template: rhdm76-authoring-ha
   rhdm: "1.0"
 message: |-
           A new persistent HA Decision Manager application has been created in your project.
@@ -246,14 +246,14 @@ parameters:
   value: openshift
   required: true
 - displayName: Decision Central ImageStream Name
-  description: The name of the image stream to use for Decision Central. Default is "rhdm75-decisioncentral-openshift".
+  description: The name of the image stream to use for Decision Central. Default is "rhdm76-decisioncentral-openshift".
   name: DECISION_CENTRAL_IMAGE_STREAM_NAME
-  value: "rhdm75-decisioncentral-openshift"
+  value: "rhdm76-decisioncentral-openshift"
   required: true
 - displayName: KIE Server ImageStream Name
-  description: The name of the image stream to use for KIE server. Default is "rhdm75-kieserver-openshift".
+  description: The name of the image stream to use for KIE server. Default is "rhdm76-kieserver-openshift".
   name: KIE_SERVER_IMAGE_STREAM_NAME
-  value: "rhdm75-kieserver-openshift"
+  value: "rhdm76-kieserver-openshift"
   required: true
 - displayName: ImageStream Tag
   description: A named pointer to an image in an image stream. Default is "1.0".

@@ -1,92 +1,92 @@
 kind: ImageStreamList
 apiVersion: v1
 metadata:
-  name: rhdm75-image-streams
+  name: rhdm76-image-streams
   annotations:
-    description: ImageStream definitions for Red Hat Decision Manager 7.5
+    description: ImageStream definitions for Red Hat Decision Manager 7.6
     openshift.io/provider-display-name: Red Hat, Inc.
 items:
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: rhdm75-decisioncentral-openshift
+    name: rhdm76-decisioncentral-openshift
     annotations:
-      openshift.io/display-name: Red Hat Decision Manager Decision Central 7.5
+      openshift.io/display-name: Red Hat Decision Manager Decision Central 7.6
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
     - name: '1.0'
       annotations:
-        description: Red Hat Decision Manager 7.5 - Decision Central image.
+        description: Red Hat Decision Manager 7.6 - Decision Central image.
         iconClass: icon-jboss
         tags: rhdm
-        supports: rhdm:7.5
+        supports: rhdm:7.6
         version: '1.0'
       referencePolicy:
         type: Local
       from:
         kind: DockerImage
-        name: registry.redhat.io/rhdm-7/rhdm75-decisioncentral-openshift:1.0
+        name: registry.redhat.io/rhdm-7/rhdm76-decisioncentral-openshift:1.0
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: rhdm75-controller-openshift
+    name: rhdm76-controller-openshift
     annotations:
-      openshift.io/display-name: Red Hat Decision Manager Standalone Controller 7.5
+      openshift.io/display-name: Red Hat Decision Manager Standalone Controller 7.6
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
     - name: '1.0'
       annotations:
-        description: Red Hat Decision Manager 7.5 - Standalone Controller image.
+        description: Red Hat Decision Manager 7.6 - Standalone Controller image.
         iconClass: icon-jboss
         tags: rhdm
-        supports: rhdm:7.5
+        supports: rhdm:7.6
         version: '1.0'
       referencePolicy:
         type: Local
       from:
         kind: DockerImage
-        name: registry.redhat.io/rhdm-7/rhdm75-controller-openshift:1.0
+        name: registry.redhat.io/rhdm-7/rhdm76-controller-openshift:1.0
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: rhdm75-kieserver-openshift
+    name: rhdm76-kieserver-openshift
     annotations:
-      openshift.io/display-name: Red Hat Decision Manager KIE Server 7.5
+      openshift.io/display-name: Red Hat Decision Manager KIE Server 7.6
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
     - name: '1.0'
       annotations:
-        description: Red Hat Decision Manager 7.5 - KIE Server image.
+        description: Red Hat Decision Manager 7.6 - KIE Server image.
         iconClass: icon-jboss
         tags: rhdm
-        supports: rhdm:7.5
+        supports: rhdm:7.6
         version: '1.0'
       referencePolicy:
         type: Local
       from:
         kind: DockerImage
-        name: registry.redhat.io/rhdm-7/rhdm75-kieserver-openshift:1.0
+        name: registry.redhat.io/rhdm-7/rhdm76-kieserver-openshift:1.0
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: rhdm75-optaweb-employee-rostering-openshift
+    name: rhdm76-optaweb-employee-rostering-openshift
     annotations:
-      openshift.io/display-name: Red Hat Decision Manager Business Optimizer OptaWeb Employee Rostering 7.5
+      openshift.io/display-name: Red Hat Decision Manager Business Optimizer OptaWeb Employee Rostering 7.6
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
     - name: '1.0'
       annotations:
-        description: Red Hat Decision Manager 7.5 - Business Optimizer OptaWeb Employee Rostering image.
+        description: Red Hat Decision Manager 7.6 - Business Optimizer OptaWeb Employee Rostering image.
         iconClass: icon-jboss
         tags: rhdm
-        supports: rhdm:7.5
+        supports: rhdm:7.6
         version: '1.0'
       referencePolicy:
         type: Local
       from:
         kind: DockerImage
-        name: registry.redhat.io/rhdm-7-tech-preview/rhdm75-optaweb-employee-rostering-openshift:1.0
+        name: registry.redhat.io/rhdm-7-tech-preview/rhdm76-optaweb-employee-rostering-openshift:1.0
