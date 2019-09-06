@@ -1,10 +1,10 @@
 ## Red Hat Decision Manager Kie Server Quickstart - Multi module
 
-This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/master/kieserver) image.
+This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.5.x/kieserver) image.
 
 ## How to use it?
 
-To deploy the Hello Rules demo you can use the [rhdm75-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/master/templates/rhdm75-prod-immutable-kieserver.yaml)
+To deploy the Hello Rules demo you can use the [rhdm75-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/7.5.x/templates/rhdm75-prod-immutable-kieserver.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
 
@@ -33,13 +33,13 @@ Error from server (NotFound): templates "rhdm75-prod-immutable-kieserver" not fo
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/templates/rhdm75-prod-immutable-kieserver.yaml -n openshift
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/7.5.x/templates/rhdm75-prod-immutable-kieserver.yaml -n openshift
 template "rhdm75-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/example-app-secret-template.yaml
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/7.5.x/example-app-secret-template.yaml
 $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
 --> Deploying template "rhdm/example-app-secret" to project rhdm
 
@@ -64,7 +64,7 @@ Error from server (NotFound): imagestreams.image.openshift.io "rhdm75-kieserver-
 If the `rhdm75-kieserver-openshift` is not found, install it under the 'openshift' namespace:
 
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/rhdm75-image-streams.yaml -n openshift
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/7.5.x/rhdm75-image-streams.yaml -n openshift
 ```
 
 Note that, to pull the images the OpenShift must be able to pull images from registry.redhat.io, for more information
@@ -79,7 +79,7 @@ $ oc new-app rhdm75-prod-immutable-kieserver \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.5.0-SNAPSHOT \
 -p ARTIFACT_DIR=hellorules/target,hellorules-model/target \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=master \
+-p SOURCE_REPOSITORY_REF=7.5.x \
 -p CONTEXT_DIR=quickstarts/hello-rules-multi-module \
 -p IMAGE_STREAM_NAMESPACE=openshift
   --> Deploying template "openshift/rhdm75-prod-immutable-kieserver" to project rhdm
@@ -123,7 +123,7 @@ $ oc new-app rhdm75-prod-immutable-kieserver \
           * KIE Server Bypass Auth User=false
           * KIE Server Container Deployment=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.5.0-SNAPSHOT
           * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
-          * Git Reference=master
+          * Git Reference=7.5.x
           * Context Directory=quickstarts/hello-rules-multi-module
           * Github Webhook Secret=YvQgrVeI # generated
           * Generic Webhook Secret=sA4xxjxl # generated
@@ -168,7 +168,7 @@ To do so, execute the following commands:
 ```bash
 $ oc new-app eap72-basic-s2i \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=master \
+-p SOURCE_REPOSITORY_REF=7.5.x \
 -p CONTEXT_DIR=quickstarts/hello-rules
 ```
 
@@ -186,7 +186,7 @@ As result you should see something like this:
         * Application Name=eap-app
         * Custom http Route Hostname=
         * Git Repository URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git
-        * Git Reference=master
+        * Git Reference=7.5.x
         * Context Directory=quickstarts/hello-rules
         * Topics=
         * A-MQ cluster password=wMafLKF6 # generated
