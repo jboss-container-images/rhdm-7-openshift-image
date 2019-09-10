@@ -8,8 +8,9 @@ metadata:
     version: "1.0"
     openshift.io/display-name: Red Hat Decision Manager 7.6 Business Optimizer Employee Rostering with a PostgreSQL database
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for a Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.6 - Deprecated
-    template.openshift.io/long-description: This web application assists the operations department to assign shifts to employees, for example in hospitals, factories, guard firms or call centers. It automatically finds the best employee for each shift, taking into account labor regulations, skill requirements, employee preferences and other constraints. Deprecated in 7.6; using the Red Hat Business Automation Operator is recommended.  template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.6/html/deploying_the_employee_roster_starter_application_for_red_hat_business_optimizer_on_red_hat_openshift_container_platform/
+    description: Application template for Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.6 - Deprecated
+    template.openshift.io/long-description: This web application assists the operations department to assign shifts to employees, for example in hospitals, factories, guard firms or call centers. It automatically finds the best employee for each shift, taking into account labor regulations, skill requirements, employee preferences and other constraints. Template for Red Hat OpenShift Container Platform version 3.11. Deprecated since Red Hat Decision Manager version 7.5. 
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.6/html/deploying_the_employee_roster_starter_application_for_red_hat_business_optimizer_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
   name: rhdm76-optaweb-employee-rostering
@@ -38,7 +39,7 @@ parameters:
   generate: expression
   required: false
 - displayName: ImageStream Namespace
-  description: Namespace in which the ImageStreams for Red Hat Middleware images are
+  description: Namespace in which the ImageStreams for Red Hat Decision Manager images are
     installed. These ImageStreams are normally installed in the openshift namespace.
     You should only need to modify this if you installed the ImageStreams in a
     different namespace/project.
