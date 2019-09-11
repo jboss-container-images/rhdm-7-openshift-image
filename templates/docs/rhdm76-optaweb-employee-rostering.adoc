@@ -9,7 +9,7 @@
 :toc-placement!:
 :toclevels: 5
 
-Application template for a Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.6 - Deprecated
+Application template for Optaweb Employee Rostering with a PostgreSQL database, for Red Hat Decision Manager 7.6 - Deprecated
 
 toc::[]
 
@@ -26,7 +26,7 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`APPLICATION_NAME` | -- | The name for the application. | myapp | True
 |`OPTAWEB_ADMIN_USER` | `KIE_ADMIN_USER` | OptaWeb administrator username | adminUser | False
 |`OPTAWEB_ADMIN_PWD` | `KIE_ADMIN_PWD` | OptaWeb administrator password | -- | False
-|`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
+|`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Decision Manager images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
 |`OPTAWEB_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for Optaweb employee rostering. Default is "rhdm76-optaweb-employee-rostering-openshift". | rhdm76-optaweb-employee-rostering-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
 |`OPTAWEB_PERSISTENCE_DS` | `RHDM_JNDI` | Optaweb employee rostering persistence datasource (Sets the org.optaweb.employeerostering.persistence.datasource system property) | java:/jboss/datasources/optaweb | True
