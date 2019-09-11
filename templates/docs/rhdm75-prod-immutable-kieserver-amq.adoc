@@ -27,8 +27,8 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`KIE_ADMIN_USER` | `KIE_ADMIN_USER` | KIE administrator username | adminUser | False
 |`KIE_ADMIN_PWD` | `KIE_ADMIN_PWD` | KIE administrator password | -- | False
 |`KIE_SERVER_USER` | `KIE_SERVER_USER` | KIE server username (Sets the org.kie.server.user system property) | executionUser | False
-|`KIE_SERVER_PWD` | `KIE_SERVER_PWD` | KIE server password, used to connect to KIE servers. Generated value can be a suggestion to use for thew s2i various (Sets the org.kie.server.pwd system property) | -- | False
-|`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Middleware images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
+|`KIE_SERVER_PWD` | `KIE_SERVER_PWD` | KIE server password. If this parameter is not set, the password is automatically generated. (Sets the org.kie.server.pwd system property) | -- | False
+|`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Decision Manager images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
 |`KIE_SERVER_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for KIE server. Default is "rhdm75-kieserver-openshift". | rhdm75-kieserver-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
 |`KIE_MBEANS` | `KIE_MBEANS` | KIE server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties) | enabled | False
@@ -40,8 +40,8 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`KIE_SERVER_HTTPS_KEYSTORE` | `HTTPS_KEYSTORE` | The name of the keystore file within the secret | keystore.jks | False
 |`KIE_SERVER_HTTPS_NAME` | `HTTPS_NAME` | The name associated with the server certificate | jboss | False
 |`KIE_SERVER_HTTPS_PASSWORD` | `HTTPS_PASSWORD` | The password for the keystore and certificate | mykeystorepass | False
-|`KIE_SERVER_BYPASS_AUTH_USER` | `KIE_SERVER_BYPASS_AUTH_USER` | KIE server bypass auth user (Sets the org.kie.server.bypass.auth.user system property) | false | False
-|`KIE_SERVER_CONTAINER_DEPLOYMENT` | `KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2 | rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.5.0-SNAPSHOT | True
+|`KIE_SERVER_BYPASS_AUTH_USER` | `KIE_SERVER_BYPASS_AUTH_USER` | Allows the KIE server to bypass the authenticated user for task-related operations, for example, queries. (Sets the org.kie.server.bypass.auth.user system property) | false | False
+|`KIE_SERVER_CONTAINER_DEPLOYMENT` | `KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration with optional alias. Format: containerId=groupId:artifactId:version\|c2(alias2)=g2:a2:v2 | rhdm-kieserver-hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.5.0-SNAPSHOT | True
 |`SOURCE_REPOSITORY_URL` | -- | Git source URI for application | https://github.com/jboss-container-images/rhdm-7-openshift-image.git | True
 |`SOURCE_REPOSITORY_REF` | -- | Git branch/tag reference | 7.5.x | False
 |`CONTEXT_DIR` | -- | Path within Git project to build; empty for root project directory. | quickstarts/hello-rules/hellorules | False
@@ -63,7 +63,7 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`AMQ_USERNAME` | `AMQ_USERNAME` | User name for standard broker user. It is required for connecting to the broker. If left empty, it will be generated. | -- | False
 |`AMQ_PASSWORD` | `AMQ_PASSWORD` | Password for standard broker user. It is required for connecting to the broker. If left empty, it will be generated. | -- | False
 |`AMQ_ROLE` | `AMQ_ROLE` | User role for standard broker user. | admin | True
-|`AMQ_QUEUES` | `AMQ_QUEUES` | Queue names, separated by commas. These queues will be automatically created when the broker starts. Also, they will be made accessible as JNDI resources in EAP. These are the default queues needed by KIE Server. If using custom Queues use the same value here than KIE_SERVER_JMS_QUEUE_RESPONSE and KIE_SERVER_JMS_QUEUE_REQUEST. | queue/KIE.SERVER.REQUEST,queue/KIE.SERVER.RESPONSE | False
+|`AMQ_QUEUES` | `AMQ_QUEUES` | Queue names, separated by commas. These queues will be automatically created when the broker starts. Also, they will be made accessible as JNDI resources in EAP. These are the default queues needed by KIE Server. If using custom Queues, use the same values here as in the KIE_SERVER_JMS_QUEUE_RESPONSE and KIE_SERVER_JMS_QUEUE_REQUEST parameters. | queue/KIE.SERVER.REQUEST,queue/KIE.SERVER.RESPONSE | False
 |`AMQ_GLOBAL_MAX_SIZE` | `AMQ_GLOBAL_MAX_SIZE` | Specifies the maximum amount of memory that message data can consume. If no value is specified, half of the system's memory is allocated. | 10 gb | False
 |`AMQ_SECRET` | -- | The name of a secret containing AMQ SSL related files. | broker-app-secret | True
 |`AMQ_TRUSTSTORE` | `AMQ_TRUSTSTORE` | The name of the AMQ SSL Trust Store file. | broker.ts | False
@@ -319,12 +319,12 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |`KIE_MBEANS` | KIE server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties) | `${KIE_MBEANS}`
 |`DROOLS_SERVER_FILTER_CLASSES` | KIE server class filtering (Sets the org.drools.server.filter.classes system property) | `${DROOLS_SERVER_FILTER_CLASSES}`
 |`PROMETHEUS_SERVER_EXT_DISABLED` | If set to false, the prometheus server extension will be enabled. (Sets the org.kie.prometheus.server.ext.disabled system property) | `${PROMETHEUS_SERVER_EXT_DISABLED}`
-|`KIE_SERVER_BYPASS_AUTH_USER` | KIE server bypass auth user (Sets the org.kie.server.bypass.auth.user system property) | `${KIE_SERVER_BYPASS_AUTH_USER}`
+|`KIE_SERVER_BYPASS_AUTH_USER` | Allows the KIE server to bypass the authenticated user for task-related operations, for example, queries. (Sets the org.kie.server.bypass.auth.user system property) | `${KIE_SERVER_BYPASS_AUTH_USER}`
 |`KIE_SERVER_ID` | -- | --
 |`KIE_SERVER_ROUTE_NAME` | -- | `${APPLICATION_NAME}-kieserver`
 |`KIE_SERVER_USER` | KIE server username (Sets the org.kie.server.user system property) | `${KIE_SERVER_USER}`
-|`KIE_SERVER_PWD` | KIE server password, used to connect to KIE servers. Generated value can be a suggestion to use for thew s2i various (Sets the org.kie.server.pwd system property) | `${KIE_SERVER_PWD}`
-|`KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2 | `${KIE_SERVER_CONTAINER_DEPLOYMENT}`
+|`KIE_SERVER_PWD` | KIE server password. If this parameter is not set, the password is automatically generated. (Sets the org.kie.server.pwd system property) | `${KIE_SERVER_PWD}`
+|`KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration with optional alias. Format: containerId=groupId:artifactId:version\|c2(alias2)=g2:a2:v2 | `${KIE_SERVER_CONTAINER_DEPLOYMENT}`
 |`MAVEN_REPOS` | -- | RHDMCENTR,EXTERNAL
 |`RHDMCENTR_MAVEN_REPO_SERVICE` | The Service name for the optional Decision Central, where it can be reached, to allow service lookups (for example, maven repo usage), if required. | `${DECISION_CENTRAL_SERVICE}`
 |`RHDMCENTR_MAVEN_REPO_PATH` | -- | `/maven2/`
@@ -340,7 +340,7 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |`AMQ_USERNAME` | User name for standard broker user. It is required for connecting to the broker. If left empty, it will be generated. | `${AMQ_USERNAME}`
 |`AMQ_PASSWORD` | Password for standard broker user. It is required for connecting to the broker. If left empty, it will be generated. | `${AMQ_PASSWORD}`
 |`AMQ_PROTOCOL` | Broker protocols to configure, separated by commas. Allowed values are: `openwire`, `amqp`, `stomp` and `mqtt`. Only `openwire` is supported by EAP. | tcp
-|`AMQ_QUEUES` | Queue names, separated by commas. These queues will be automatically created when the broker starts. Also, they will be made accessible as JNDI resources in EAP. These are the default queues needed by KIE Server. If using custom Queues use the same value here than KIE_SERVER_JMS_QUEUE_RESPONSE and KIE_SERVER_JMS_QUEUE_REQUEST. | `${AMQ_QUEUES}`
+|`AMQ_QUEUES` | Queue names, separated by commas. These queues will be automatically created when the broker starts. Also, they will be made accessible as JNDI resources in EAP. These are the default queues needed by KIE Server. If using custom Queues, use the same values here as in the KIE_SERVER_JMS_QUEUE_RESPONSE and KIE_SERVER_JMS_QUEUE_REQUEST parameters. | `${AMQ_QUEUES}`
 |`HTTPS_KEYSTORE_DIR` | -- | `/etc/kieserver-secret-volume`
 |`HTTPS_KEYSTORE` | The name of the keystore file within the secret | `${KIE_SERVER_HTTPS_KEYSTORE}`
 |`HTTPS_NAME` | The name associated with the server certificate | `${KIE_SERVER_HTTPS_NAME}`
@@ -390,7 +390,7 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |`AMQ_ROLE` | User role for standard broker user. | `${AMQ_ROLE}`
 |`AMQ_NAME` | -- | `${APPLICATION_NAME}-broker`
 |`AMQ_TRANSPORTS` | Broker protocols to configure, separated by commas. Allowed values are: `openwire`, `amqp`, `stomp` and `mqtt`. Only `openwire` is supported by EAP. | `${AMQ_PROTOCOL}`
-|`AMQ_QUEUES` | Queue names, separated by commas. These queues will be automatically created when the broker starts. Also, they will be made accessible as JNDI resources in EAP. These are the default queues needed by KIE Server. If using custom Queues use the same value here than KIE_SERVER_JMS_QUEUE_RESPONSE and KIE_SERVER_JMS_QUEUE_REQUEST. | `${AMQ_QUEUES}`
+|`AMQ_QUEUES` | Queue names, separated by commas. These queues will be automatically created when the broker starts. Also, they will be made accessible as JNDI resources in EAP. These are the default queues needed by KIE Server. If using custom Queues, use the same values here as in the KIE_SERVER_JMS_QUEUE_RESPONSE and KIE_SERVER_JMS_QUEUE_REQUEST parameters. | `${AMQ_QUEUES}`
 |`AMQ_GLOBAL_MAX_SIZE` | Specifies the maximum amount of memory that message data can consume. If no value is specified, half of the system's memory is allocated. | `${AMQ_GLOBAL_MAX_SIZE}`
 |`AMQ_REQUIRE_LOGIN` | -- | true
 |`AMQ_ANYCAST_PREFIX` | -- | --
