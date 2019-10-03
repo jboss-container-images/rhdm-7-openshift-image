@@ -215,6 +215,7 @@ packages:
 osbs:
       configuration:
           container_file: container.yaml
+      extra_dir: osbs-extra
       repository:
           name: containers/rhdm-7-kieserver-openshift
           branch: rhba-7.6-openshift-rhel-8
