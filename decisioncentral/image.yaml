@@ -6,7 +6,7 @@ version: "1.0"
 from: "ubi8:8-released"
 labels:
     - name: "com.redhat.component"
-      value: "rhdm-7-rhdm76-decisioncentral-openshift-rhel8-container"
+      value: "rhdm-7-rhdm76-decisioncentral-openshift-container"
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Decision Central"
     - name: "io.k8s.display-name"
