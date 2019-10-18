@@ -5,7 +5,7 @@ metadata:
   annotations:
     iconClass: icon-jboss
     tags: rhdm,decisionserver,jboss,authoring,ha
-    version: "1.0"
+    version: "7.6"
     openshift.io/display-name: Red Hat Decision Manager 7.6 authoring environment (HA, persistent, with https)
     openshift.io/provider-display-name: Red Hat, Inc.
     description: Application template for a HA persistent authoring environment, for Red Hat Decision Manager 7.6 - Deprecated
@@ -16,7 +16,7 @@ metadata:
   name: rhdm76-authoring-ha
 labels:
   template: rhdm76-authoring-ha
-  rhdm: "1.0"
+  rhdm: "7.6"
 message: |-
           A new persistent HA Decision Manager application has been created in your project.
           The username/password for accessing the Decision Central interface is
@@ -246,19 +246,19 @@ parameters:
   value: openshift
   required: true
 - displayName: Decision Central ImageStream Name
-  description: The name of the image stream to use for Decision Central. Default is "rhdm76-decisioncentral-openshift".
+  description: The name of the image stream to use for Decision Central. Default is "rhdm-decisioncentral-rhel8".
   name: DECISION_CENTRAL_IMAGE_STREAM_NAME
-  value: "rhdm76-decisioncentral-openshift"
+  value: "rhdm-decisioncentral-rhel8"
   required: true
 - displayName: KIE Server ImageStream Name
-  description: The name of the image stream to use for KIE server. Default is "rhdm76-kieserver-openshift".
+  description: The name of the image stream to use for KIE server. Default is "rhdm-kieserver-rhel8".
   name: KIE_SERVER_IMAGE_STREAM_NAME
-  value: "rhdm76-kieserver-openshift"
+  value: "rhdm-kieserver-rhel8"
   required: true
 - displayName: ImageStream Tag
-  description: A named pointer to an image in an image stream. Default is "1.0".
+  description: A named pointer to an image in an image stream. Default is "7.6.0".
   name: IMAGE_STREAM_TAG
-  value: "1.0"
+  value: "7.6.0"
   required: true
 - displayName: Maven mirror URL
   description: Maven mirror that Decision Central and KIE server must use. If you configure a mirror, this mirror must contain all artifacts that are required for building and deploying your services.

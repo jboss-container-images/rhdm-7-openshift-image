@@ -5,7 +5,7 @@ metadata:
   annotations:
     iconClass: icon-jboss
     tags: rhdm,decisionserver,jboss,kieserver,immutable,s2i
-    version: "1.0"
+    version: "7.6"
     openshift.io/display-name: Red Hat Decision Manager 7.6 immutable production environment
     openshift.io/provider-display-name: Red Hat, Inc.
     description: Application template for an immutable KIE server in a production environment, for Red Hat Decision Manager 7.6 - Deprecated
@@ -16,7 +16,7 @@ metadata:
   name: rhdm76-prod-immutable-kieserver
 labels:
   template: rhdm76-prod-immutable-kieserver
-  rhdm: "1.0"
+  rhdm: "7.6"
 message: |-
           A new immutable Red Hat Decision Manager KIE server has been created in your project.
           The username/password for accessing the KIE server is
@@ -62,14 +62,14 @@ parameters:
   value: openshift
   required: true
 - displayName: KIE Server ImageStream Name
-  description: The name of the image stream to use for KIE server. Default is "rhdm76-kieserver-openshift".
+  description: The name of the image stream to use for KIE server. Default is "rhdm-kieserver-rhel8".
   name: KIE_SERVER_IMAGE_STREAM_NAME
-  value: "rhdm76-kieserver-openshift"
+  value: "rhdm-kieserver-rhel8"
   required: true
 - displayName: ImageStream Tag
-  description: A named pointer to an image in an image stream. Default is "1.0".
+  description: A named pointer to an image in an image stream. Default is "7.6.0".
   name: IMAGE_STREAM_TAG
-  value: "1.0"
+  value: "7.6.0"
   required: true
 - displayName: KIE MBeans
   description: KIE server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties)

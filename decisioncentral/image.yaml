@@ -1,12 +1,12 @@
 schema_version: 1
 
-name: "rhdm-7/rhdm76-decisioncentral-openshift"
+name: "rhdm-7/rhdm-decisioncentral-rhel8"
 description: "Red Hat Decision Central 7.6 OpenShift container image"
 version: "1.0"
 from: "ubi8:8-released"
 labels:
     - name: "com.redhat.component"
-      value: "rhdm-7-rhdm76-decisioncentral-openshift-container"
+      value: "rhdm-7-decisioncentral-rhel8-container"
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Decision Central"
     - name: "io.k8s.display-name"
@@ -192,8 +192,8 @@ osbs:
           container_file: container.yaml
       extra_dir: osbs-extra
       repository:
-          name: containers/rhdm-7-decisioncentral-openshift
-          branch: rhba-7.6-openshift-rhel-8
+          name: containers/rhdm-7-decisioncentral
+          branch: rhba-7-rhel-8
 run:
       user: 185
       cmd:
