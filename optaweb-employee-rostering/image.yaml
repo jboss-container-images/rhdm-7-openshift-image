@@ -1,12 +1,12 @@
 schema_version: 1
 
-name: "rhdm-7/rhdm75-optaweb-employee-rostering-openshift"
+name: "rhdm-7/rhdm-optaweb-employee-rostering-rhel8"
 description: "Red Hat Business Optimizer OptaWeb Employee Rostering 7.5 OpenShift container image"
 version: "1.0"
 from: "ubi8:8-released"
 labels:
     - name: "com.redhat.component"
-      value: "rhdm-7-rhdm75-optaweb-employee-rostering-openshift-container"
+      value: "rhdm-7-optaweb-employee-rostering-rhel8-container"
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Business Optimizer OptaWeb Employee Rostering"
     - name: "io.k8s.display-name"
@@ -116,8 +116,8 @@ osbs:
       configuration:
           container_file: container.yaml
       repository:
-          name: containers/rhdm-7-optaweb-employee-rostering-openshift
-          branch: rhba-7.5-openshift-rhel-8
+          name: containers/rhdm-7-optaweb-employee-rostering
+          branch: rhba-7-rhel-8
 run:
       user: 185
       cmd:

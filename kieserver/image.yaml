@@ -1,12 +1,12 @@
 schema_version: 1
 
-name: "rhdm-7/rhdm75-kieserver-openshift"
+name: "rhdm-7/rhdm-kieserver-rhel8"
 description: "Red Hat Decision Manager Kie Server 7.5 OpenShift container image"
 version: "1.0"
 from: "ubi8:8-released"
 labels:
     - name: "com.redhat.component"
-      value: "rhdm-7-rhdm75-kieserver-openshift-container"
+      value: "rhdm-7-kieserver-rhel8-container"
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Decision Manager KIE Server"
     - name: "io.k8s.display-name"
@@ -217,8 +217,8 @@ osbs:
           container_file: container.yaml
       extra_dir: osbs-extra
       repository:
-          name: containers/rhdm-7-kieserver-openshift
-          branch: rhba-7.5-openshift-rhel-8
+          name: containers/rhdm-7-kieserver
+          branch: rhba-7-rhel-8
 run:
       user: 185
       cmd:
