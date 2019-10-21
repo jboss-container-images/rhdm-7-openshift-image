@@ -9,84 +9,84 @@ items:
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: rhdm75-decisioncentral-openshift
+    name: rhdm-decisioncentral-rhel8
     annotations:
       openshift.io/display-name: Red Hat Decision Manager Decision Central 7.5
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
-    - name: '1.0'
+    - name: '7.5.0'
       annotations:
         description: Red Hat Decision Manager 7.5 - Decision Central image.
         iconClass: icon-jboss
         tags: rhdm
         supports: rhdm:7.5
-        version: '1.0'
+        version: '7.5.0'
       referencePolicy:
         type: Local
       from:
         kind: DockerImage
-        name: registry.redhat.io/rhdm-7/rhdm75-decisioncentral-openshift:1.0
+        name: registry.redhat.io/rhdm-7/rhdm-decisioncentral-rhel8:7.5.0
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: rhdm75-controller-openshift
+    name: rhdm-controller-rhel8
     annotations:
       openshift.io/display-name: Red Hat Decision Manager Standalone Controller 7.5
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
-    - name: '1.0'
+    - name: '7.5.0'
       annotations:
         description: Red Hat Decision Manager 7.5 - Standalone Controller image.
         iconClass: icon-jboss
         tags: rhdm
         supports: rhdm:7.5
-        version: '1.0'
+        version: '7.5.0'
       referencePolicy:
         type: Local
       from:
         kind: DockerImage
-        name: registry.redhat.io/rhdm-7/rhdm75-controller-openshift:1.0
+        name: registry.redhat.io/rhdm-7/rhdm-controller-rhel8:7.5.0
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: rhdm75-kieserver-openshift
+    name: rhdm-kieserver-rhel8
     annotations:
       openshift.io/display-name: Red Hat Decision Manager KIE Server 7.5
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
-    - name: '1.0'
+    - name: '7.5.0'
       annotations:
         description: Red Hat Decision Manager 7.5 - KIE Server image.
         iconClass: icon-jboss
         tags: rhdm
         supports: rhdm:7.5
-        version: '1.0'
+        version: '7.5.0'
       referencePolicy:
         type: Local
       from:
         kind: DockerImage
-        name: registry.redhat.io/rhdm-7/rhdm75-kieserver-openshift:1.0
+        name: registry.redhat.io/rhdm-7/rhdm-kieserver-rhel8:7.5.0
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: rhdm75-optaweb-employee-rostering-openshift
+    name: rhdm-optaweb-employee-rostering-rhel8
     annotations:
       openshift.io/display-name: Red Hat Decision Manager Business Optimizer OptaWeb Employee Rostering 7.5
       openshift.io/provider-display-name: Red Hat, Inc.
   spec:
     tags:
-    - name: '1.0'
+    - name: '7.5.0'
       annotations:
         description: Red Hat Decision Manager 7.5 - Business Optimizer OptaWeb Employee Rostering image.
         iconClass: icon-jboss
         tags: rhdm
         supports: rhdm:7.5
-        version: '1.0'
+        version: '7.5.0'
       referencePolicy:
         type: Local
       from:
         kind: DockerImage
-        name: registry.redhat.io/rhdm-7-tech-preview/rhdm75-optaweb-employee-rostering-openshift:1.0
+        name: registry.redhat.io/rhdm-7-tech-preview/rhdm-optaweb-employee-rostering-rhel8:7.5.0
