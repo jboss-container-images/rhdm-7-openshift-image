@@ -1634,7 +1634,7 @@ objects:
       application: "${APPLICATION_NAME}"
   spec:
     accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
     resources:
       requests:
         storage: "${DECISION_CENTRAL_VOLUME_CAPACITY}"
