@@ -4,12 +4,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (https://github.com/jboss-container-images/jboss-kie-modules/tree/master/tools/gen-template-doc/*.in)
 ////
-= rhdm76-prod-immutable-kieserver-amq
+= rhdm77-prod-immutable-kieserver-amq
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for an immutable KIE server in a production environment integrated with ActiveMQ, for Red Hat Decision Manager 7.6 - Deprecated
+Application template for an immutable KIE server in a production environment integrated with ActiveMQ, for Red Hat Decision Manager 7.7 - Deprecated
 
 toc::[]
 
@@ -29,7 +29,7 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`KIE_SERVER_USER` | `KIE_SERVER_USER` | KIE server username (Sets the org.kie.server.user system property) | executionUser | False
 |`KIE_SERVER_PWD` | `KIE_SERVER_PWD` | KIE server password. If this parameter is not set, the password is automatically generated. (Sets the org.kie.server.pwd system property) | -- | False
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Decision Manager images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
-|`KIE_SERVER_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for KIE server. Default is "rhdm76-kieserver-openshift". | rhdm76-kieserver-openshift | True
+|`KIE_SERVER_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for KIE server. Default is "rhdm77-kieserver-openshift". | rhdm77-kieserver-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
 |`KIE_MBEANS` | `KIE_MBEANS` | KIE server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties) | enabled | False
 |`DROOLS_SERVER_FILTER_CLASSES` | `DROOLS_SERVER_FILTER_CLASSES` | KIE server class filtering (Sets the org.drools.server.filter.classes system property) | true | False
@@ -188,7 +188,7 @@ for more information.
 |=============
 | S2I image  | link | Build output | BuildTriggers and Settings
 
-|rhdm76-kieserver-openshift:1.0 |  link:../../../kieserver/image.yaml[`rhdm-7/rhdm76-kieserver-openshift`] | `${APPLICATION_NAME}-kieserver:latest` | GitHub, Generic, ImageChange, ConfigChange
+|rhdm77-kieserver-openshift:1.0 |  link:../../../kieserver/image.yaml[`rhdm-7/rhdm77-kieserver-openshift`] | `${APPLICATION_NAME}-kieserver:latest` | GitHub, Generic, ImageChange, ConfigChange
 |=============
 
 

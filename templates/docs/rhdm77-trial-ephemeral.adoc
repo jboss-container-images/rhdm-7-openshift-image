@@ -4,12 +4,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (https://github.com/jboss-container-images/jboss-kie-modules/tree/master/tools/gen-template-doc/*.in)
 ////
-= rhdm76-trial-ephemeral
+= rhdm77-trial-ephemeral
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for an ephemeral authoring and testing environment, for Red Hat Decision Manager 7.6 - Deprecated
+Application template for an ephemeral authoring and testing environment, for Red Hat Decision Manager 7.7 - Deprecated
 
 toc::[]
 
@@ -44,7 +44,7 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE` | `KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE` | If OpenShift integration of Business Central is turned on, setting this parameter to true enables connection to KIE Server via an OpenShift internal Service endpoint. (Sets the org.kie.server.controller.openshift.prefer.kieserver.service system property) | true | False
 |`KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL` | `KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL` | KIE ServerTemplate Cache TTL in milliseconds. (Sets the org.kie.server.controller.template.cache.ttl system property) | 60000 | False
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Decision Manager images are installed. These ImageStreams are normally installed in the openshift namespace. You should only need to modify this if you installed the ImageStreams in a different namespace/project. | openshift | True
-|`KIE_SERVER_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for KIE server. Default is "rhdm76-kieserver-openshift". | rhdm76-kieserver-openshift | True
+|`KIE_SERVER_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for KIE server. Default is "rhdm77-kieserver-openshift". | rhdm77-kieserver-openshift | True
 |`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "1.0". | 1.0 | True
 |`KIE_SERVER_CONTAINER_DEPLOYMENT` | `KIE_SERVER_CONTAINER_DEPLOYMENT` | KIE Server Container deployment configuration in format: containerId=groupId:artifactId:version\|c2=g2:a2:v2 | -- | False
 |`MAVEN_REPO_ID` | `MAVEN_REPO_ID` | The id to use for the maven repository, if set. Default is generated randomly. | repo-custom | False
@@ -191,7 +191,7 @@ information.
 |============
 |Deployment | Image
 
-|`${APPLICATION_NAME}-rhdmcentr` | rhdm76-decisioncentral-openshift
+|`${APPLICATION_NAME}-rhdmcentr` | rhdm77-decisioncentral-openshift
 |`${APPLICATION_NAME}-kieserver` | `${KIE_SERVER_IMAGE_STREAM_NAME}`
 |============
 
