@@ -77,8 +77,11 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`DECISION_CENTRAL_MAVEN_PASSWORD` | `KIE_MAVEN_PWD` | Password to access the Maven service hosted by Decision Central inside EAP. | -- | True
 |`GIT_HOOKS_DIR` | `GIT_HOOKS_DIR` | The directory to use for git hooks, if required. | `/opt/kie/data/git/hooks` | False
 |`DECISION_CENTRAL_VOLUME_CAPACITY` | -- | Size of the persistent storage for Decision Central's runtime data. | 1Gi | True
-|`DECISION_CENTRAL_MEMORY_LIMIT` | -- | Decision Central Container memory limit. | 2Gi | False
-|`KIE_SERVER_MEMORY_LIMIT` | -- | KIE server Container memory limit. | 1Gi | False
+|`DECISION_CENTRAL_MEMORY_LIMIT` | -- | Decision Central Container memory limit. | 8Gi | True
+|`DECISION_CENTRAL_JAVA_MAX_MEM_RATIO` | `JAVA_MAX_MEM_RATIO` | Decision Central Container JVM max memory ratio. -Xmx is set to a ratio of the container available memory. The default is 80 which means 80% of the available memory is used as an upper boundary. You can skip this mechanism by setting this value to 0 in which case no -Xmx option is added. | 80 | True
+|`DECISION_CENTRAL_CPU_LIMIT` | -- | Decision Central Container cpu limit. | 2000m | True
+|`KIE_SERVER_MEMORY_LIMIT` | -- | KIE server Container memory limit. | 1Gi | True
+|`KIE_SERVER_CPU_LIMIT` | -- | KIE server Container cpu limit. | 1000m | True
 |`SSO_URL` | `SSO_URL` | RH-SSO URL. | https://rh-sso.example.com/auth | False
 |`SSO_REALM` | `SSO_REALM` | RH-SSO Realm name. | -- | False
 |`DECISION_CENTRAL_SSO_CLIENT` | `SSO_CLIENT` | Decision Central RH-SSO Client name. | -- | False
@@ -295,7 +298,7 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |=======================================================================
 |Deployment |Variable name |Description |Example value
 
-.70+| `${APPLICATION_NAME}-rhdmcentr`
+.71+| `${APPLICATION_NAME}-rhdmcentr`
 |`APPLICATION_USERS_PROPERTIES` | -- | `/opt/kie/data/configuration/application-users.properties`
 |`APPLICATION_ROLES_PROPERTIES` | -- | `/opt/kie/data/configuration/application-roles.properties`
 |`KIE_ADMIN_USER` | KIE administrator user name. | `${KIE_ADMIN_USER}`
@@ -332,6 +335,7 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |`APPFORMER_JMS_BROKER_PORT` | -- | 61616
 |`APPFORMER_JMS_BROKER_USER` | The user name to connect to the JMS broker. | `${APPFORMER_JMS_BROKER_USER}`
 |`APPFORMER_JMS_BROKER_PASSWORD` | The password to connect to the JMS broker. | `${APPFORMER_JMS_BROKER_PASSWORD}`
+|`JAVA_MAX_MEM_RATIO` | Decision Central Container JVM max memory ratio. -Xmx is set to a ratio of the container available memory. The default is 80 which means 80% of the available memory is used as an upper boundary. You can skip this mechanism by setting this value to 0 in which case no -Xmx option is added. | `${DECISION_CENTRAL_JAVA_MAX_MEM_RATIO}`
 |`SSO_URL` | RH-SSO URL. | `${SSO_URL}`
 |`SSO_OPENIDCONNECT_DEPLOYMENTS` | -- | ROOT.war
 |`SSO_REALM` | RH-SSO Realm name. | `${SSO_REALM}`
