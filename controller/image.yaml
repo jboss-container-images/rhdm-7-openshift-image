@@ -21,7 +21,7 @@ envs:
     - name: "SCRIPT_DEBUG"
       description: "If set to true, ensures that the bash scripts are executed with the -x option, printing the commands and their arguments as they are executed."
       example: "true"
-      - name: "KIE_ADMIN_USER"
+    - name: "KIE_ADMIN_USER"
       example: "adminUser"
       description: "Username for basic authentication used to access the controller externally and to connect with the execution server (Sets the org.kie.server.user and org.kie.server.controller.user system properties)"
     - name: "KIE_ADMIN_PWD"
