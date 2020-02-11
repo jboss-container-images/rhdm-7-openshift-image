@@ -501,7 +501,7 @@ objects:
             value: "${KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL}"
 ## OpenShift Enhancement END
           - name: WORKBENCH_ROUTE_NAME
-            value: "${APPLICATION_NAME}-rhdmcentr"
+            value: "insecure-${APPLICATION_NAME}-rhdmcentr"
           - name: MAVEN_REPO_ID
             value: "${MAVEN_REPO_ID}"
           - name: MAVEN_REPO_URL
