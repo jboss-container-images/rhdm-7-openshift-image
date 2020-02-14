@@ -22,8 +22,8 @@ message: |-
           The username/password needed for accessing the application are stored in "${CREDENTIALS_SECRET}" secret as
           KIE_ADMIN_USER and KIE_ADMIN_PWD
 
-          Please be sure to create the secrets named "${CREDENTIALS_SECRET}", "${DECISION_CENTRAL_HTTPS_SECRET}" and "${KIE_SERVER_HTTPS_SECRET}"
-          containing the ${DECISION_CENTRAL_HTTPS_KEYSTORE} and ${KIE_SERVER_HTTPS_KEYSTORE} files used for serving secure content.
+          You must create the secret named "${CREDENTIALS_SECRET}" containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values and the secrets named "${BUSINESS_CENTRAL_HTTPS_SECRET}" and "${KIE_SERVER_HTTPS_SECRET}"
+          containing the ${BUSINESS_CENTRAL_HTTPS_KEYSTORE} and ${KIE_SERVER_HTTPS_KEYSTORE} files used for serving secure content.
 parameters:
 - displayName: Application Name
   description: The name for the application.
@@ -31,7 +31,7 @@ parameters:
   value: myapp
   required: true
 - displayName: Credentials secret
-  description: Secret containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values
+  description: Secret containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values.
   name: CREDENTIALS_SECRET
   example: rhpam-credentials
   required: true
@@ -141,7 +141,7 @@ parameters:
   value: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift:1.4
   required: true
 - displayName: DataGrid Container CPU Limit
-  description: DataGrid Container cpu limit.
+  description: DataGrid Container CPU limit.
   name: DATAGRID_CPU_LIMIT
   value: "1000m"
   required: true
@@ -205,7 +205,7 @@ parameters:
 - displayName: ImageStream Namespace
   description: Namespace in which the ImageStreams for Red Hat Decision Manager images are
     installed. These ImageStreams are normally installed in the openshift namespace.
-    You should only need to modify this if you installed the ImageStreams in a
+    You need to modify this parameter only if you installed the ImageStreams in a
     different namespace/project.
   name: IMAGE_STREAM_NAMESPACE
   value: openshift
@@ -268,12 +268,12 @@ parameters:
   value: "8Gi"
   required: true
 - displayName: Decision Central Container JVM Max Memory Ratio
-  description: Decision Central Container JVM max memory ratio. -Xmx is set to a ratio of the container available memory. The default is 80 which means 80% of the available memory is used as an upper boundary. You can skip this mechanism by setting this value to 0 in which case no -Xmx option is added.
+  description: Decision Central Container JVM max memory ratio. -Xmx is set to a ratio of the memory available on the container. The default is 80, which means the upper boundary is 80% of the available memory. To skip adding the -Xmx option, set this value to 0.
   name: DECISION_CENTRAL_JAVA_MAX_MEM_RATIO
   value: "80"
   required: true
 - displayName: Decision Central Container CPU Limit
-  description: Decision Central Container cpu limit.
+  description: Decision Central Container CPU limit.
   name: DECISION_CENTRAL_CPU_LIMIT
   value: "2000m"
   required: true
@@ -283,7 +283,7 @@ parameters:
   value: "1Gi"
   required: true
 - displayName: KIE Server Container CPU Limit
-  description: KIE server Container cpu limit.
+  description: KIE server Container CPU limit.
   name: KIE_SERVER_CPU_LIMIT
   value: "1000m"
   required: true

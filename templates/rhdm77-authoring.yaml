@@ -22,8 +22,8 @@ message: |-
           The username/password needed for accessing the application are stored in "${CREDENTIALS_SECRET}" secret as
           KIE_ADMIN_USER and KIE_ADMIN_PWD
 
-          Please be sure to create the secrets named "${CREDENTIALS_SECRET}", "${DECISION_CENTRAL_HTTPS_SECRET}" and "${KIE_SERVER_HTTPS_SECRET}"
-          containing the ${DECISION_CENTRAL_HTTPS_KEYSTORE} and ${KIE_SERVER_HTTPS_KEYSTORE} files used for serving secure content.
+          You must create the secret named "${CREDENTIALS_SECRET}" containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values and the secrets named "${BUSINESS_CENTRAL_HTTPS_SECRET}" and "${KIE_SERVER_HTTPS_SECRET}"
+          containing the ${BUSINESS_CENTRAL_HTTPS_KEYSTORE} and ${KIE_SERVER_HTTPS_KEYSTORE} files used for serving secure content.
 parameters:
 - displayName: Application Name
   description: The name for the application.
@@ -31,7 +31,7 @@ parameters:
   value: myapp
   required: true
 - displayName: Credentials secret
-  description: Secret containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values
+  description: Secret containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values.
   name: CREDENTIALS_SECRET
   example: rhpam-credentials
   required: true
@@ -144,7 +144,7 @@ parameters:
 - displayName: ImageStream Namespace
   description: Namespace in which the ImageStreams for Red Hat Decision Manager images are
     installed. These ImageStreams are normally installed in the openshift namespace.
-    You should only need to modify this if you installed the ImageStreams in a
+    You need to modify this parameter only if you installed the ImageStreams in a
     different namespace/project.
   name: IMAGE_STREAM_NAMESPACE
   value: openshift
