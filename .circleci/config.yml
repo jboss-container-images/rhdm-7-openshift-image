@@ -25,4 +25,4 @@ jobs:
     - run:
         name: Verify the RHDM imagestream
         command: |
-          ./openshift-template-validator-linux-amd64 validate --file rhdm77-image-streams.yaml
+          ./openshift-template-validator-linux-amd64 validate --file rhdm78-image-streams.yaml
