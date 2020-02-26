@@ -1,6 +1,6 @@
 ## Red Hat Decision Manager Kie Server Quickstart
 
-Note that, this is the development branch, the target images might not be available here, instead you can look at the [released branch](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.7.x/quickstarts/hello-rules)
+Note that, this is the development branch, the target images might not be available here, instead you can look at the [released branch](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.8.x/quickstarts/hello-rules)
 
 This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/master/kieserver) image.
 
@@ -8,7 +8,7 @@ This quickstart is intend to be used with the [RHDM Kie Server](https://github.c
 
 The template below will be used for this quickstart:
 
-[rhdm77-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/master/templates/rhdm77-prod-immutable-kieserver.yaml)
+[rhdm78-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/master/templates/rhdm78-prod-immutable-kieserver.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
 
@@ -31,14 +31,14 @@ Now using project "rhdm" on server "https://ocp-master.mycloud.com:8443".
 
 Make sure that you have the RHDM template installed in your OpenShift Instance:
 ```bash
-$ oc get template rhdm77-prod-immutable-kieserver -n openshift
-Error from server (NotFound): templates "rhdm77-prod-immutable-kieserver" not found
+$ oc get template rhdm78-prod-immutable-kieserver -n openshift
+Error from server (NotFound): templates "rhdm78-prod-immutable-kieserver" not found
 ```
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/templates/rhdm77-prod-immutable-kieserver.yaml -n openshift
-template "rhdm77-prod-immutable-kieserver" created
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/templates/rhdm78-prod-immutable-kieserver.yaml -n openshift
+template "rhdm78-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
@@ -64,13 +64,13 @@ $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
 Before proceed, make sure you have the RHDM imagestreams available under the 'openshift' namespace.
 
  ```bash
-$ oc get imagestream rhdm-kieserver-rhel8 -n openshift | grep 7.7
+$ oc get imagestream rhdm-kieserver-rhel8 -n openshift | grep 7.8
 Error from server (NotFound): imagestreams.image.openshift.io "rhdm-kieserver-rhel8" not found
 ```
 
 If the `rhdm-kieserver-rhel8` is not found, install it under the 'openshift' namespace:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/rhdm77-image-streams.yaml -n openshift
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/rhdm78-image-streams.yaml -n openshift
 ```
 Note that, to pull the images the OpenShift must be able to pull images from registry.redhat.io, for more information
 please take a look [here](https://access.redhat.com/RegistryAuthentication)
@@ -79,18 +79,18 @@ At this moment we are ready to instantiate the kieserver app:
 
 
 ```bash
-$ oc new-app rhdm77-prod-immutable-kieserver \
+$ oc new-app rhdm78-prod-immutable-kieserver \
 -p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.6.0-SNAPSHOT \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
 -p SOURCE_REPOSITORY_REF=master \
 -p CONTEXT_DIR=quickstarts/hello-rules/hellorules \
 -p IMAGE_STREAM_NAMESPACE=openshift
-  --> Deploying template "openshift/rhdm77-prod-immutable-kieserver" to project rhdm
+  --> Deploying template "openshift/rhdm78-prod-immutable-kieserver" to project rhdm
 
-     Red Hat Decision Manager 7.7 immutable production environment
+     Red Hat Decision Manager 7.8 immutable production environment
      ---------
-     Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.7
+     Application template for an immultable KIE server in a production environment, for Red Hat Decision Manager 7.8
 
      A new immutable Red Hat Decision Manager KIE server have been created in your project.
      The username/password for accessing the KIE server is
@@ -108,7 +108,7 @@ $ oc new-app rhdm77-prod-immutable-kieserver \
         * KIE Server Password=QTSdSM4! # generated
         * ImageStream Namespace=openshift
         * KIE Server ImageStream Name=rhdm-kieserver-rhel8
-        * ImageStream Tag=7.7.0
+        * ImageStream Tag=7.8.0
         * KIE Server Controller User=controllerUser
         * KIE Server Controller Password=
         * KIE Server Controller Token=
@@ -250,7 +250,7 @@ Remember, the certificates are required, for more information about how to confi
 https://access.redhat.com/documentation/en-us/red_hat_amq/7.3/html/deploying_amq_broker_on_openshift_container_platform/configure-ssl-broker-ocp#configuring-ssl_broker-ocp
 This client allows you to test if your JMS setup is working properly and if you are able to perform JMS calls outside OpenShift
 by using the *hello-rules* quickstart and this client to interact with ActiveMQ.
-First of all, install this quickstart on OpenShift using the [rhdm77-prod-immutable-kieserver-amq.yaml](../../templates/rhdm77-prod-immutable-kieserver-amq.yaml)
+First of all, install this quickstart on OpenShift using the [rhdm78-prod-immutable-kieserver-amq.yaml](../../templates/rhdm78-prod-immutable-kieserver-amq.yaml)
 and do not forget to properly configure the s2i build and the AMQ parameters, mainly the credentials.
 Execute a maven install on the root directory of the hello-rules:
 
