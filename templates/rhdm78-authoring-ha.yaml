@@ -22,8 +22,8 @@ message: |-
           The username/password needed for accessing the application are stored in "${CREDENTIALS_SECRET}" secret as
           KIE_ADMIN_USER and KIE_ADMIN_PWD
 
-          You must create the secret named "${CREDENTIALS_SECRET}" containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values and the secrets named "${BUSINESS_CENTRAL_HTTPS_SECRET}" and "${KIE_SERVER_HTTPS_SECRET}"
-          containing the ${BUSINESS_CENTRAL_HTTPS_KEYSTORE} and ${KIE_SERVER_HTTPS_KEYSTORE} files used for serving secure content.
+          You must create the secret named "${CREDENTIALS_SECRET}" containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values and the secrets named "${DECISION_CENTRAL_HTTPS_SECRET}" and "${KIE_SERVER_HTTPS_SECRET}"
+          containing the ${DECISION_CENTRAL_HTTPS_KEYSTORE} and ${KIE_SERVER_HTTPS_KEYSTORE} files used for serving secure content.
 parameters:
 - displayName: Application Name
   description: The name for the application.
@@ -185,6 +185,16 @@ parameters:
   name: AMQ_REPLICAS
   required: true
   value: "2"
+- displayName: Decision Central Container Replicas
+  description: Decision Central Container Replicas, defines how many Decision Central containers will be started.
+  name: DECISION_CENTRAL_CONTAINER_REPLICAS
+  value: '2'
+  required: true
+- displayName: KIE Server Container Replicas
+  description: KIE Server Container Replicas, defines how many KIE Server containers will be started.
+  name: KIE_SERVER_CONTAINER_REPLICAS
+  value: '2'
+  required: true
 ## OpenShift Enhancement BEGIN
 - displayName: Enable KIE server global discovery
   description: "If set to true, turns on KIE server global discovery feature (Sets the org.kie.server.controller.openshift.global.discovery.enabled system property)"
@@ -782,7 +792,7 @@ objects:
           namespace: "${IMAGE_STREAM_NAMESPACE}"
           name: "${DECISION_CENTRAL_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
     - type: ConfigChange
-    replicas: 2
+    replicas: "${{DECISION_CENTRAL_CONTAINER_REPLICAS}}"
     selector:
       deploymentConfig: "${APPLICATION_NAME}-rhdmcentr"
     template:
@@ -1012,7 +1022,7 @@ objects:
           namespace: "${IMAGE_STREAM_NAMESPACE}"
           name: "${KIE_SERVER_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
     - type: ConfigChange
-    replicas: 2
+    replicas: "${{KIE_SERVER_CONTAINER_REPLICAS}}"
     selector:
       deploymentConfig: "${APPLICATION_NAME}-kieserver"
     template:
