@@ -108,7 +108,7 @@ $ oc new-app rhdm77-prod-immutable-kieserver \
         * KIE Server Password=QTSdSM4! # generated
         * ImageStream Namespace=openshift
         * KIE Server ImageStream Name=rhdm-kieserver-rhel8
-        * ImageStream Tag=7.7.0
+        * ImageStream Tag=7.7.1
         * KIE Server Controller User=controllerUser
         * KIE Server Controller Password=
         * KIE Server Controller Token=
