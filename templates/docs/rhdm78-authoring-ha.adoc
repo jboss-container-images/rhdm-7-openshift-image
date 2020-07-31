@@ -45,16 +45,18 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`KIE_SERVER_HTTPS_PASSWORD` | `HTTPS_PASSWORD` | The password for the keystore and certificate for KIE Server. | mykeystorepass | False
 |`APPFORMER_JMS_BROKER_USER` | `APPFORMER_JMS_BROKER_USER` | The user name to connect to the JMS broker. | jmsBrokerUser | True
 |`APPFORMER_JMS_BROKER_PASSWORD` | `APPFORMER_JMS_BROKER_PASSWORD` | The password to connect to the JMS broker. | -- | True
-|`DATAGRID_IMAGE` | -- | DataGrid image. | registry.redhat.io/jboss-datagrid-7/datagrid73-openshift:1.4 | True
+|`DATAGRID_IMAGE` | -- | DataGrid image. | registry.redhat.io/jboss-datagrid-7/datagrid73-openshift:1.5 | True
 |`DATAGRID_CPU_LIMIT` | -- | DataGrid Container CPU limit. | 1000m | True
 |`DATAGRID_MEMORY_LIMIT` | -- | DataGrid Container memory limit. | 2Gi | True
 |`DATAGRID_VOLUME_CAPACITY` | -- | Size of the persistent storage for DataGrid's runtime data. | 1Gi | True
-|`AMQ_BROKER_IMAGE` | -- | AMQ Broker Image | registry.redhat.io/amq7/amq-broker:7.5 | True
+|`AMQ_BROKER_IMAGE` | -- | AMQ Broker Image | registry.redhat.io/amq7/amq-broker:7.6 | True
 |`AMQ_ROLE` | -- | User role for standard broker user. | admin | True
 |`AMQ_NAME` | -- | The name of the broker. | broker | True
 |`AMQ_GLOBAL_MAX_SIZE` | -- | Specifies the maximum amount of memory that message data can consume. If no value is specified, half of the system's memory is allocated. | 10 gb | False
 |`AMQ_VOLUME_CAPACITY` | -- | Size of persistent storage for AMQ broker volume. | 1Gi | True
 |`AMQ_REPLICAS` | -- | Number of broker replicas for a cluster | 2 | True
+|`DECISION_CENTRAL_CONTAINER_REPLICAS` | -- | Decision Central Container Replicas, defines how many Decision Central containers will be started. | 2 | True
+|`KIE_SERVER_CONTAINER_REPLICAS` | -- | KIE Server Container Replicas, defines how many KIE Server containers will be started. | 2 | True
 |`KIE_SERVER_CONTROLLER_OPENSHIFT_GLOBAL_DISCOVERY_ENABLED` | `KIE_SERVER_CONTROLLER_OPENSHIFT_GLOBAL_DISCOVERY_ENABLED` | If set to true, turns on KIE server global discovery feature (Sets the org.kie.server.controller.openshift.global.discovery.enabled system property) | false | False
 |`KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE` | `KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE` | If OpenShift integration of Business Central is turned on, setting this parameter to true enables connection to KIE Server via an OpenShift internal Service endpoint. (Sets the org.kie.server.controller.openshift.prefer.kieserver.service system property) | true | False
 |`KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL` | `KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL` | KIE ServerTemplate Cache TTL in milliseconds. (Sets the org.kie.server.controller.template.cache.ttl system property) | 60000 | False
@@ -75,8 +77,6 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`DECISION_CENTRAL_CPU_LIMIT` | -- | Decision Central Container CPU limit. | 2000m | True
 |`KIE_SERVER_MEMORY_LIMIT` | -- | KIE server Container memory limit. | 1Gi | True
 |`KIE_SERVER_CPU_LIMIT` | -- | KIE server Container CPU limit. | 1000m | True
-|`DECISION_CENTRAL_CONTAINER_REPLICAS` | -- | Decision Central Container Replicas, defines how many Decision Central containers will be started. | 2 | True
-|`KIE_SERVER_CONTAINER_REPLICAS` | -- | KIE Server Container Replicas, defines how many KIE Server containers will be started. | 2 | True
 |`SSO_URL` | `SSO_URL` | RH-SSO URL. | https://rh-sso.example.com/auth | False
 |`SSO_REALM` | `SSO_REALM` | RH-SSO Realm name. | -- | False
 |`DECISION_CENTRAL_SSO_CLIENT` | `SSO_CLIENT` | Decision Central RH-SSO Client name. | -- | False
@@ -299,7 +299,7 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |`KIE_ADMIN_USER` | -- | --
 |`KIE_ADMIN_PWD` | -- | --
 |`KIE_MBEANS` | KIE server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties) | `${KIE_MBEANS}`
-|`KIE_SERVER_CONTROLLER_OPENSHIFT_ENABLED` | -- | false
+|`KIE_SERVER_CONTROLLER_OPENSHIFT_ENABLED` | -- | true
 |`KIE_SERVER_CONTROLLER_OPENSHIFT_GLOBAL_DISCOVERY_ENABLED` | If set to true, turns on KIE server global discovery feature (Sets the org.kie.server.controller.openshift.global.discovery.enabled system property) | `${KIE_SERVER_CONTROLLER_OPENSHIFT_GLOBAL_DISCOVERY_ENABLED}`
 |`KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE` | If OpenShift integration of Business Central is turned on, setting this parameter to true enables connection to KIE Server via an OpenShift internal Service endpoint. (Sets the org.kie.server.controller.openshift.prefer.kieserver.service system property) | `${KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE}`
 |`KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL` | KIE ServerTemplate Cache TTL in milliseconds. (Sets the org.kie.server.controller.template.cache.ttl system property) | `${KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL}`
@@ -371,7 +371,7 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |`KIE_SERVER_CONTROLLER_SERVICE` | -- | `${APPLICATION_NAME}-rhdmcentr`
 |`KIE_SERVER_CONTROLLER_PROTOCOL` | -- | ws
 |`KIE_SERVER_ID` | -- | --
-|`KIE_SERVER_ROUTE_NAME` | -- | `${APPLICATION_NAME}-kieserver`
+|`KIE_SERVER_ROUTE_NAME` | -- | insecure-${APPLICATION_NAME}-kieserver
 |`KIE_SERVER_STARTUP_STRATEGY` | -- | OpenShiftStartupStrategy
 |`MAVEN_MIRROR_URL` | Maven mirror that Decision Central and KIE server must use. If you configure a mirror, this mirror must contain all artifacts that are required for building and deploying your services. | `${MAVEN_MIRROR_URL}`
 |`MAVEN_MIRROR_OF` | Maven mirror configuration for KIE server. | `${MAVEN_MIRROR_OF}`
