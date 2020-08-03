@@ -4,12 +4,12 @@
     Changes to .adoc or HTML files may be overwritten! Please change the
     generator or the input template (https://github.com/jboss-container-images/jboss-kie-modules/tree/master/tools/gen-template-doc/*.in)
 ////
-= rhdm78-kieserver
+= rhdm79-kieserver
 :toc:
 :toc-placement!:
 :toclevels: 5
 
-Application template for a managed KIE Server, for Red Hat Decision Manager 7.8 - Deprecated
+Application template for a managed KIE Server, for Red Hat Decision Manager 7.9 - Deprecated
 
 toc::[]
 
@@ -34,7 +34,7 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`CREDENTIALS_SECRET` | -- | Secret containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values. | rhpam-credentials | True
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Decision Manager images are installed. These ImageStreams are normally installed in the openshift namespace. You need to modify this parameter only if you installed the ImageStreams in a different namespace/project. | openshift | True
 |`KIE_SERVER_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for KIE server. Default is "rhdm-kieserver-rhel8". | rhdm-kieserver-rhel8 | True
-|`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "7.8.0". | 7.8.0 | True
+|`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "7.9.0". | 7.9.0 | True
 |`KIE_SERVER_MODE` | `KIE_SERVER_MODE` | The KIE Server mode. Valid values are 'DEVELOPMENT' or 'PRODUCTION'. In production mode, you can not deploy SNAPSHOT versions of artifacts on the KIE server and can not change the version of an artifact in an existing container. (Sets the org.kie.server.mode system property). | `PRODUCTION` | False
 |`KIE_MBEANS` | `KIE_MBEANS` | KIE server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties) | enabled | False
 |`DROOLS_SERVER_FILTER_CLASSES` | `DROOLS_SERVER_FILTER_CLASSES` | KIE server class filtering. (Sets the org.drools.server.filter.classes system property) | true | False
