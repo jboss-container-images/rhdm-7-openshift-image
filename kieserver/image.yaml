@@ -1,8 +1,8 @@
 schema_version: 1
 
 name: "rhdm-7/rhdm-kieserver-rhel8"
-description: "Red Hat Decision Manager Kie Server 7.8 OpenShift container image"
-version: "7.8.0"
+description: "Red Hat Decision Manager Kie Server 7.9 OpenShift container image"
+version: "7.9.0"
 from: "ubi8:8-released"
 labels:
     - name: "com.redhat.component"
@@ -10,7 +10,7 @@ labels:
     - name: "io.k8s.description"
       value: "Platform for running Red Hat Decision Manager KIE Server"
     - name: "io.k8s.display-name"
-      value: "Red Hat Decision Manager KIE Server 7.8"
+      value: "Red Hat Decision Manager KIE Server 7.9"
     - name: "io.openshift.expose-services"
       value: "8080:http,8443:https"
     - name: "io.openshift.tags"

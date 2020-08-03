@@ -1,7 +1,7 @@
 # Red Hat Decision Manager 7 OpenShift images
 
 This repository contain all the image descriptors and files necessary to build the RHPAM images.
-It also includes the application templates, however they are deprecated in 7.8. Using the Red Hat Business Automation Operator is recommended.
+It also includes the application templates, however they are deprecated in 7.9. Using the Red Hat Business Automation Operator is recommended.
 
 
 ### Repo structure:
@@ -24,7 +24,7 @@ Inside each image directory you will find the following files:
 
 On the root directory you can also find the two files:
  - [example-app-secret-template.yaml](example-app-secret-template.yaml): Contains a https certificate to be used as example where https is required.
- - [rhdm-image-streams.yaml](rhdm78-image-streams.yaml): imagestreams definitions, file used to install the product image streams on OpenShift, this files contains the image stream name and the registry the image will be pulled of.
+ - [rhdm-image-streams.yaml](rhdm79-image-streams.yaml): imagestreams definitions, file used to install the product image streams on OpenShift, this files contains the image stream name and the registry the image will be pulled of.
 
 
 This repo depends directly on 5 repositories, which are:
