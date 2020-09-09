@@ -28,10 +28,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- maven-compiler-plugin -->
 		<maven.compiler.version>3.8.0</maven.compiler.version>
-		<ba-platform-bom.version>7.3.0.GA-redhat-00002</ba-platform-bom.version>
+		<ba-platform-bom.version>7.8.1.redhat-00002</ba-platform-bom.version>
 		<jaxb-api.version>2.3.0.redhat-1</jaxb-api.version>
 	</properties>
-
 
 	<dependencyManagement>
 		<dependencies>
