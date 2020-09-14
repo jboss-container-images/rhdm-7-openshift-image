@@ -7,7 +7,7 @@
 
 	<groupId>org.openshift.quickstarts</groupId>
 	<artifactId>rhdm-kieserver-hellorules</artifactId>
-	<version>1.6.0-SNAPSHOT</version>
+	<version>1.7.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>OpenShift Quickstarts: RHDM Kie Server: Hello Rules</name>
@@ -58,7 +58,6 @@
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>${jaxb-api.version}</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
