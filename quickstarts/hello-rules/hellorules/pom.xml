@@ -36,7 +36,14 @@
 			<dependency>
 				<groupId>com.redhat.ba</groupId>
 				<artifactId>ba-platform-bom</artifactId>
-				<version>7.3.0.GA-redhat-00002</version>
+				<version>7.8.1.redhat-00002</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.bom</groupId>
+				<artifactId>eap-runtime-artifacts</artifactId>
+				<version>7.3.2.GA</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -47,11 +54,13 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
+			<version>${jaxb-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
