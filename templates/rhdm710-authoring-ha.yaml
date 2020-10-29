@@ -272,31 +272,51 @@ parameters:
   name: DECISION_CENTRAL_VOLUME_CAPACITY
   value: 1Gi
   required: true
-- displayName: Decision Central Container Memory Limit
-  description: Decision Central Container memory limit.
-  name: DECISION_CENTRAL_MEMORY_LIMIT
-  value: "8Gi"
-  required: true
 - displayName: Decision Central Container JVM Max Memory Ratio
   description: Decision Central Container JVM max memory ratio. -Xmx is set to a ratio of the memory available on the container. The default is 80, which means the upper boundary is 80% of the available memory. To skip adding the -Xmx option, set this value to 0.
   name: DECISION_CENTRAL_JAVA_MAX_MEM_RATIO
   value: "80"
   required: true
+- displayName: Decision Central Container Memory Limit
+  description: Decision Central Container memory limit.
+  name: DECISION_CENTRAL_MEMORY_LIMIT
+  value: 4Gi
+  required: true
 - displayName: Decision Central Container CPU Limit
   description: Decision Central Container CPU limit.
   name: DECISION_CENTRAL_CPU_LIMIT
-  value: "2000m"
+  value: "2"
+  required: true
+- displayName: Decision Central Container Memory Request
+  description: Decision Central Container memory request.
+  name: DECISION_CENTRAL_MEMORY_REQUEST
+  value: 3Gi
+  required: true
+- displayName: Decision Central Container CPU Request
+  description: Decision Central Container CPU request.
+  name: DECISION_CENTRAL_CPU_REQUEST
+  value: '1500m'
   required: true
 - displayName: KIE Server Container Memory Limit
   description: KIE server Container memory limit.
   name: KIE_SERVER_MEMORY_LIMIT
-  value: "1Gi"
+  value: 2Gi
+  required: true
+- displayName: KIE Server Container Memory Request
+  description: KIE server Container memory Request.
+  name: KIE_SERVER_MEMORY_REQUEST
+  value: 1.5Gi
   required: true
 - displayName: KIE Server Container CPU Limit
   description: KIE server Container CPU limit.
   name: KIE_SERVER_CPU_LIMIT
-  value: "1000m"
-  required: true
+  value: '1'
+  required: true  
+- displayName: KIE Server Container CPU Request
+  description: KIE server Container CPU Request.
+  name: KIE_SERVER_CPU_REQUEST
+  value: '750m'
+  required: true 
 - displayName: RH-SSO URL
   description: RH-SSO URL.
   name: SSO_URL
@@ -813,8 +833,8 @@ objects:
               cpu: ${DECISION_CENTRAL_CPU_LIMIT}
               memory: ${DECISION_CENTRAL_MEMORY_LIMIT}
             requests:
-              cpu: ${DECISION_CENTRAL_CPU_LIMIT}
-              memory: ${DECISION_CENTRAL_MEMORY_LIMIT}
+              cpu: ${DECISION_CENTRAL_CPU_REQUEST}
+              memory: ${DECISION_CENTRAL_MEMORY_REQUEST}
           volumeMounts:
           - name: decisioncentral-keystore-volume
             mountPath: "/etc/decisioncentral-secret-volume"
@@ -1059,8 +1079,8 @@ objects:
               cpu: ${KIE_SERVER_CPU_LIMIT}
               memory: ${KIE_SERVER_MEMORY_LIMIT}
             requests:
-              cpu: ${KIE_SERVER_CPU_LIMIT}
-              memory: ${KIE_SERVER_MEMORY_LIMIT}
+              cpu: ${KIE_SERVER_CPU_REQUEST}
+              memory: ${KIE_SERVER_MEMORY_REQUEST}
           volumeMounts:
           - name: kieserver-keystore-volume
             mountPath: "/etc/kieserver-secret-volume"

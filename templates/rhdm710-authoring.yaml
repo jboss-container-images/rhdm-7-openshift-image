@@ -199,13 +199,43 @@ parameters:
 - displayName: Decision Central Container Memory Limit
   description: Decision Central Container memory limit.
   name: DECISION_CENTRAL_MEMORY_LIMIT
-  value: 2Gi
-  required: false
+  value: 4Gi
+  required: true
+- displayName: Decision Central Container CPU Limit
+  description: Decision Central Container CPU limit.
+  name: DECISION_CENTRAL_CPU_LIMIT
+  value: "2"
+  required: true
+- displayName: Decision Central Container Memory Request
+  description: Decision Central Container memory request.
+  name: DECISION_CENTRAL_MEMORY_REQUEST
+  value: 3Gi
+  required: true
+- displayName: Decision Central Container CPU Request
+  description: Decision Central Container CPU request.
+  name: DECISION_CENTRAL_CPU_REQUEST
+  value: '1500m'
+  required: true
 - displayName: KIE Server Container Memory Limit
   description: KIE server Container memory limit.
   name: KIE_SERVER_MEMORY_LIMIT
-  value: 1Gi
-  required: false
+  value: 2Gi
+  required: true
+- displayName: KIE Server Container Memory Request
+  description: KIE server Container memory Request.
+  name: KIE_SERVER_MEMORY_REQUEST
+  value: 1.5Gi
+  required: true
+- displayName: KIE Server Container CPU Limit
+  description: KIE server Container CPU limit.
+  name: KIE_SERVER_CPU_LIMIT
+  value: '1'
+  required: true  
+- displayName: KIE Server Container CPU Request
+  description: KIE server Container CPU Request.
+  name: KIE_SERVER_CPU_REQUEST
+  value: '750m'
+  required: true
 - displayName: RH-SSO URL
   description: RH-SSO URL.
   name: SSO_URL
@@ -535,6 +565,10 @@ objects:
           resources:
             limits:
               memory: "${DECISION_CENTRAL_MEMORY_LIMIT}"
+              cpu: "${DECISION_CENTRAL_CPU_LIMIT}"
+            requests:
+              memory: "${DECISION_CENTRAL_MEMORY_REQUEST}"
+              cpu: "${DECISION_CENTRAL_CPU_REQUEST}"
           volumeMounts:
           - name: decisioncentral-keystore-volume
             mountPath: "/etc/decisioncentral-secret-volume"
@@ -756,6 +790,10 @@ objects:
           resources:
             limits:
               memory: "${KIE_SERVER_MEMORY_LIMIT}"
+              cpu: "${KIE_SERVER_CPU_LIMIT}"
+            requests:
+              memory: "${KIE_SERVER_MEMORY_REQUEST}"
+              cpu: "${KIE_SERVER_CPU_REQUEST}"
           volumeMounts:
           - name: kieserver-keystore-volume
             mountPath: "/etc/kieserver-secret-volume"
