@@ -471,7 +471,7 @@ objects:
           resources:
             limits:
               memory: "${KIE_SERVER_MEMORY_LIMIT}"
-              cpu: "${KIE_SERVER_MEMORY_LIMIT}"
+              cpu: "${KIE_SERVER_CPU_LIMIT}"
             requests:
               memory: "${KIE_SERVER_MEMORY_REQUEST}"
               cpu: "${KIE_SERVER_CPU_REQUEST}"
