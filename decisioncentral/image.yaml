@@ -3,7 +3,7 @@ schema_version: 1
 name: "rhdm-7/rhdm-decisioncentral-rhel8"
 description: "Red Hat Decision Central 7.10 OpenShift container image"
 version: "7.10.0"
-from: "ubi8:8-released"
+from: "registry.redhat.io/ubi8/ubi:latest"
 labels:
     - name: "com.redhat.component"
       value: "rhdm-7-decisioncentral-rhel8-container"
