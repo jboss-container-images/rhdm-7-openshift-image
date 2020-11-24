@@ -3,7 +3,7 @@ schema_version: 1
 name: "rhdm-7/rhdm-controller-rhel8"
 description: "Red Hat Decision Manager Standalone Controller 7.9 container image"
 version: "7.9.0"
-from: "ubi8:8-released"
+from: "registry.redhat.io/ubi8/ubi:latest"
 labels:
     - name: "com.redhat.component"
       value: "rhdm-7-controller-rhel8-container"
