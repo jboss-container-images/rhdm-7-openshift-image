@@ -3,7 +3,7 @@ schema_version: 1
 name: "rhdm-7/rhdm-kieserver-rhel8"
 description: "Red Hat Decision Manager Kie Server 7.10 OpenShift container image"
 version: "7.10.0"
-from: "registry.redhat.io/ubi8/ubi:latest"
+from: "registry.redhat.io/ubi8/ubi-minimal:latest"
 labels:
     - name: "com.redhat.component"
       value: "rhdm-7-kieserver-rhel8-container"
@@ -206,6 +206,7 @@ modules:
           - name: jboss-kie-kieserver
 packages:
       content_sets_file: content_sets.yml
+      manager: microdnf
       install:
           - hostname
 osbs:
