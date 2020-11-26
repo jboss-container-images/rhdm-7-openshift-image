@@ -340,9 +340,9 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |`HTTPS_PASSWORD` | The password for the keystore and certificate | `${KIE_SERVER_HTTPS_PASSWORD}`
 |`KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped. Sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | `${KIE_SERVER_MGMT_DISABLED}`
 |`KIE_SERVER_STARTUP_STRATEGY` | -- | OpenShiftStartupStrategy
-|`JGROUPS_PING_PROTOCOL` | -- | openshift.DNS_PING
-|`OPENSHIFT_DNS_PING_SERVICE_NAME` | -- | `${APPLICATION_NAME}-kieserver-ping`
-|`OPENSHIFT_DNS_PING_SERVICE_PORT` | -- | 8888
+|`JGROUPS_PING_PROTOCOL` | -- | openshift.KUBE_PING
+|`OPENSHIFT_KUBE_PING_SERVICE_NAME` | -- | `${APPLICATION_NAME}-kieserver-ping`
+|`OPENSHIFT_KUBE_PING_SERVICE_PORT` | -- | 8888
 |`SSO_URL` | RH-SSO URL | `${SSO_URL}`
 |`SSO_OPENIDCONNECT_DEPLOYMENTS` | -- | ROOT.war
 |`SSO_REALM` | RH-SSO Realm name | `${SSO_REALM}`

@@ -315,9 +315,9 @@ Http Get on http://localhost:8080/services/rest/server/healthcheck
 |`HTTPS_KEYSTORE` | The name of the keystore file within the secret for Decision Central. | `${DECISION_CENTRAL_HTTPS_KEYSTORE}`
 |`HTTPS_NAME` | The name associated with the server certificate for Decision Central. | `${DECISION_CENTRAL_HTTPS_NAME}`
 |`HTTPS_PASSWORD` | The password for the keystore and certificate for Decision Central. | `${DECISION_CENTRAL_HTTPS_PASSWORD}`
-|`JGROUPS_PING_PROTOCOL` | -- | openshift.DNS_PING
-|`OPENSHIFT_DNS_PING_SERVICE_NAME` | -- | `${APPLICATION_NAME}-rhdmcentr-ping`
-|`OPENSHIFT_DNS_PING_SERVICE_PORT` | -- | 8888
+|`JGROUPS_PING_PROTOCOL` | -- | openshift.KUBE_PING
+|`OPENSHIFT_KUBE_PING_SERVICE_NAME` | -- | `${APPLICATION_NAME}-rhdmcentr-ping`
+|`OPENSHIFT_KUBE_PING_SERVICE_PORT` | -- | 8888
 |`APPFORMER_INFINISPAN_SERVICE_NAME` | -- | `${APPLICATION_NAME}-datagrid`
 |`APPFORMER_INFINISPAN_PORT` | -- | 11222
 |`APPFORMER_JMS_BROKER_ADDRESS` | -- | `${APPLICATION_NAME}-amq-tcp`
