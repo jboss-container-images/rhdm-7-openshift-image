@@ -2,6 +2,6 @@
 
 NOTE: Extends link:https://github.com/jboss-container-images/rhdm-7-image[Red Hat Decision Manager 7.9 container image]
 
-# License
+## License
 
 See link:../LICENSE[LICENSE] file.
