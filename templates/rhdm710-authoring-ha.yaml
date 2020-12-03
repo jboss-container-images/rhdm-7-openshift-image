@@ -720,9 +720,8 @@ objects:
           - name: SERVICE_PROFILE
             value: ${APPLICATION_NAME}-datagrid
           - name: JGROUPS_PING_PROTOCOL
-            value: openshift.DNS_PING
-          - name: OPENSHIFT_DNS_PING_SERVICE_NAME
-            value: ${APPLICATION_NAME}-datagrid-ping
+            value: kubernetes.KUBE_PING
+            value: kubernetes.KUBE_PING
           - name: INFINISPAN_CONNECTORS
             value: "hotrod"
           image: ${DATAGRID_IMAGE}
@@ -924,11 +923,7 @@ objects:
           - name: HTTPS_PASSWORD
             value: "${DECISION_CENTRAL_HTTPS_PASSWORD}"
           - name: JGROUPS_PING_PROTOCOL
-            value: "openshift.DNS_PING"
-          - name: OPENSHIFT_DNS_PING_SERVICE_NAME
-            value: "${APPLICATION_NAME}-rhdmcentr-ping"
-          - name: OPENSHIFT_DNS_PING_SERVICE_PORT
-            value: "8888"
+            value: "kubernetes.KUBE_PING"
           - name: APPFORMER_INFINISPAN_SERVICE_NAME
             value: "${APPLICATION_NAME}-datagrid"
           - name: APPFORMER_INFINISPAN_PORT
