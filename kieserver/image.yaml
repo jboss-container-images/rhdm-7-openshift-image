@@ -175,11 +175,15 @@ modules:
       version: "7.3-latest"
     - name: jboss.container.eap.setup
     - name: rhdm-7-kieserver
-    - name: jboss.container.maven.35.bash
-      version: "3.5"
-    - name: jboss.container.maven.default.bash
+    - name: jboss.container.maven
+      version: "8.2.3.6"
+    - name: jboss.container.maven.default
+    - name: jboss.container.maven.default
     - name: jboss.container.eap.s2i.bash
-    - name: jboss.container.jolokia.bash
+      version: '1.0-kie'
+    - name: jboss.container.maven.s2i
+    - name: jboss.container.jolokia
+      version: "7"
     - name: jboss.eap.cd.jolokia
     - name: os-eap7-openshift
     - name: jboss.eap.config.openshift
