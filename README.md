@@ -34,6 +34,56 @@ This repo depends directly on 5 repositories, which are:
  - [rhdm-7-image](https://github.com/jboss-container-images/rhdm-7-image.git): provides the RHDM binaries modules.
  - [jboss-kie-modules](https://github.com/jboss-container-images/jboss-kie-modules): contains all the resources used to configure the RHDM images.
 
+#### Building Images
+
+To build the images for local testing there is a [Makefile](./Makefile) which will do all the hard work for you.
+With this Makefile you can:
+
+- Build and test all images with only one command:
+
+     ```bash
+     make
+     ```
+
+     If there's no need to run the tests just set the *ignore_test* env to true, e.g.:
+
+     ```bash
+     make ignore_test=true
+     ```
+
+- Test all images with only one command, no build triggered, set the *ignore_build* env to true, e.g.:
+
+     ```bash
+     make ignore_build=true
+     ```
+
+- Build images individually, by default it will build and test each image
+
+     ```bash
+     make image image_name=decisioncentral
+     make image image_name=controller
+     make image image_name=kieserver
+     ```
+  
+     We can ignore the build or the tests while interacting with a specific image as well, to build only:
+
+     ```bash
+     make ignore_test=true image_name={image_name}
+
+     ```
+
+     Or to test only:
+
+     ```bash
+     make ignore_build=true image_name={image_name}
+     ```
+
+- List all available Images:
+    To list all available images in the reposotiory do:
+
+    ```bash
+    make list-images
+    ```
 
 ##### Found a issue?
 Please submit a issue [here](https://issues.jboss.org/projects/RHDM) with the **Cloud** tag or send us a email: bsig-cloud@redhat.com.
