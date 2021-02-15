@@ -12,6 +12,7 @@
 
 	<artifactId>rhdm-kieserver-hellorules-model</artifactId>
 	<packaging>jar</packaging>
+	<version>1.6.0-SNAPSHOT</version>
 
 	<name>OpenShift Quickstarts: RHDM Kie Server: Multi Module Hello Rules Model</name>
 	<description>A simple example application demonstrating the use of a business rule.</description>
