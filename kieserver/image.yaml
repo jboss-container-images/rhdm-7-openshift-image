@@ -142,7 +142,6 @@ envs:
   - name: "KIE_SERVER_DISABLE_KC_VERIFICATION"
     example: "true"
     description: "Disable Maven KIE Jar verification. It is recommended to test the kjar manually before disabling this verification."
-
 ports:
   - value: 8080
   - value: 8443
