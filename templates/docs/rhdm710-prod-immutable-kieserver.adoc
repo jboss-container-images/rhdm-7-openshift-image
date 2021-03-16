@@ -27,7 +27,7 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`CREDENTIALS_SECRET` | -- | Secret containing the KIE_ADMIN_USER and KIE_ADMIN_PWD values. | rhpam-credentials | True
 |`IMAGE_STREAM_NAMESPACE` | -- | Namespace in which the ImageStreams for Red Hat Decision Manager images are installed. These ImageStreams are normally installed in the openshift namespace. You need to modify this parameter only if you installed the ImageStreams in a different namespace/project. | openshift | True
 |`KIE_SERVER_IMAGE_STREAM_NAME` | -- | The name of the image stream to use for KIE Server. Default is "rhdm-kieserver-rhel8". | rhdm-kieserver-rhel8 | True
-|`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "7.10.0". | 7.10.0 | True
+|`IMAGE_STREAM_TAG` | -- | A named pointer to an image in an image stream. Default is "7.10.1". | 7.10.1 | True
 |`KIE_MBEANS` | `KIE_MBEANS` | KIE Server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties) | enabled | False
 |`DROOLS_SERVER_FILTER_CLASSES` | `DROOLS_SERVER_FILTER_CLASSES` | KIE Server class filtering. (Sets the org.drools.server.filter.classes system property) | true | False
 |`PROMETHEUS_SERVER_EXT_DISABLED` | `PROMETHEUS_SERVER_EXT_DISABLED` | If set to false, the prometheus server extension will be enabled. (Sets the org.kie.prometheus.server.ext.disabled system property) | false | False
@@ -53,7 +53,7 @@ https://docs.okd.io/latest/architecture/core_concepts/templates.html#parameters[
 |`DECISION_CENTRAL_SERVICE` | `WORKBENCH_SERVICE_NAME` | The Service name for the optional Decision Central, where it can be reached, to allow service lookups (for example, maven repo usage), if required. | myapp-rhdmcentr | False
 |`ARTIFACT_DIR` | -- | List of directories from which archives will be copied into the deployment folder. If unspecified, all archives in /target will be copied. | -- | False
 |`KIE_SERVER_MEMORY_LIMIT` | -- | KIE Server Container memory limit. | 2Gi | True
-|`KIE_SERVER_MEMORY_REQUEST` | -- | KIE Server Container memory Request. | 1.5Gi | True
+|`KIE_SERVER_MEMORY_REQUEST` | -- | KIE Server Container memory Request. | 1536Mi | True
 |`KIE_SERVER_CPU_LIMIT` | -- | KIE Server Container CPU limit. | 1 | True
 |`KIE_SERVER_CPU_REQUEST` | -- | KIE Server Container CPU Request. | 750m | True
 |`KIE_SERVER_MGMT_DISABLED` | `KIE_SERVER_MGMT_DISABLED` | Disable management api and don't allow KIE containers to be deployed/undeployed or started/stopped. Sets the property org.kie.server.mgmt.api.disabled to true and org.kie.server.startup.strategy to LocalContainersStartupStrategy. | true | True
@@ -144,7 +144,7 @@ for more information.
 |=============
 | S2I image  | link | Build output | BuildTriggers and Settings
 
-|rhdm-kieserver-rhel8:7.10.0 |  link:../../../kieserver/image.yaml[`rhdm-7/rhdm-kieserver-rhel8`] | `${APPLICATION_NAME}-kieserver:latest` | GitHub, Generic, ImageChange, ConfigChange
+|rhdm-kieserver-rhel8:7.10.1 |  link:../../../kieserver/image.yaml[`rhdm-7/rhdm-kieserver-rhel8`] | `${APPLICATION_NAME}-kieserver:latest` | GitHub, Generic, ImageChange, ConfigChange
 |=============
 
 
