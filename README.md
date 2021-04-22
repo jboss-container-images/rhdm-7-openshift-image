@@ -1,7 +1,7 @@
 # Red Hat Decision Manager 7 OpenShift images
 
 This repository contains all the image descriptors and files necessary to build the RHPAM images.
-It also includes the application templates, however they are deprecated in 7.11. Using the Red Hat Business Automation Operator is recommended.
+It also includes the application templates, however they are deprecated in 7.12. Using the Red Hat Business Automation Operator is recommended.
 
 
 ### Repo structure:
@@ -27,7 +27,7 @@ Inside each image directory you will find the following files:
 On the root directory you can also find the two files:
 
  - [example-app-secret-template.yaml](example-app-secret-template.yaml): Contains a https certificate to be used as example where https is required.
- - [rhdm-image-streams.yaml](rhdm711-image-streams.yaml): imagestreams definitions, file used to install the product image streams on OpenShift, this files contains the image stream name and the registry the image will be pulled of.
+ - [rhdm-image-streams.yaml](rhdm712-image-streams.yaml): imagestreams definitions, file used to install the product image streams on OpenShift, this files contains the image stream name and the registry the image will be pulled of.
 
 
 This repo depends directly on 6 repositories, which are:
@@ -111,16 +111,39 @@ make generate_adocs
 
 It will use the `master` branch from *jboss-kie-modules* using the current branch from RHDM git repository.
 
-To generate the adocs for, example, 7.10.x branch, first, switch the git branch from RHDM repository then execute the
+To generate the adocs for, example, 7.12.x branch, first, switch the git branch from RHDM repository then execute the
 following command:
 
 ```bash
-make generate_adocs branch=7.10.x
+make generate_adocs branch=7.12.x
 ```
 
-It will use the `7.10.x` branch from *jboss-kie-modules* using the checked out branch on RHDM repository based from 7.10.x.
+It will use the `7.12.x` branch from *jboss-kie-modules* using the checked out branch on RHDM repository based from 7.12.x.
 
 
+#### Update versions
+
+Before each release, there is a need to update the product version on each repository that composes the Container
+Images.
+In this repo you will find the **scripts** directory which containers the `update-version.py` script which helps to
+update the version to the next release interation smoothly.
+
+This script requires python 3.
+
+
+See its usage:
+```bash
+$ python scripts/update-version.py --help
+usage: update-version.py [-h] [-v T_VERSION] [--confirm]
+RHDM Version Manager
+optional arguments:
+  -h, --help    show this help message and exit
+  -v T_VERSION  update everything to the next version
+  --confirm     if not set, script will not update the rhdm modules. (Dry run)
+```
+There is two options to run it, a dry-run option which will only print for you the changes, useful if you want just to see
+how the changes will looks like after the script is executed, and if the chages are correct, the `--confirm` flag
+should be used.
 
 
 ##### Found an issue?

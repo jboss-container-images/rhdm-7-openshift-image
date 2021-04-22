@@ -4,18 +4,18 @@ metadata:
   annotations:
     iconClass: icon-jboss
     tags: rhdm,decisionserver,jboss,kieserver,immutable,s2i,amq
-    version: "7.11"
-    openshift.io/display-name: Red Hat Decision Manager 7.11 immutable production environment with ActiveMQ.
+    version: "7.12"
+    openshift.io/display-name: Red Hat Decision Manager 7.12 immutable production environment with ActiveMQ.
     openshift.io/provider-display-name: Red Hat, Inc.
-    description: Application template for an immutable KIE Server in a production environment integrated with ActiveMQ, for Red Hat Decision Manager 7.11 - Deprecated
-    template.openshift.io/long-description: This template defines resources needed for an immutable production runtime environment for Red Hat Decision Manager 7.11, including a source to image (S2I) build of your services, application deployment configuration, secure and insecure http communication. Template for Red Hat OpenShift Container Platform version 3.11. Deprecated since Red Hat Decision Manager version 7.5; consider using the Red Hat Business Automation Operator.
-    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.11/html/deploying_a_red_hat_decision_manager_7.11_immutable_server_environment_on_red_hat_openshift_container_platform/
+    description: Application template for an immutable KIE Server in a production environment integrated with ActiveMQ, for Red Hat Decision Manager 7.12 - Deprecated
+    template.openshift.io/long-description: This template defines resources needed for an immutable production runtime environment for Red Hat Decision Manager 7.12, including a source to image (S2I) build of your services, application deployment configuration, secure and insecure http communication. Template for Red Hat OpenShift Container Platform version 3.11. Deprecated since Red Hat Decision Manager version 7.5; consider using the Red Hat Business Automation Operator.
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.12/html/deploying_a_red_hat_decision_manager_7.12_immutable_server_environment_on_red_hat_openshift_container_platform/
     template.openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: "false"
-  name: rhdm711-prod-immutable-kieserver-amq
+  name: rhdm712-prod-immutable-kieserver-amq
 labels:
-  template: rhdm711-prod-immutable-kieserver-amq
-  rhdm: "7.11"
+  template: rhdm712-prod-immutable-kieserver-amq
+  rhdm: "7.12"
 message: |-
   A new immutable Red Hat Decision Manager KIE Server has been created in your project.
   The username/password needed for accessing the application are stored in "${CREDENTIALS_SECRET}" secret as
@@ -44,9 +44,9 @@ parameters:
     value: "rhdm-kieserver-rhel8"
     required: true
   - displayName: ImageStream Tag
-    description: A named pointer to an image in an image stream. Default is "7.11.0".
+    description: A named pointer to an image in an image stream. Default is "7.12.0".
     name: IMAGE_STREAM_TAG
-    value: "7.11.0"
+    value: "7.12.0"
     required: true
   - displayName: KIE MBeans
     description: KIE Server mbeans enabled/disabled. (Sets the kie.mbeans and kie.scanner.mbeans system properties)
