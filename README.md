@@ -115,7 +115,7 @@ To generate the adocs for, example, 7.10.x branch, first, switch the git branch 
 following command:
 
 ```bash
-make generate_adocs branch=7.10.x
+make generate_adocs branch=7.11.x
 ```
 
 It will use the `7.10.x` branch from *jboss-kie-modules* using the checked out branch on RHDM repository based from 7.10.x.
