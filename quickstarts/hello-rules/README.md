@@ -2,13 +2,13 @@
 
 Note that, this is the development branch, the target images might not be available here, instead you can look at the [released branch](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.12.x/quickstarts/hello-rules)
 
-This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/master/kieserver) image.
+This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/main/kieserver) image.
 
 ## How to use it?
 
 The template below will be used for this quickstart:
 
-[rhdm712-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/master/templates/rhdm712-prod-immutable-kieserver.yaml)
+[rhdm712-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/main/templates/rhdm712-prod-immutable-kieserver.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
 
@@ -21,7 +21,7 @@ Create a new project, i.e.:
 
 ```bash
 $ oc new-project rhdm
-Now using project "rhdm" on server "https://ocp-master.mycloud.com:8443".
+Now using project "rhdm" on server "https://ocp.mycloud.com:8443".
 ```
 
 Make sure you have the RHDM template installed in your OpenShift Instance:
@@ -32,13 +32,13 @@ Error from server (NotFound): templates "rhdm712-prod-immutable-kieserver" not f
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/templates/rhdm712-prod-immutable-kieserver.yaml -n openshift
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/templates/rhdm712-prod-immutable-kieserver.yaml -n openshift
 template "rhdm712-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/example-app-secret-template.yaml
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/example-app-secret-template.yaml
 $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
 ```
 
@@ -52,7 +52,7 @@ Error from server (NotFound): imagestreams.image.openshift.io "rhdm-kieserver-rh
 
 If the `rhdm-kieserver-rhel8` is not found, install it under the 'openshift' namespace:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/rhdm712-image-streams.yaml -n openshift
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/rhdm712-image-streams.yaml -n openshift
 ```
 Note that, to pull the images the OpenShift must be able to pull images from registry.redhat.io, for more information
 please take a look [here](https://access.redhat.com/RegistryAuthentication)
@@ -61,7 +61,7 @@ please take a look [here](https://access.redhat.com/RegistryAuthentication)
 Deploy the `credentials secret` provided as example:
 
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/master/example-credentials.yaml
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/example-credentials.yaml
 secret/rhpam-credentials created
 ```
 
@@ -75,7 +75,7 @@ $ oc new-app rhdm712-prod-immutable-kieserver \
 -p CREDENTIALS_SECRET=rhpam-credentials \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.6.0-SNAPSHOT \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=master \
+-p SOURCE_REPOSITORY_REF=main \
 -p CONTEXT_DIR=quickstarts/hello-rules/hellorules \
 -p IMAGE_STREAM_NAMESPACE=openshift
 ```
@@ -96,7 +96,7 @@ To do so, execute the following commands:
 ```bash
 $ oc new-app eap73-basic-s2i \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=master \
+-p SOURCE_REPOSITORY_REF=main \
 -p CONTEXT_DIR=quickstarts/hello-rules
 ```
 
@@ -147,7 +147,7 @@ $ oc new-app rhdm712-prod-immutable-kieserver-amq \
 -p CREDENTIALS_SECRET=rhpam-credentials \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.6.0-SNAPSHOT \
 -p SOURCE_REPOSITORY_URL=https://github.com/jboss-container-images/rhdm-7-openshift-image.git \
--p SOURCE_REPOSITORY_REF=master \
+-p SOURCE_REPOSITORY_REF=main \
 -p CONTEXT_DIR=quickstarts/hello-rules/hellorules \
 -p AMQ_USERNAME=admin -p AMQ_PASSWORD=RedHat \
 -p AMQ_SECRET=<amq_secret_with_trust_and_key_store> \
