@@ -2,7 +2,7 @@ schema_version: 1
 
 name: "rhdm-7/rhdm-kieserver-rhel8"
 description: "Red Hat Decision Manager Kie Server 7.11 OpenShift container image"
-version: "7.11.0"
+version: "7.11.1"
 from: "registry.redhat.io/ubi8/ubi-minimal:latest"
 labels:
   - name: "com.redhat.component"
