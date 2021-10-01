@@ -1,6 +1,6 @@
 # Red Hat Decision Manager 7 - Decision Central OpenShift container image
 
-NOTE: Extends link:https://github.com/jboss-container-images/rhdm-7-image[Red Hat Decision Manager 7.12 container image]
+NOTE: Extends link:https://github.com/jboss-container-images/rhdm-7-image[Red Hat Decision Manager 7.13 container image]
 
 ## License
 
