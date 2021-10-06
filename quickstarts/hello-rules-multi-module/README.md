@@ -4,7 +4,7 @@ This quickstart is intend to be used with the [RHDM Kie Server](https://github.c
 
 ## How to use it?
 
-To deploy the Hello Rules demo you can use the [rhdm712-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/main/templates/rhdm712-prod-immutable-kieserver.yaml)
+To deploy the Hello Rules demo you can use the [rhdm713-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/main/templates/rhdm713-prod-immutable-kieserver.yaml)
 
 
 To deploy it on your OpenShift instance, just execute the following commands:
@@ -23,14 +23,14 @@ Now using project "rhdm" on server "https://ocp-main.mycloud.com:8443".
 
 Make sure you have the RHDM template installed in your OpenShift Instance:
 ```bash
-$ oc get template rhdm712-prod-immutable-kieserver -n openshift
-Error from server (NotFound): templates "rhdm712-prod-immutable-kieserver" not found
+$ oc get template rhdm713-prod-immutable-kieserver -n openshift
+Error from server (NotFound): templates "rhdm713-prod-immutable-kieserver" not found
 ```
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/templates/rhdm712-prod-immutable-kieserver.yaml -n openshift
-template "rhdm712-prod-immutable-kieserver" created
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/templates/rhdm713-prod-immutable-kieserver.yaml -n openshift
+template "rhdm713-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
@@ -41,13 +41,13 @@ $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
 
 Before proceed, make sure you have the RHDM imagestreams available under the 'openshift' namespace.
 ```bash
-$ oc get imagestream rhdm-kieserver-rhel8 -n openshift | grep 7.12
+$ oc get imagestream rhdm-kieserver-rhel8 -n openshift | grep 7.13
 Error from server (NotFound): imagestreams.image.openshift.io "rhdm-kieserver-rhel8" not found
 ```
 If the `rhdm-kieserver-rhel8` is not found, install it under the 'openshift' namespace:
 
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/rhdm712-image-streams.yaml -n openshift
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/rhdm713-image-streams.yaml -n openshift
 ```
 
 Deploy the `credentials secret` provided as example:
@@ -66,7 +66,7 @@ At this moment we are ready to instantiate the kieserver app:
 
 
 ```bash
-$ oc new-app rhdm712-prod-immutable-kieserver \
+$ oc new-app rhdm713-prod-immutable-kieserver \
 -p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
 -p CREDENTIALS_SECRET=rhpam-credentials \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.6.0-SNAPSHOT \

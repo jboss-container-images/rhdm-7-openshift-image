@@ -1,6 +1,6 @@
 ## Red Hat Decision Manager Kie Server Quickstart
 
-Note that, this is the development branch, the target images might not be available here, instead you can look at the [released branch](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.12.x/quickstarts/hello-rules)
+Note that, this is the development branch, the target images might not be available here, instead you can look at the [released branch](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/7.13.x/quickstarts/hello-rules)
 
 This quickstart is intend to be used with the [RHDM Kie Server](https://github.com/jboss-container-images/rhdm-7-openshift-image/tree/main/kieserver) image.
 
@@ -8,7 +8,7 @@ This quickstart is intend to be used with the [RHDM Kie Server](https://github.c
 
 The template below will be used for this quickstart:
 
-[rhdm712-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/main/templates/rhdm712-prod-immutable-kieserver.yaml)
+[rhdm713-prod-immutable-kieserver](https://github.com/jboss-container-images/rhdm-7-openshift-image/blob/main/templates/rhdm713-prod-immutable-kieserver.yaml)
 
 To deploy it on your OpenShift instance, just execute the following commands:
 
@@ -26,14 +26,14 @@ Now using project "rhdm" on server "https://ocp.mycloud.com:8443".
 
 Make sure you have the RHDM template installed in your OpenShift Instance:
 ```bash
-$ oc get template rhdm712-prod-immutable-kieserver -n openshift
-Error from server (NotFound): templates "rhdm712-prod-immutable-kieserver" not found
+$ oc get template rhdm713-prod-immutable-kieserver -n openshift
+Error from server (NotFound): templates "rhdm713-prod-immutable-kieserver" not found
 ```
 If you don't have it yet, just install it:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/templates/rhdm712-prod-immutable-kieserver.yaml -n openshift
-template "rhdm712-prod-immutable-kieserver" created
+oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/templates/rhdm713-prod-immutable-kieserver.yaml -n openshift
+template "rhdm713-prod-immutable-kieserver" created
 ```
 
 For this template, we also need to install the secrets, which contain the certificates to configure https:
@@ -46,13 +46,13 @@ $ oc new-app example-app-secret -p SECRET_NAME=decisioncentral-app-secret
 Before proceed, make sure you have the RHDM imagestreams available under the 'openshift' namespace.
 
  ```bash
-$ oc get imagestream rhdm-kieserver-rhel8 -n openshift | grep 7.12
+$ oc get imagestream rhdm-kieserver-rhel8 -n openshift | grep 7.13
 Error from server (NotFound): imagestreams.image.openshift.io "rhdm-kieserver-rhel8" not found
 ```
 
 If the `rhdm-kieserver-rhel8` is not found, install it under the 'openshift' namespace:
 ```bash
-$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/rhdm712-image-streams.yaml -n openshift
+$ oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/main/rhdm713-image-streams.yaml -n openshift
 ```
 Note that, to pull the images the OpenShift must be able to pull images from registry.redhat.io, for more information
 please take a look [here](https://access.redhat.com/RegistryAuthentication)
@@ -70,7 +70,7 @@ Default credential is `adminUser/RedHat`.
 At this moment we are ready to instantiate the kieserver app:
 
 ```bash
-$ oc new-app rhdm712-prod-immutable-kieserver \
+$ oc new-app rhdm713-prod-immutable-kieserver \
 -p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
 -p CREDENTIALS_SECRET=rhpam-credentials \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.6.0-SNAPSHOT \
@@ -127,7 +127,7 @@ by using the *hello-rules* quickstart and this client to interact with Active MQ
 
 Before proceed, clone this repository.
 Follow the steps described before to:
- - install the rhdm712-prod-immutable-kieserver-amq.yaml template in the current namespace
+ - install the rhdm713-prod-immutable-kieserver-amq.yaml template in the current namespace
  - install the https secret
  - credentials secret
  - Make sure that the Active MQ 7.8 imagestream is available in the `openshift` namespace. 
@@ -142,7 +142,7 @@ After properly configuring the Active-MQ pre requisites, deploy the Kie Server u
 To deploy the template execute the following command:
 
 ```bash
-$ oc new-app rhdm712-prod-immutable-kieserver-amq \
+$ oc new-app rhdm713-prod-immutable-kieserver-amq \
 -p KIE_SERVER_HTTPS_SECRET=decisioncentral-app-secret \
 -p CREDENTIALS_SECRET=rhpam-credentials \
 -p KIE_SERVER_CONTAINER_DEPLOYMENT=hellorules=org.openshift.quickstarts:rhdm-kieserver-hellorules:1.6.0-SNAPSHOT \
