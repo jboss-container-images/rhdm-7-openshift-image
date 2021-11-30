@@ -172,6 +172,9 @@ envs:
   - name: "KIE_SERVER_KAFKA_EXT_MAX_BLOCK_MS"
     example: "6000"
     description: "Value in milliseconds that indicates how long the 'publish' method will block the operation. Default 2000 milliseconds (2 seconds), this environment variable will be used to set the org.kie.server.jbpm-kafka.ext.max.block.ms system property."
+  - name: "KIE_ELYTRON_FS_PATH"
+    example: "/opt/my-elytrom-fs-path"
+    description: "Elytron's Filesystem realm for application authentication and authorization. Defaults to /opt/kie/data/kie-fs-realm-users"
 ports:
   - value: 8080
   - value: 8443

@@ -101,6 +101,9 @@ envs:
   - name: "APPFORMER_INFINISPAN_PASSWORD"
     example: "pass"
     description: "Password used for the Datagrid."
+  - name: "KIE_ELYTRON_FS_PATH"
+    example: "/opt/my-elytrom-fs-path"
+    description: "Elytron's Filesystem realm for application authentication and authorization. Defaults to /opt/kie/data/kie-fs-realm-users"
 ports:
   - value: 8080
   - value: 8443
