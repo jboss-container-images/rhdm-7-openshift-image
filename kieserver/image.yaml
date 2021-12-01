@@ -175,6 +175,9 @@ envs:
   - name: "KIE_ELYTRON_FS_PATH"
     example: "/opt/my-elytrom-fs-path"
     description: "Elytron's Filesystem realm for application authentication and authorization. Defaults to /opt/kie/data/kie-fs-realm-users"
+  - name: "KIE_GIT_CONFIG_PATH"
+    example: "/opt/my_git_config.json"
+    description: "SSO configuration for ssh authentication on Decision Central. Not required, if not set will configure one based on the given SSO properties and will store under /opt/eap/kie_git_config.json"
 ports:
   - value: 8080
   - value: 8443
