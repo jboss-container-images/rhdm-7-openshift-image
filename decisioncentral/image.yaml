@@ -95,6 +95,12 @@ envs:
   - name: "WORKBENCH_ROUTE_NAME"
     example: "myapp-rhdmcentr"
     description: "Route name that will be used to query its public address in the Kubernetes API to set the org.appformer.m2repo.url property. This env will only take effect if WORKBENCH_ROUTE_NAME is not empty. To set it to use https use the secure route available in the application template. Usually its name is secure-${APPLICATION_NAME}-rhdmcentr"
+  - name: "APPFORMER_INFINISPAN_USERNAME"
+    example: "user"
+    description: "Username used for the Datagrid."
+  - name: "APPFORMER_INFINISPAN_PASSWORD"
+    example: "pass"
+    description: "Password used for the Datagrid."
 ports:
   - value: 8080
   - value: 8443
