@@ -1,8 +1,22 @@
-# Red Hat Decision Manager 7 OpenShift images
+# Notice of Product Replacement
+```text
+With the 7.13 release, RHDM customers will notice that the distribution files for RHDM have been replaced with those 
+for RHPAM. Note that there is no change to the RHDM subscription - support entitlements and fees remain the same.
+RHDM is a subset of RHPAM, and RHDM subscribers will continue to receive full support for the decision management 
+and optimization capabilities included. The business process management (BPM) capabilities exclusive to RHPAM will 
+be available for use by RHDM subscribers, but with development support services only. RHDM subscribers may upgrade 
+to a full RHPAM subscription at any time to receive full support for BPM features."
+```
+
+For quickstarts and Application Templates, please refer to the [Red Hat Process Automation](https://github.com/jboss-container-images/rhpam-7-openshift-image) repository.
+For versions older than 7.13, please refer to the branch of the target release.
+
+---
+
+## Red Hat Decision Manager 7 OpenShift images
 
 This repository contains all the image descriptors and files necessary to build the RHPAM images.
 It also includes the application templates, however they are deprecated in 7.13. Using the Red Hat Business Automation Operator is recommended.
-
 
 ### Repo structure:
 
