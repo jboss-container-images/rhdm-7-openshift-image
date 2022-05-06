@@ -1,5 +1,5 @@
 kind: ImageStreamList
-apiVersion: v1
+apiVersion: image.openshift.io/v1
 metadata:
   name: rhdm713-image-streams
   annotations:
@@ -7,7 +7,7 @@ metadata:
     openshift.io/provider-display-name: Red Hat, Inc.
 items:
   - kind: ImageStream
-    apiVersion: v1
+    apiVersion: image.openshift.io/v1
     metadata:
       name: rhdm-decisioncentral-rhel8
       annotations:
@@ -28,7 +28,7 @@ items:
             kind: DockerImage
             name: registry.redhat.io/rhdm-7/rhdm-decisioncentral-rhel8:7.13.0
   - kind: ImageStream
-    apiVersion: v1
+    apiVersion: image.openshift.io/v1
     metadata:
       name: rhdm-controller-rhel8
       annotations:
@@ -49,7 +49,7 @@ items:
             kind: DockerImage
             name: registry.redhat.io/rhdm-7/rhdm-controller-rhel8:7.13.0
   - kind: ImageStream
-    apiVersion: v1
+    apiVersion: image.openshift.io/v1
     metadata:
       name: rhdm-kieserver-rhel8
       annotations:
